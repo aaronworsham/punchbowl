@@ -12,6 +12,7 @@ gem 'haml'
 gem 'rspec-rails', ">= 2.0.0.beta.22"
 
 gem 'oauth2'
+gem 'json'
 
 # Use unicorn as the web server
 # gem 'unicorn'
