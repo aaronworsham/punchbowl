@@ -24,11 +24,10 @@ private
 
 
   def redirect_uri
-    # uri = URI.parse(request.url)
-    # uri.path = '/auth/facebook/check'
-    # uri.query = nil
-    # uri.to_s
-    'http://punchbowl.heroku.com/auth/facebook/check'
+    uri = URI.parse(request.url)
+    uri.path = '/facebook/check'
+    uri.query = nil
+    uri.to_s
   end
   
 end
