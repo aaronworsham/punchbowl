@@ -16,7 +16,7 @@ class FacebooksController < ApplicationController
   end
   def post_message
     fe = FacebookEvent.create
-    p = Post.create(params[:post].merge(:postable => fe)
+    p = Post.create(params[:post].merge(:postable => fe))
     access_token = client.web_server.get_access_token(session[:code], :redirect_uri => redirect_uri)
     response = JSON.parse(access_token.post('/me/feed', {:message=> p.message}))
     render :text => response.inspect
