@@ -31,7 +31,7 @@ private
 
   def redirect_uri
     uri = URI.parse(request.url)
-    uri.path = '/facebook/feed'
+    uri.path = '/facebook/get_code'
     uri.query = nil
     uri.to_s
   end
