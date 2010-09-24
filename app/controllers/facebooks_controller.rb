@@ -22,7 +22,7 @@ class FacebooksController < ApplicationController
   def post_message
     p = Post.create(params[:post].merge(:postable => FacebookEvent.create))
     ft = FacebookToken.last #TODO this needs to lookup by a user param in the future
-    if ft.expires_at > Time.now
+    if ft.expires_at.nil? or ft.expires_at > Time.now
       access_token = OAuth2::AccessToken.new(client, ft.access_token, ft.refresh_token)
     else
       access_token = client.web_server.get_access_token(session[:code], :redirect_uri => redirect_uri) 
