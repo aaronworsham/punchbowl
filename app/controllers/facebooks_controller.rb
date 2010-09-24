@@ -1,5 +1,4 @@
 class FacebooksController < ApplicationController
-  layout 'applicaiton'
   def index
 
   end
@@ -10,14 +9,16 @@ class FacebooksController < ApplicationController
     )
   
   end
-  def check
-    access_token = client.web_server.get_access_token(params[:code], :redirect_uri => redirect_uri)
-    user = JSON.parse(access_token.get('/me'))
-    render :text => user.inspect
+  def get_code
+    @post = Post.new
+    session[:code] = params[:code]
+    render 'message'
   end
-  def feed
-    access_token = client.web_server.get_access_token(params[:code], :redirect_uri => redirect_uri)
-    response = JSON.parse(access_token.post('/me/feed', {:message=> 'hi'}))
+  def post_message
+    fe = FacebookEvent.create
+    p = Post.create(params[:post].merge(:postable => fe)
+    access_token = client.web_server.get_access_token(session[:code], :redirect_uri => redirect_uri)
+    response = JSON.parse(access_token.post('/me/feed', {:message=> p.message}))
     render :text => response.inspect
   end
 

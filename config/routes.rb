@@ -14,10 +14,12 @@ Punchbowl::Application.routes.draw do
   resource :facebook do
     member do
       get 'auth'
-      get 'check'
-      get 'feed'
+      get 'get_code'
+      post 'post_message'
     end
   end
+
+  resources :posts
 
   # Sample resource route with options:
   #   resources :products do
