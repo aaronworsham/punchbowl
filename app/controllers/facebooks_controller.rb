@@ -6,7 +6,7 @@ class FacebooksController < ApplicationController
   def auth
     redirect_to client.web_server.authorize_url(
       :redirect_uri => redirect_uri, 
-      :scope => 'email,offline_access'
+      :scope => 'email,publish_stream'
     )
   
   end
@@ -17,7 +17,7 @@ class FacebooksController < ApplicationController
   end
   def feed
     access_token = client.web_server.get_access_token(params[:code], :redirect_uri => redirect_uri)
-    response = JSON.parse(access_token.post('/me/feed', :message=> 'hi'))
+    response = JSON.parse(access_token.post('/me/feed', {:message=> 'hi'}))
     render :text => response.inspect
   end
 
