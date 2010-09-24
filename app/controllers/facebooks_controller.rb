@@ -11,9 +11,12 @@ class FacebooksController < ApplicationController
   
   end
   def check
-      access_token = client.web_server.get_access_token(params[:code], :redirect_uri => redirect_uri)
-      user = JSON.parse(access_token.get('/me'))
-      render :text => user.inspect
+    access_token = client.web_server.get_access_token(params[:code], :redirect_uri => redirect_uri)
+    user = JSON.parse(access_token.get('/me'))
+    render :text => user.inspect
+  end
+  def feed
+
   end
 
 
@@ -25,7 +28,7 @@ private
 
   def redirect_uri
     uri = URI.parse(request.url)
-    uri.path = '/facebook/check'
+    uri.path = '/facebook/feed'
     uri.query = nil
     uri.to_s
   end
