@@ -15,6 +15,7 @@ Punchbowl::Application.routes.draw do
     member do
       get 'auth'
       get 'check'
+      get 'feed'
     end
   end
 
