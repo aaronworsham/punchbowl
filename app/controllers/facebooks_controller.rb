@@ -16,7 +16,9 @@ class FacebooksController < ApplicationController
     render :text => user.inspect
   end
   def feed
-
+    access_token = client.web_server.get_access_token(params[:code], :redirect_uri => redirect_uri)
+    response = JSON.parse(access_token.post('/me/feed', :message=> 'hi'))
+    render :text => response.inspect
   end
 
 
