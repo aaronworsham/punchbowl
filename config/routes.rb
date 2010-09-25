@@ -18,6 +18,12 @@ Punchbowl::Application.routes.draw do
     end
   end
 
+  resource :twitter do
+    member do
+      post 'auth'
+      get  'post_message'
+    end
+  end
   resources :posts
 
   # Sample resource route with options:

@@ -9,6 +9,7 @@ class FacebooksController < ApplicationController
       :scope => 'email,publish_stream,offline_access'
     )
   end
+
   def post_message
     access_token = client.web_server.get_access_token(params[:code], :redirect_uri => redirect_uri) 
     p = Post.last
