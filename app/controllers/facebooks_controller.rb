@@ -25,7 +25,7 @@ private
 
   def redirect_uri
     uri = URI.parse(request.url)
-    uri.path = '/facebook/get_code'
+    uri.path = '/facebook/post_message'
     uri.query = nil
     uri.to_s
   end
