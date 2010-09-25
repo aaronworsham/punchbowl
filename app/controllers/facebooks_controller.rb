@@ -11,9 +11,9 @@ class FacebooksController < ApplicationController
   end
   def post_message
     access_token = client.web_server.get_access_token(session[:code], :redirect_uri => redirect_uri) 
-    p = Post.last
-    response = JSON.parse(access_token.post('/me/feed', {:message=> "bob"}))
-    render :text => response.inspect
+    # p = Post.last
+    # response = JSON.parse(access_token.post('/me/feed', {:message=> p.message}))
+    render :text => access_token.inspect
   end
 
 
