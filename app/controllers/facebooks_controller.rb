@@ -10,10 +10,9 @@ class FacebooksController < ApplicationController
     )
   end
   def post_message
-    # access_token = client.web_server.get_access_token(session[:code], :redirect_uri => redirect_uri) 
+    access_token = client.web_server.get_access_token(session[:code], :redirect_uri => redirect_uri) 
     # p = Post.last
-    # response = JSON.parse(access_token.post('/me/feed', {:message=> p.message}))
-    render :text => client.access_token_url + "?" + client.web_server.access_token_params(session[:code], :redirect_uri => redirect_uri)
+    response = JSON.parse(access_token.get('/me')) 
   end
 
 
