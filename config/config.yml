@@ -1,16 +1,22 @@
 common:
   site_name:  Punchbowl 
-
+  facebook_url: 
 development:
   url:        http://localhost.com:3000
   twitter:
     key:      CXgfZm05277FOxb7HBTkUg
     secret:   ky0oGma6zfy4qt8q3Z27JIQpIopbr2aMBhKxbNZ1c    
+  facebook: 
+    key:      156567211039786
+    secret:   b06f11f6ffdea46f2da73d54eda5af5e
 production:
   url:        http://punchbowl.heroku.com
   twitter:
     key:      l1UrVnBEjoaAqgw8zzqCg
     secret:   fxPgyUSyw07WYiRXFia1A68d534MTvB6gtefZFnc
+  facebook: 
+    id:      154629021224817
+    secret:   48ad712fe340e5e13aaa015bc721a272
 
 test:
   # required for specs

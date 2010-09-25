@@ -24,7 +24,8 @@ class FacebooksController < ApplicationController
 
 private
   def client
-    OAuth2::Client.new('154629021224817', '48ad712fe340e5e13aaa015bc721a272', :site => 'https://graph.facebook.com')
+    settings = AppConfig.facebook
+    OAuth2::Client.new(settings["key"], settings["secret"], :site => 'https://graph.facebook.com')
   end
 
 
