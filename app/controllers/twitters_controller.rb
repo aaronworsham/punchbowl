@@ -20,7 +20,8 @@ class TwittersController < ApplicationController
 private
 
   def client
-    @twitter ||= Twitter::OAuth.new('l1UrVnBEjoaAqgw8zzqCg', 'fxPgyUSyw07WYiRXFia1A68d534MTvB6gtefZFnc')    
+    settings = AppConfig.twitter
+    @twitter ||= Twitter::OAuth.new(settings["key"], settings["secret"])
   end
 
 

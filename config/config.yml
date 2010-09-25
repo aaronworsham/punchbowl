@@ -1,0 +1,19 @@
+common:
+  site_name:  Punchbowl 
+
+development:
+  url:        http://localhost.com:3000
+  twitter:
+    key:      CXgfZm05277FOxb7HBTkUg
+    secret:   ky0oGma6zfy4qt8q3Z27JIQpIopbr2aMBhKxbNZ1c    
+production:
+  url:        http://punchbowl.heroku.com
+  twitter:
+    key:      l1UrVnBEjoaAqgw8zzqCg
+    secret:   fxPgyUSyw07WYiRXFia1A68d534MTvB6gtefZFnc
+
+test:
+  # required for specs
+  email:      yeah@test.com 
+  something:
+    somethingelse: yeah
