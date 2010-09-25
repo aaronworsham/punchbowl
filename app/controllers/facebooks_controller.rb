@@ -6,7 +6,7 @@ class FacebooksController < ApplicationController
     Post.create(params[:post]) #This needs to be keyed to an email or user id
     redirect_to client.web_server.authorize_url(
       :redirect_uri => redirect_uri, 
-      :scope => 'email,publish_stream,offline_acess'
+      :scope => 'email,publish_stream,offline_access'
     )
   end
   def post_message
