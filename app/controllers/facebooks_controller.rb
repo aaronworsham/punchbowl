@@ -13,6 +13,7 @@ class FacebooksController < ApplicationController
     access_token = client.web_server.get_access_token(session[:code], :redirect_uri => redirect_uri) 
     # p = Post.last
     response = JSON.parse(access_token.get('/me')) 
+    render :text => response.inspect
   rescue => e
     Rails.logger.error e.message
   end
