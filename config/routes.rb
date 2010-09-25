@@ -13,9 +13,8 @@ Punchbowl::Application.routes.draw do
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   resource :facebook do
     member do
-      get 'auth'
-      get 'get_code'
-      post 'post_message'
+      post 'auth'
+      get  'post_message'
     end
   end
 
@@ -56,7 +55,7 @@ Punchbowl::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
- root :to => "facebook#index"
+ root :to => "punchbowl#index"
 
   # See how all your routes lay out with "rake routes"
 
