@@ -9,9 +9,17 @@ describe TwitterAccount do
   end
 
   describe "#has_credentials?" do 
+    it "is false if secret, token or verifier dont exist" do 
+      account = TwitterAccount.make      
+      account.token = nil
+      account.has_credentials?.should == false
+    end
+
     it "is true when secret, token and verifier exist" do 
-      TwitterAccount.make      
+      account = TwitterAccount.make      
+      account.has_credentials?.should == true
     end
   end
+
 
 end
