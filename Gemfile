@@ -15,4 +15,6 @@ group :development, :test do
   gem 'spork'
   gem 'capybara'
   gem 'spork'
+  gem 'machinist'
+  gem 'faker'
 end

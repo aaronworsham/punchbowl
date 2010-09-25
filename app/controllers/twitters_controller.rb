@@ -24,7 +24,6 @@ private
     @twitter ||= Twitter::OAuth.new(settings["key"], settings["secret"])
   end
 
-
   def redirect_uri
     uri = URI.parse(request.url)
     uri.path = '/twitter/post_message'

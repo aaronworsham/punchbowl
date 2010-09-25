@@ -52,6 +52,7 @@ GEM
     diff-lcs (1.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
+    faker (0.3.1)
     faraday (0.4.6)
       addressable (>= 2.1.1)
       rack (>= 1.0.1)
@@ -70,6 +71,7 @@ GEM
     i18n (0.4.1)
     json (1.4.6)
     json_pure (1.4.6)
+    machinist (1.0.6)
     mail (2.2.6.1)
       activesupport (>= 2.3.6)
       mime-types
@@ -140,9 +142,11 @@ DEPENDENCIES
   capybara
   cucumber
   cucumber-rails
+  faker
   formtastic
   haml
   json
+  machinist
   oauth2
   rails (= 3.0.0)
   rspec-rails (>= 2.0.0.beta.22)
