@@ -3,37 +3,21 @@ class FacebooksController < ApplicationController
 
   end
   def auth
+    Post.create(params[:post]) #This needs to be keyed to an email or user id
     redirect_to client.web_server.authorize_url(
       :redirect_uri => redirect_uri, 
-      :scope => 'email,publish_stream,offline_acess'
+      :scope => 'email,publish_stream,offline_access'
     )
-  
-  end
-  def get_code
-    @post = Post.new
-    access_token = client.web_server.get_access_token(session[:code], :redirect_uri => redirect_uri) 
-    FacebookToken.create(
-      :access_token => access_token.token,
-      :refresh_token => access_token.refresh_token,
-      :expires_at => access_token.expires_at
-    )
-    render 'message'
   end
   def post_message
-    p = Post.create(params[:post].merge(:postable => FacebookEvent.create))
-    ft = FacebookToken.last #TODO this needs to lookup by a user param in the future
-    if ft.expires_at.nil? or ft.expires_at > Time.now
-      access_token = OAuth2::AccessToken.new(client, ft.access_token, ft.refresh_token)
-    else
-      access_token = client.web_server.get_access_token(session[:code], :redirect_uri => redirect_uri) 
-      FacebookToken.create(
-        :access_token => access_token.token,
-        :refresh_token => access_token.refresh_token,
-        :expires_at => access_token.expires_at
-      )
-    end
-    response = JSON.parse(access_token.post('/me/feed', {:message=> p.message}))
+    access_token = client.web_server.get_access_token(params[:code], :redirect_uri => redirect_uri) 
+    p = Post.last
+    response = JSON.parse(access_token.post('/me/feed', :message => p.message)) 
     render :text => response.inspect
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.response.body
+    Rails.logger.error e.response.headers
   end
 
 
@@ -45,7 +29,7 @@ private
 
   def redirect_uri
     uri = URI.parse(request.url)
-    uri.path = '/facebook/get_code'
+    uri.path = '/facebook/post_message'
     uri.query = nil
     uri.to_s
   end
