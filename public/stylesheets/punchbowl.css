@@ -312,15 +312,15 @@ input.bt_medium {
 
 #main {
   z-index: 99999;
-  width: 826px;
-  height: 602px!important;
+  width: 900px;
+  height: 700px!important;
   margin: 0 auto;
   text-align: left;
   position: relative;
   margin-top: 10px;
   margin-bottom: 0;
   padding-top: 30px;
-  background: url(/images/content-border.png?1285351421) top left no-repeat; }
+  background: url(/images/postcard.jpg) top left no-repeat; }
   #main .content-img-top {
     position: absolute;
     top: 12px;

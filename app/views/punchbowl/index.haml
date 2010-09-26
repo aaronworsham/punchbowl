@@ -1,8 +1,8 @@
 #wrap 
   #main.png_img
     .content
-      - semantic_form_for @post, :url => 'facebook/auth' do |form|
-        = form.input :message, :as => :text, :label => false, :input_html => { :value => "Try Mango..." }
-        = form.commit_button :button_html => { :value => "Share" } 
-      = image_tag 'facebook.png'
+      - semantic_form_for @post, :url => '/posts?post_to=facebook+twitter' do |form|
+        = render :partial => 'message', :locals => {:form => form}
+
+
     

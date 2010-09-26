@@ -14,13 +14,47 @@ form.formtastic fieldset ol li fieldset legend { margin-left: -6px;}
 --------------------------------------------------------------------------------------------------*/
 
 form.formtastic  textarea { 
-  width:98%; 
-  height: 125px; 
-  border-radius: 15px; 
-  -moz-border-radius: 15px; 
-  background: #e8d0a7; 
-  border: 2px solid #ddc9a6; 
+  padding-top: 30px;
+  width: 90%;
+  height: 350px; 
+  border: 0px;
   font-size: 30px;
+  background-color:transparent;
+}
+
+form.formtastic input{
+  border: 0px;
+  font-size: 14px;
+  background-color:transparent;
+}
+
+form.formtastic .submit_button{
+  position: relative;
+  bottom: -200px;
+  right: -300px;
+}
+
+form.formtastic #post_email{
+  width: 350px;
+}
+
+
+form.formtastic .left{
+  float: left;
+}
+
+form.formtastic .right{
+  float: right;
+}
+
+form.formtastic #message_area{
+  width:50%;
+}
+
+form.formtastic #address_area{
+  padding-top: 200px;
+  padding-left: 10px;
+  width:40%;
 }
 
 form.formtastic li {
