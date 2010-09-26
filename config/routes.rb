@@ -13,7 +13,7 @@ Punchbowl::Application.routes.draw do
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   
   match 'test_facebook' => 'punchbowl#test_facebook'
-  match 'test_twitter' => 'punchbowl#test_facebook'
+  match 'test_twitter' => 'punchbowl#test_twitter'
   
   resource :facebook do
     member do
