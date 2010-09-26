@@ -37,7 +37,7 @@ private
   end
 
   def find_post
-    @post = Post.find_by_id params[post_id]
+    @post = Post.find_by_id params[:post_id]
   end
 
   def redirect_uri
