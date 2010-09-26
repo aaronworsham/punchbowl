@@ -9,7 +9,7 @@ class FacebooksController < ApplicationController
     if facebook_post?
       redirect_to client.web_server.authorize_url(
         :redirect_uri => redirect_uri, 
-        :scope => 'email,publish_stream,offline_access',
+        :scope => 'email,publish_stream,offline_access'
       )
     else
       raise "Without a post_to for facebook, you should not be in this action"
