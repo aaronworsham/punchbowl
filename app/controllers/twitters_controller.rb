@@ -1,6 +1,7 @@
 class TwittersController < ApplicationController
 
   before_filter :find_post, :only => [:auth, :post_message]
+  before_filter :setup_post_to
 
   def auth
     #render :text => "Email not provided", :status => 401 if email.nil?
@@ -10,13 +11,20 @@ class TwittersController < ApplicationController
       session['rsecret'] = client.request_token.secret
       redirect_to client.request_token.authorize_url
     elsif @post.nil?
-      raise "We could not locate the post referenced in the post_id"
+      raise "Could not located the post for Facebook Auth"
     elsif !twitter_post?
-      raise "This request does not have a post_for for Twitter"
+      raise "Post does not have facebook listed in post_to but was sent to TwitterController"
     end
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error "Post to param = #{params[:post_to]}"
+    flash[:warning] = "Something unusual has happened so we have notified the administrators.  We are very sorry for this."
+      if @post
+      render 'punchbowl/index'
+    else
+      render 'twitter/error'
+    end
+
   end
 
   def post_message
@@ -27,7 +35,24 @@ class TwittersController < ApplicationController
     redirect_to "/success"
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error response.inspect
+    Rails.logger.error e.reponse.inspect
+    # Rails.logger.error e.response.body 
+    # Rails.logger.error e.response.headers
+    # if e.respond_to?("response")
+    #   message = if e.response.present? 
+    #     "Message from Twitter: #{JSON.parse(e.response.body)["error"]["message"]}"
+    #   else 
+    #     e.message
+    #   end
+    #   flash[:warning] = message
+    # else
+    #   flash[:warning] = e.message
+    # end
+    # if @post
+    #   render 'punchbowl/index'
+    # else
+    #   render 'twitter/error'
+    # end
   end
 
 private
