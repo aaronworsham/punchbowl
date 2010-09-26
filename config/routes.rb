@@ -15,18 +15,23 @@ Punchbowl::Application.routes.draw do
   match 'test_facebook' => 'punchbowl#test_facebook'
   match 'test_twitter' => 'punchbowl#test_twitter'
   match 'success' => 'punchbowl#success'
+
   
   resource :facebook do
-    member do
-      get 'auth'
-      get  'post_message'
+    resources :posts do
+      member do
+        get  'post_message'
+        get 'auth'
+      end
     end
   end
 
   resource :twitter do
-    member do
-      get 'auth'
-      get  'post_message'
+    resources :posts do
+      member do
+        get  'post_message'
+        get 'auth'
+      end
     end
   end
   resources :posts

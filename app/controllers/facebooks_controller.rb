@@ -1,16 +1,17 @@
 class FacebooksController < ApplicationController
   
-  def index
+  before_filter :find_post, :only => [:auth, :post_message]
 
-  end
   def auth
-    if facebook_post?
+    if @post and facebook_post? 
       redirect_to client.web_server.authorize_url(
         :redirect_uri => redirect_uri, 
         :scope => 'email,publish_stream,offline_access'
       )
-    else
-      raise "Without a post_to for facebook, you should not be in this action"
+    elsif @post.nil?
+      raise "We could not locate the post referenced in the post_id"
+    elsif !facebook_post?
+      raise "This request does not have a post_for for Facebook"
     end
   rescue => e
     Rails.logger.error e.message
@@ -19,10 +20,11 @@ class FacebooksController < ApplicationController
 
   def post_message
     access_token = client.web_server.get_access_token(params[:code], :redirect_uri => redirect_uri) 
-    p = Post.last
-    response = JSON.parse(access_token.post('/me/feed', :message => p.message)) 
-    if post_to.include?("twitter")
-      redirect_to "/twitter/auth?#{paramify_post_to}"
+        response = JSON.parse(access_token.post('/me/feed', :message => @post.message)) 
+    
+    #chain on to Twitter if requested    
+    if twitter_post?
+      redirect_to auth_twitter_post(post, :post_to => paramify_post_to)
     else
       render :text => response.inspect
     end
@@ -39,12 +41,12 @@ private
     OAuth2::Client.new(settings["key"], settings["secret"], :site => 'https://graph.facebook.com')
   end
 
+  def find_post
+    @post = Post.find_by_id params[post_id]
+  end
 
   def redirect_uri
-    uri = URI.parse(request.url)
-    uri.path = '/facebook/post_message'
-    uri.query = paramify_post_to 
-    uri.to_s
+    post_message_facebook_post_path(@post, :post_to => paramify_post_to) 
   end
   
 end

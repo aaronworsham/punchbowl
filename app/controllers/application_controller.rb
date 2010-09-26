@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   end
   def paramify_post_to
     if post_to.present?
-      "post_to=#{post_to.join("+")}"
+      post_to.join("+")
     else
       ""
     end
