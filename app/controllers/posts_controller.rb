@@ -6,9 +6,9 @@ class PostsController < ApplicationController
   def create
     Post.create(params[:post])
 
-    if post_to.include?("facebook")
+    if facebook_post? 
       redirect_to "/facebook/auth?#{paramify_post_to}"
-    elsif post_to.include?("twitter")
+    elsif twitter_post?
       redirect_to "/twitter/auth?#{paramify_post_to}"
     end
   end
