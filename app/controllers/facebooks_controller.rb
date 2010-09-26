@@ -11,6 +11,8 @@ class FacebooksController < ApplicationController
   end
 
   def post_message
+    Rails.logger.info Rails.env
+    Rails.logger.info AppConfig.facebook["key"]
     access_token = client.web_server.get_access_token(params[:code], :redirect_uri => redirect_uri) 
     p = Post.last
     response = JSON.parse(access_token.post('/me/feed', :message => p.message)) 
