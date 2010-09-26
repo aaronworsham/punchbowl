@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   def post_to
     if params[:post_to]
-      @post_to ||= params[:post_to].split()
+      @post_to ||= URI.decode(params[:post_to]).gsub("+", " ").split()
     else
       ""
     end
