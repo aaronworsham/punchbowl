@@ -39,9 +39,9 @@ class FacebooksController < ApplicationController
     Rails.logger.error e.response.body 
     Rails.logger.error e.response.headers
     if e.respond_to?("response") 
-      flash[:warning] => e.response.present? ? JSON.parse(e.response)["error"]["message"] : e.message
+      flash[:warning] = e.response.present? ? JSON.parse(e.response)["error"]["message"] : e.message
     else
-      flash[:warning] => e.message
+      flash[:warning] = e.message
     end
     if @post
       render 'punchbowl/index'
