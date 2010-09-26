@@ -1,7 +1,5 @@
 class FacebooksController < ApplicationController
   
-  before_filter :parse_post_to, :only => [:auth, :post_message]
-  
   def index
 
   end

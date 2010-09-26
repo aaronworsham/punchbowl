@@ -18,14 +18,14 @@ Punchbowl::Application.routes.draw do
   
   resource :facebook do
     member do
-      post 'auth'
+      get 'auth'
       get  'post_message'
     end
   end
 
   resource :twitter do
     member do
-      post 'auth'
+      get 'auth'
       get  'post_message'
     end
   end

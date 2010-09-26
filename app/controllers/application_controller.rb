@@ -1,9 +1,11 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  def parse_post_to
+  def post_to
     if params[:post_to]
-      post_to = params[:post_to].split("+")
+      @post_to ||= params[:post_to].split()
+    else
+      ""
     end
   end
   def paramify_post_to

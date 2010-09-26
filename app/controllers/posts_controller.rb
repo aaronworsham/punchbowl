@@ -1,7 +1,5 @@
 class PostsController < ApplicationController
   
-  before_filter :parse_post_to, :only => [:create]
-
   
   def create
     Post.create(params[:post])
