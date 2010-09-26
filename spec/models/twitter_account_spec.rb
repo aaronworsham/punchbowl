@@ -27,7 +27,7 @@ describe TwitterAccount do
 
     before(:each) do 
       account.expects(:save)
-      account.set_callback_url("http://aol.com")
+      account.get_authorize_url("http://aol.com")
      end
 
     it "creates a token and key" do 
@@ -35,6 +35,38 @@ describe TwitterAccount do
       account.secret.should_not be_nil
     end
 
+  end
+
+  describe "#authorize" do
+
+    let(:account) {TwitterAccount.new}
+
+    describe "when invalid" do
+
+      before(:each) do
+        account.expects(:save).never
+        @result = account.authorize(:token)
+      end
+
+      # todo: save expectation is in the before
+      it "returns false and doesn't save the account" do
+        @result.should == false
+      end
+
+    end
+
+    describe "when valid" do
+
+      before(:each) do 
+        account.expects(:save)
+        @result = account.authorize(:token)
+      end
+      
+      # todo: save expectation is in the before
+      it "returns true and saves the account" do
+        @result.should == true
+      end
+    end 
   end
 
 end

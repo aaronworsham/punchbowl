@@ -3,41 +3,27 @@ class TwittersController < ApplicationController
   before_filter :find_post, :only => [:auth, :post_message]
 
   def auth
-    #render :text => "Email not provided", :status => 401 if email.nil?
+    render :text => "Email not provided", :status => 401 if email.nil?
     if @post and twitter_post?
-      client.set_callback_url(redirect_uri)
-      session['rtoken']  = client.request_token.token
-      session['rsecret'] = client.request_token.secret
-      redirect_to client.request_token.authorize_url
+      redirect_to twitter.get_authorize_url(redirect_uri) 
     elsif @post.nil?
       raise "We could not locate the post referenced in the post_id"
     elsif !twitter_post?
       raise "This request does not have a post_for for Twitter"
     end
-  rescue => e
-    Rails.logger.error e.message
-    Rails.logger.error "Post to param = #{params[:post_to]}"
   end
 
   def post_message
-    client.authorize_from_request(session['rtoken'], session['rsecret'], params[:oauth_verifier])
-    twitter = Twitter::Base.new(client)
-    twitter.verify_credentials
-    twitter.update(@post.message)
+    twitter.authorize(params[:oauth_verifier])
+    twitter.post(@post.message)
     redirect_to "/success"
-  rescue => e
-    Rails.logger.error e.message
-    Rails.logger.error response.inspect
   end
 
 private
 
-  def email
-    session[:email] ||= params[:email]
-  end
-
-  def customer 
-    Customer.find_by_email email
+  def twitter
+    current_customer.ensure_twitter_account
+    current_customer.twitter_account
   end
 
   def client

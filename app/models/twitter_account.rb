@@ -6,11 +6,25 @@ class TwitterAccount < ActiveRecord::Base
     self.token? && self.secret? && self.verifier?
   end
 
-  def set_callback_url(url) 
-    oauth.set_callback_url(url)
+  def get_authorize_url(callback_url) 
+    oauth.set_callback_url(callback_url)
     self.token = oauth.request_token.token
     self.secret = oauth.request_token.secret
     self.save
+    oauth.request_token.authorize_url
+  end
+
+  def authorize(verifier) 
+    oauth.authorize_from_request(self.token, self.secret, verifier)
+    self.verifier = verifier
+    self.save
+    true
+  end
+
+  def post(message)
+    twitter = Twitter::Base.new(oauth)
+    twitter.verify_credentials
+    twitter.update(message)
   end
 
   private 
