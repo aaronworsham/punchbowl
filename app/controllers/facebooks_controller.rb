@@ -3,7 +3,7 @@ class FacebooksController < ApplicationController
 
   end
   def auth
-    Post.create(params[:post]) #This needs to be keyed to an email or user id
+    post.create(params[:post]) #This needs to be keyed to an email or user id
     redirect_to client.web_server.authorize_url(
       :redirect_uri => redirect_uri, 
       :scope => 'email,publish_stream,offline_access'
@@ -11,8 +11,7 @@ class FacebooksController < ApplicationController
   end
 
   def post_message
-    Rails.logger.info Rails.env
-    Rails.logger.info AppConfig.facebook["key"]
+
     access_token = client.web_server.get_access_token(params[:code], :redirect_uri => redirect_uri) 
     p = Post.last
     response = JSON.parse(access_token.post('/me/feed', :message => p.message)) 
@@ -27,6 +26,8 @@ class FacebooksController < ApplicationController
 private
   def client
     settings = AppConfig.facebook
+    Rails.logger.info Rails.env
+    Rails.logger.info settings["key"]
     OAuth2::Client.new(settings["key"], settings["secret"], :site => 'https://graph.facebook.com')
   end
 
