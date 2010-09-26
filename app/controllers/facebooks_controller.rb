@@ -27,7 +27,7 @@ private
   def client
     settings = AppConfig.facebook
     Rails.logger.info Rails.env
-    Rails.logger.info settings["key"]
+    Rails.logger.info AppConfig
     OAuth2::Client.new(settings["key"], settings["secret"], :site => 'https://graph.facebook.com')
   end
 
