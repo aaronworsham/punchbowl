@@ -2,7 +2,7 @@
   #main.png_img
     .content
       - semantic_form_for @post, :url => '/posts?post_to=facebook+twitter' do |form|
-        = render :partial => 'message', :locals => {:form => form}
+        = render :partial => '/punchbowl/message', :locals => {:form => form}
 
 
     
