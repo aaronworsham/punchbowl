@@ -1,2 +1,7 @@
-= form.input :message, :as => :text, :label => false, :input_html => { :value => "Try Mango..." }
-= form.commit_button :button_html => { :value => "Share" } 
+.left#message_area
+  = form.input :message, :as => :text, :label => false, :input_html => { :value => default_message_copy }
+.left#address_area
+  = form.input :email, :as => :string, :label => "From", :input_html => { :value => "Your email address here...", :size => 60 }
+  .submit_button
+    = form.commit_button :button_html => { :value => "Share" } 
+

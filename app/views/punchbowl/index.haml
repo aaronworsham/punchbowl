@@ -3,5 +3,6 @@
     .content
       - semantic_form_for @post, :url => '/posts?post_to=facebook+twitter' do |form|
         = render :partial => 'message', :locals => {:form => form}
-      = image_tag 'facebook.png'
+
+
     
