@@ -33,7 +33,7 @@ class FacebooksController < ApplicationController
     if twitter_post?
       redirect_to auth_post_twitter_path(@post, :post_to => paramify_post_to)
     else
-      render :text => response.inspect
+      redirect_to '/success'
     end
   rescue => e
     Rails.logger.error e.message
