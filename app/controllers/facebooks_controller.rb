@@ -24,14 +24,14 @@ class FacebooksController < ApplicationController
     
     #chain on to Twitter if requested    
     if twitter_post?
-      redirect_to auth_post_twitter_path(post, :post_to => paramify_post_to)
+      redirect_to auth_post_twitter_path(@post, :post_to => paramify_post_to)
     else
       render :text => response.inspect
     end
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.response.body
-    Rails.logger.error e.response.headers
+    Rails.logger.error e.response.body if response
+    Rails.logger.error e.response.headers if response
   end
 
 
