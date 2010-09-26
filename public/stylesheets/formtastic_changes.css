@@ -30,12 +30,16 @@ form.formtastic input{
 
 form.formtastic .submit_button{
   position: relative;
-  bottom: -200px;
+  bottom: -55px;
   right: -300px;
 }
 
 form.formtastic #post_email{
   width: 350px;
+}
+
+form.formtastic .icons{
+  padding-top: 20px;
 }
 
 

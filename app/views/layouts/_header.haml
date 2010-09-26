@@ -1,0 +1,4 @@
+- if flash[:warning] or flash[:notice] 
+  %div{:id=>"notice", :class =>(flash[:warning] ? "warning" : "" )}
+    = flash[:warning] || flash[:notice] 
+
