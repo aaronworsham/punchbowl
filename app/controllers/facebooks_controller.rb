@@ -20,7 +20,7 @@ class FacebooksController < ApplicationController
 
   def post_message
     access_token = client.web_server.get_access_token(params[:code], :redirect_uri => redirect_uri) 
-        response = JSON.parse(access_token.post('/me/feed', :message => @post.message)) 
+    response = JSON.parse(access_token.post('/me/feed', :message => @post.message)) 
     
     #chain on to Twitter if requested    
     if twitter_post?
@@ -30,8 +30,8 @@ class FacebooksController < ApplicationController
     end
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.response.body if response
-    Rails.logger.error e.response.headers if response
+    Rails.logger.error e.response.body 
+    Rails.logger.error e.response.headers 
   end
 
 
