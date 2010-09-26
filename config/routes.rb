@@ -11,6 +11,10 @@ Punchbowl::Application.routes.draw do
   # This route can be invoked with purchase_url(:id => product.id)
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
+  
+  match 'test_facebook' => 'punchbowl#test_facebook'
+  match 'test_twitter' => 'punchbowl#test_facebook'
+  
   resource :facebook do
     member do
       post 'auth'
