@@ -41,7 +41,7 @@ private
   end
 
   def redirect_uri
-    post_message_twitter_post_path(@post, :post_to => paramify_post_to) 
+    post_message_post_twitter_url(@post, :post_to => paramify_post_to) 
   end
 
 end

@@ -24,7 +24,7 @@ class FacebooksController < ApplicationController
     
     #chain on to Twitter if requested    
     if twitter_post?
-      redirect_to auth_twitter_post(post, :post_to => paramify_post_to)
+      redirect_to auth_post_twitter_path(post, :post_to => paramify_post_to)
     else
       render :text => response.inspect
     end
@@ -46,7 +46,7 @@ private
   end
 
   def redirect_uri
-    post_message_facebook_post_path(@post, :post_to => paramify_post_to) 
+    post_message_post_facebook_url(@post, :post_to => paramify_post_to) 
   end
   
 end

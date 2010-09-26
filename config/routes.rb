@@ -18,23 +18,25 @@ Punchbowl::Application.routes.draw do
 
   
   resource :facebook do
-    resources :posts do
-      member do
-        get  'post_message'
-        get 'auth'
-      end
-    end
   end
 
   resource :twitter do
-    resources :posts do
+  end
+
+  resources :posts do
+    resource :facebook do
+      member do
+        get  'post_message'
+        get 'auth'
+      end
+    end
+    resource :twitter do
       member do
         get  'post_message'
         get 'auth'
       end
     end
   end
-  resources :posts
 
   # Sample resource route with options:
   #   resources :products do
