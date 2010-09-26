@@ -1,6 +1,7 @@
 class FacebooksController < ApplicationController
   
   before_filter :find_post, :only => [:auth, :post_message]
+  before_filter :setup_post_to
 
   def auth
     if @post and facebook_post? 
@@ -38,8 +39,13 @@ class FacebooksController < ApplicationController
     Rails.logger.error e.message
     Rails.logger.error e.response.body 
     Rails.logger.error e.response.headers
-    if e.respond_to?("response") 
-      flash[:warning] = e.response.present? ? JSON.parse(e.response.body)["error"]["message"] : e.message
+    if e.respond_to?("response")
+      message = if e.response.present? 
+        "Message from Facebook: #{JSON.parse(e.response.body)["error"]["message"]}"
+      else 
+        e.message
+      end
+      flash[:warning] = message
     else
       flash[:warning] = e.message
     end

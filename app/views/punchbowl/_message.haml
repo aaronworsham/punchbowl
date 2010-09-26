@@ -1,7 +1,20 @@
+= form.input :post_to, :as => :hidden, :input_html => { :value => "facebook+twitter"}
 .left#message_area
-  = form.input :message, :as => :text, :label => false, :input_html => { :value => default_message_copy }
+  = form.input :message, :as => :text, :label => false, :input_html => { :value => default_message_copy, :maxlength =>"130" }
 .left#address_area
-  = form.input :email, :as => :string, :label => "From", :input_html => { :placeholder => "Your email address here...", :size => 60 }
+  = form.input :email, :as => :string, :label => "From", :input_html => { :placeholder => "Your email address here...", :size => 60, :class => "email" }
+  .icons
+    To:
+    %ul
+      %li.facebook-icon.selected
+        = image_tag 'facebook-icon.jpg'
+        %span.facebook-check
+          = image_tag 'GreenCheckbox.gif'
+      %li.twitter-icon.selected
+        = image_tag 'twitter-icon-sm.png'
+        %span.twitter-check
+          = image_tag 'GreenCheckbox.gif'
+
   .submit_button
-    = form.commit_button :button_html => { :value => "Share" } 
+    = form.commit_button :button_html => { :value => "Deliver" } 
 
