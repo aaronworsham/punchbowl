@@ -21,5 +21,20 @@ describe TwitterAccount do
     end
   end
 
+  describe "@set_callback_url" do 
+
+    let(:account) {TwitterAccount.new}
+
+    before(:each) do 
+      account.expects(:save)
+      account.set_callback_url("http://aol.com")
+     end
+
+    it "creates a token and key" do 
+      account.token.should_not be_nil
+      account.secret.should_not be_nil
+    end
+
+  end
 
 end

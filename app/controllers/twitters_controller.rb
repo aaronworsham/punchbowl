@@ -1,6 +1,7 @@
 class TwittersController < ApplicationController
 
   def auth
+    render :text => "Email not provided", :status => 401 if email.nil?
     session[:post] = params[:post]
     client.set_callback_url(redirect_uri)
     session['rtoken']  = client.request_token.token
@@ -18,6 +19,14 @@ class TwittersController < ApplicationController
   end
 
 private
+
+  def email
+    session[:email] ||= params[:email]
+  end
+
+  def customer 
+    Customer.find_by_email email
+  end
 
   def client
     settings = AppConfig.twitter

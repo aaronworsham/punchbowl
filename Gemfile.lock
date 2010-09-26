@@ -77,6 +77,8 @@ GEM
       mime-types
       treetop (>= 1.4.5)
     mime-types (1.16)
+    mocha (0.9.8)
+      rake
     multi_json (0.0.4)
     nokogiri (1.4.3.1)
     oauth (0.4.3)
@@ -147,6 +149,7 @@ DEPENDENCIES
   haml
   json
   machinist
+  mocha
   oauth2
   rails (= 3.0.0)
   rspec-rails (>= 2.0.0.beta.22)
