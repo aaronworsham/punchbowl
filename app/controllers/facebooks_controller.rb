@@ -11,7 +11,6 @@ class FacebooksController < ApplicationController
   end
 
   def post_message
-
     access_token = client.web_server.get_access_token(params[:code], :redirect_uri => redirect_uri) 
     p = Post.last
     response = JSON.parse(access_token.post('/me/feed', :message => p.message)) 
@@ -26,8 +25,6 @@ class FacebooksController < ApplicationController
 private
   def client
     settings = AppConfig.facebook
-    Rails.logger.info Rails.env
-    Rails.logger.info AppConfig
     OAuth2::Client.new(settings["key"], settings["secret"], :site => 'https://graph.facebook.com')
   end
 

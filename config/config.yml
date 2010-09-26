@@ -15,7 +15,7 @@ production:
     key:      l1UrVnBEjoaAqgw8zzqCg
     secret:   fxPgyUSyw07WYiRXFia1A68d534MTvB6gtefZFnc
   facebook: 
-    id:      154629021224817
+    key:      154629021224817
     secret:   48ad712fe340e5e13aaa015bc721a272
 
 test:
