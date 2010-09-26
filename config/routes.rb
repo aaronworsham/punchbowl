@@ -14,6 +14,7 @@ Punchbowl::Application.routes.draw do
   
   match 'test_facebook' => 'punchbowl#test_facebook'
   match 'test_twitter' => 'punchbowl#test_twitter'
+  match 'success' => 'punchbowl#success'
   
   resource :facebook do
     member do

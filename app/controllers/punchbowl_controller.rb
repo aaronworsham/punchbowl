@@ -10,6 +10,10 @@ class PunchbowlController < ApplicationController
   def test_twitter
   end
 
+  def success
+
+  end
+
   private
   def new_post
     @post = Post.new

@@ -1,20 +1,33 @@
 class FacebooksController < ApplicationController
+  
+  before_filter :parse_post_to, :only => [:auth, :post_message]
+  
   def index
 
   end
   def auth
-    Post.create(params[:post]) #This needs to be keyed to an email or user id
-    redirect_to client.web_server.authorize_url(
-      :redirect_uri => redirect_uri, 
-      :scope => 'email,publish_stream,offline_access'
-    )
+    if facebook_post?
+      redirect_to client.web_server.authorize_url(
+        :redirect_uri => redirect_uri, 
+        :scope => 'email,publish_stream,offline_access',
+      )
+    else
+      raise "Without a post_to for facebook, you should not be in this action"
+    end
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error "Post to param = #{params[:post_to]}"
   end
 
   def post_message
     access_token = client.web_server.get_access_token(params[:code], :redirect_uri => redirect_uri) 
     p = Post.last
     response = JSON.parse(access_token.post('/me/feed', :message => p.message)) 
-    render :text => response.inspect
+    if post_to.include?("twitter")
+      redirect_to "/twitter/auth?#{paramify_post_to}"
+    else
+      render :text => response.inspect
+    end
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.response.body
@@ -32,7 +45,7 @@ private
   def redirect_uri
     uri = URI.parse(request.url)
     uri.path = '/facebook/post_message'
-    uri.query = nil
+    uri.query = paramify_post_to 
     uri.to_s
   end
   
