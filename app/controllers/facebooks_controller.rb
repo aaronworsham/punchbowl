@@ -27,15 +27,15 @@ class FacebooksController < ApplicationController
 
   def post_message
     customer = @post.customer
-    if customer.facebook_token.present? and customer.facebook_username.present?
+    if customer.facebook_token.present? and customer.facebook_id.present?
       access_token = OAuth2::AccessToken.new(client, customer.facebook_token)
       Rails.logger.info "Has Token: #{customer.facebook_token}"
-      response = JSON.parse(access_token.post("/#{customer.facebook_username}/feed", :message => @post.message))  
+      response = JSON.parse(access_token.post("/#{customer.facebook_id}/feed", :message => @post.message))  
     else
       access_token = client.web_server.get_access_token(params[:code], :redirect_uri => redirect_uri) 
-      customer.update_attribute(:facebook_token, access_token.token)
       Rails.logger.info "Needed Token: #{access_token.token}"
       response = JSON.parse(access_token.get("/me")) 
+      customer.update_attributes(:facebook_token => access_token.token, :facebook_id => response["id"])
     end
     render :text => response.inspect
 
