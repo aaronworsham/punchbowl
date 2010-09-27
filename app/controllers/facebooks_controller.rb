@@ -39,9 +39,7 @@ class FacebooksController < ApplicationController
     end
     render :text => response.inspect
 
-    
-    
-    
+
     # #chain on to Twitter if requested    
     # if twitter_post?
     #   redirect_to auth_post_twitter_path(@post, :post_to => paramify_post_to)
@@ -50,9 +48,9 @@ class FacebooksController < ApplicationController
     # end
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.response.body 
-    Rails.logger.error e.response.headers
     if e.respond_to?("response")
+      Rails.logger.error e.response.body 
+      Rails.logger.error e.response.headers
       message = if e.response.present? 
         "Message from Facebook: #{JSON.parse(e.response.body)["error"]["message"]}"
       else 
@@ -62,11 +60,11 @@ class FacebooksController < ApplicationController
     else
       flash[:warning] = e.message
     end
-    if @post
-      render 'punchbowl/index'
-    else
-      render 'facebook/error'
-    end
+    # if @post
+    #   render 'punchbowl/index'
+    # else
+    #   render 'facebook/error'
+    # end
   end
 
 
