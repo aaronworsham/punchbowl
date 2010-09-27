@@ -33,7 +33,7 @@ class FacebooksController < ApplicationController
       response = JSON.parse(access_token.post("/#{customer.facebook_username}/feed", :message => @post.message))  
     else
       access_token = client.web_server.get_access_token(params[:code], :redirect_uri => redirect_uri) 
-      customer.update_attribute(:facebook_token => access_token.token)
+      customer.update_attribute(:facebook_token, access_token.token)
       Rails.logger.info "Needed Token: #{access_token.token}"
       response = JSON.parse(access_token.post("/me/feed", :message => @post.message)) 
     end
