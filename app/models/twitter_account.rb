@@ -3,7 +3,7 @@ class TwitterAccount < ActiveRecord::Base
   belongs_to :customer
 
   def has_credentials? 
-    self.token? && self.secret? && self.verifier?
+    self.token? && self.secret?
   end
 
   def get_authorize_url(callback_url) 
@@ -14,16 +14,19 @@ class TwitterAccount < ActiveRecord::Base
     oauth.request_token.authorize_url
   end
 
-  def authorize(verifier) 
+  def verify(verifier) 
     oauth.authorize_from_request(self.token, self.secret, verifier)
-    self.verifier = verifier
+
+    twitter = Twitter::Base.new(oauth)
+    twitter.verify_credentials
+    self.token = oauth.access_token.token
+    self.secret = oauth.access_token.secret
     self.save
-    true
   end
 
   def post(message)
+    oauth.authorize_from_access(self.token, self.secret)
     twitter = Twitter::Base.new(oauth)
-    twitter.verify_credentials
     twitter.update(message)
   end
 

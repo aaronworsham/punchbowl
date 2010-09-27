@@ -4,13 +4,20 @@ class TwittersController < ApplicationController
   before_filter :setup_post_to
 
   def auth
-    render :text => "Email not provided", :status => 401 if email.nil?
+    if email.nil? 
+      render :text => "Email not provided", :status => 401 
+      return
+    end
+    if twitter.has_credentials?
+      redirect_to redirect_uri 
+      return
+    end
     if @post and twitter_post?
       redirect_to twitter.get_authorize_url(redirect_uri) 
     elsif @post.nil?
       raise "Could not located the post for Facebook Auth"
     elsif !twitter_post?
-      raise "Post does not have facebook listed in post_to but was sent to TwitterController"
+      raise "Post does not have twitter listed in post_to but was sent to TwitterController"
     end
   rescue => e
     Rails.logger.error e.message
@@ -21,10 +28,11 @@ class TwittersController < ApplicationController
     else
       render 'twitter/error'
     end
+    
   end
 
   def post_message
-    twitter.authorize(params[:oauth_verifier])
+    twitter.verify(params[:oauth_verifier]) unless params[:oauth_verifier].nil?
     twitter.post(@post.message)
     redirect_to "/success"
   rescue => e

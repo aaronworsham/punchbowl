@@ -1,7 +1,7 @@
 class PostsController < ApplicationController 
   before_filter :setup_post_to
   def create
-    email = params[:post].delete(:email)
+    self.email= params[:post].delete(:email)
     customer = Customer.find_or_create_by_email(:email => email)
     post = Post.create(params[:post].merge(:customer => customer))
 
