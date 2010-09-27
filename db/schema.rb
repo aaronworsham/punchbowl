@@ -18,7 +18,9 @@ ActiveRecord::Schema.define(:version => 20100927225814) do
     t.datetime "updated_at"
     t.string   "email"
     t.string   "facebook_token"
+    t.string   "facebook_username"
     t.string   "twitter_token"
+    t.string   "twitter_username"
   end
 
   create_table "facebook_events", :force => true do |t|

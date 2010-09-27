@@ -27,23 +27,27 @@ class FacebooksController < ApplicationController
 
   def post_message
     customer = @post.customer
-    if customer.facebook_token.present?
+    if customer.facebook_token.present? and customer.facebook_username.present?
       access_token = OAuth2::AccessToken.new(client, customer.facebook_token)
-      Rails.logger.info "Has Token: #{customer.facebook_token}" 
+      Rails.logger.info "Has Token: #{customer.facebook_token}"
+      response = JSON.parse(access_token.post("/#{customer.facebook_username}/feed", :message => @post.message))  
     else
       access_token = client.web_server.get_access_token(params[:code], :redirect_uri => redirect_uri) 
       customer.update_attribute(:facebook_token => access_token.token)
       Rails.logger.info "Needed Token: #{access_token.token}"
+      response = JSON.parse(access_token.post("/me/feed", :message => @post.message)) 
     end
+    render :text => response.inspect
+
     
-    response = JSON.parse(access_token.post('/me/feed', :message => @post.message)) 
     
-    #chain on to Twitter if requested    
-    if twitter_post?
-      redirect_to auth_post_twitter_path(@post, :post_to => paramify_post_to)
-    else
-      redirect_to '/success'
-    end
+    
+    # #chain on to Twitter if requested    
+    # if twitter_post?
+    #   redirect_to auth_post_twitter_path(@post, :post_to => paramify_post_to)
+    # else
+    #   redirect_to '/success'
+    # end
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.response.body 
