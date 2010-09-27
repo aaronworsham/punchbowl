@@ -26,7 +26,16 @@ class FacebooksController < ApplicationController
   end
 
   def post_message
-    access_token = client.web_server.get_access_token(params[:code], :redirect_uri => redirect_uri) 
+    customer = @post.customer
+    if customer.facebook_token.present?
+      access_token = OAuth2::AccessToken.new(client, customer.facebook_token)
+      Rails.logger.info "Has Token: #{customer.facebook_token}" 
+    else
+      access_token = client.web_server.get_access_token(params[:code], :redirect_uri => redirect_uri) 
+      customer.update_attribute(:facebook_token => access_token.token)
+      Rails.logger.info "Needed Token: #{access_token.token}"
+    end
+    
     response = JSON.parse(access_token.post('/me/feed', :message => @post.message)) 
     
     #chain on to Twitter if requested    
