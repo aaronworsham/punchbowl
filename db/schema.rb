@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100928005257) do
+ActiveRecord::Schema.define(:version => 20100928165953) do
 
   create_table "customers", :force => true do |t|
     t.string   "name"
@@ -21,6 +21,21 @@ ActiveRecord::Schema.define(:version => 20100928005257) do
     t.string   "facebook_id"
     t.string   "twitter_token"
     t.string   "twitter_id"
+  end
+
+  create_table "dance_partners", :force => true do |t|
+    t.string   "email"
+    t.integer  "mango_tango_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "facebook_accounts", :force => true do |t|
+    t.string   "facebook_id"
+    t.string   "token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "customer_id"
   end
 
   create_table "facebook_events", :force => true do |t|
@@ -34,6 +49,28 @@ ActiveRecord::Schema.define(:version => 20100928005257) do
     t.string   "refresh_token"
     t.datetime "expires_at"
     t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "gift_of_mangos", :force => true do |t|
+    t.integer  "post_id"
+    t.integer  "customer_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "mango_achievements", :force => true do |t|
+    t.integer  "badge_id"
+    t.integer  "post_id"
+    t.integer  "customer_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "mango_tangos", :force => true do |t|
+    t.integer  "post_id"
+    t.integer  "customer_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

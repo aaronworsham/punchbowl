@@ -3,14 +3,6 @@ class TwittersController < ApplicationController
   before_filter :find_post, :only => [:auth, :post_message]
 
   def auth
-    if email.nil? 
-      render :text => "Email not provided", :status => 401 
-      return
-    end
-    if twitter.has_credentials?
-      redirect_to redirect_uri 
-      return
-    end
     if @post and @post.posted_to_twitter?
       redirect_to twitter.get_authorize_url(redirect_uri) 
     elsif @post.nil?
@@ -21,7 +13,7 @@ class TwittersController < ApplicationController
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error "Post to param = #{params[:post_to]}"
-    flash[:warning] = "Something unusual has happened so we have notified the administrators.  We are very sorry for this."
+    flash[:warning] = "Something has happened while trying to authenticate your Twitter account.  Please try again."
       if @post
       render 'punchbowl/index'
     else
@@ -31,19 +23,59 @@ class TwittersController < ApplicationController
   end
 
   def post_message
-    twitter.verify(params[:oauth_verifier]) unless params[:oauth_verifier].nil?
-    twitter.post(@post.message)
+
+    @customer = @post.customer
+    ta =  @customer.twitter_account
+    if ta.present? and ta.valid?
+
+      #Post to the wall of a known facebook id using valid token
+      ta.post(@post)
+
+    elsif params[:oauth_verifier]
+
+      #Verify the oauth verifier and return a auth token and secret
+      token, secret = twitter.verify(params[:oauth_verifier])
+
+      #save token and secret to the account
+      ta = TwitterAccount.create(:customer => @customer, :token => token, :secret => secret)
+
+      #finally we need to post to the twitter account
+      ta.post(@post.message)
+
+    else
+      raise "We are missing the session code from facebook to retrieve token"
+    end
+
     redirect_to "/success"
+
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.reponse.inspect
+        
+    if e.respond_to?("response")
+      #TODO uncomment once we get an smtp server set
+      #SystemMailer.warning_email(e.response.body).deliver
+      Rails.logger.error e.response.inspect
+      Rails.logger.error e.response.headers
+      flash[:warning] =  TwitterkApi.handle_error(e.response)
+    #in the event of an error, we clear out the token.
+      @customer.twitter_account.update_attribute(:token, nil) if TwitterApi.token_error?(e.response) and @customer.twitter_account.present?
+    else
+      #TODO uncomment once we get an smtp server set
+      #SystemMailer.warning_email(e.message).deliver
+      flash[:warning] =  TwitterApi.handle_error(e.message)
+    end
+
+    if @post
+      render 'punchbowl/index'
+    else
+      render 'facebook/error'
+    end
   end
 
 private
 
   def twitter
-    current_customer.ensure_twitter_account
-    current_customer.twitter_account
+    TwitterApi.client
   end
 
   def client

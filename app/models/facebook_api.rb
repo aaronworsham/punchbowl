@@ -36,35 +36,23 @@ class FacebookApi
     OAuth2::Client.new(settings["key"], settings["secret"], :site => 'https://graph.facebook.com')
   end
 
-  def initialize(customer)
-    @client = FacebookApi.client 
-    @customer = customer
+  def self.authorize_url(uri)
+    client.web_server.authorize_url(
+        :redirect_uri => uri, 
+        :scope => 'email,publish_stream,offline_access'
+    )
   end
 
-  def access_token
-    @token ||= access_token = OAuth2::AccessToken.new(@client, @customer.facebook_token)
+  def self.get_token(code, uri)
+    access_token = client.web_server.get_access_token(code, :redirect_uri => uri) 
+    access_token.token
   end
 
-  def post_to_wall(post)
-    response = JSON.parse(access_token.post("/#{@customer.facebook_id}/feed", :message => post.message)) 
+
+  def self.get_facebook_id(token)
+    response = JSON.parse(token.get("/me"))
     Rails.logger.info response.inspect
-    response
+    response["id"]
   end
 
-  def post_to_my_wall(post)
-    response = JSON.parse(@token.post("/me/feed", :message => post.message)) 
-    Rails.logger.info response.inspect
-    response
-  end
-
-  def get_token(code, uri)
-    @token = @client.web_server.get_access_token(code, :redirect_uri => uri) 
-  end
-
-  def get_id_and_token(code, uri)
-    get_token(code, uri)
-    response = JSON.parse(@token.get("/me"))
-    Rails.logger.info response.inspect
-    {:facebook_token => @token.token, :facebook_id => response["id"]}
-  end
 end
