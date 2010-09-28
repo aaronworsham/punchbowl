@@ -26,29 +26,33 @@ class FacebooksController < ApplicationController
   end
 
   def post_message
-    customer = @post.customer
-    if customer.facebook_token.present? and customer.facebook_id.present?
-      access_token = OAuth2::AccessToken.new(client, customer.facebook_token)
-      Rails.logger.info "Has Token: #{customer.facebook_token}"
-      response = JSON.parse(access_token.post("/#{customer.facebook_id}/feed", :message => @post.message))  
+    @customer = @post.customer
+    if @customer.facebook_token.present? and @customer.facebook_id.present?
+      
+      #We have all the information we need to post to the wall.  
+      access_token = OAuth2::AccessToken.new(client, @customer.facebook_token)
+      response = JSON.parse(access_token.post("/#{@customer.facebook_id}/feed", :message => @post.message))  
     else
+
+      #We need to get the token and the users facebook id
       access_token = client.web_server.get_access_token(params[:code], :redirect_uri => redirect_uri) 
-      Rails.logger.info "Needed Token: #{access_token.token}"
       response = JSON.parse(access_token.get("/me")) 
-      customer.update_attributes(:facebook_token => access_token.token, :facebook_id => response["id"])
+      @customer.update_attributes(:facebook_token => access_token.token, :facebook_id => response["id"])
     end
-    render :text => response.inspect
 
-
-    # #chain on to Twitter if requested    
-    # if twitter_post?
-    #   redirect_to auth_post_twitter_path(@post, :post_to => paramify_post_to)
-    # else
-    #   redirect_to '/success'
-    # end
+    #chain on to Twitter if requested    
+    if twitter_post?
+      redirect_to auth_post_twitter_path(@post, :post_to => paramify_post_to)
+    else
+      redirect_to '/success'
+    end
   rescue => e
     Rails.logger.error e.message
     if e.respond_to?("response")
+
+      #in the event of an error, we clear out the token.
+      @customer.update_attribute(:facebook_token, nil)
+
       Rails.logger.error e.response.body 
       Rails.logger.error e.response.headers
       message = if e.response.present? 
@@ -60,11 +64,11 @@ class FacebooksController < ApplicationController
     else
       flash[:warning] = e.message
     end
-    # if @post
-    #   render 'punchbowl/index'
-    # else
-    #   render 'facebook/error'
-    # end
+    if @post
+      render 'punchbowl/index'
+    else
+      render 'facebook/error'
+    end
   end
 
 
