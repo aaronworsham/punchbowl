@@ -34,7 +34,6 @@ class FacebooksController < ApplicationController
     elsif params[:code]
 
       #We need to get the token and the users facebook id
-
       token = facebook.get_token(params[:code], redirect_uri)
       #We also need to get the facebook id 
       id = facebook.get_facebook_id(token)
