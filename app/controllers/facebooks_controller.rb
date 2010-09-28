@@ -40,7 +40,9 @@ class FacebooksController < ApplicationController
       @customer.update_attributes(:facebook_token => access_token.token, :facebook_id => response["id"])
     end
 
-    #chain on to Twitter if requested    
+    Rails.logger.info response.inspect
+
+    chain on to Twitter if requested    
     if twitter_post?
       redirect_to auth_post_twitter_path(@post, :post_to => paramify_post_to)
     else
