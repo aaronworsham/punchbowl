@@ -1,4 +1,5 @@
-= form.input :post_to, :as => :hidden, :input_html => { :value => "facebook+twitter"}
+= form.input :posted_to_facebook, :as => :hidden, :input_html => { :value => true}
+= form.input :posted_to_twitter, :as => :hidden, :input_html => { :value => true}
 .left#message_area
   = form.input :message, :as => :text, :label => false, :input_html => { :value => default_message_copy, :maxlength =>"130" }
 .left#address_area

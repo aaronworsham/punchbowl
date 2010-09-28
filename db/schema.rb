@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100927225814) do
+ActiveRecord::Schema.define(:version => 20100928005257) do
 
   create_table "customers", :force => true do |t|
     t.string   "name"
@@ -39,12 +39,14 @@ ActiveRecord::Schema.define(:version => 20100927225814) do
   end
 
   create_table "posts", :force => true do |t|
-    t.text     "message",       :limit => 255
+    t.text     "message",            :limit => 255
     t.integer  "postable_id"
     t.string   "postable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "customer_id"
+    t.boolean  "posted_to_facebook",                :default => false
+    t.boolean  "posted_to_twitter",                 :default => false
   end
 
   create_table "twitter_accounts", :force => true do |t|

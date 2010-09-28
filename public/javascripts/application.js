@@ -29,7 +29,13 @@ $(function(){
           .hide()
         .end()
         .removeClass("selected");
-      updatePostTo();
+      if ($('#post_posted_to_facebook').val() === "true"){
+        $('#post_posted_to_facebook').val('false');
+      }
+      else {
+        $('#post_posted_to_facebook').val('true');
+      }
+
 
     }
     else {
@@ -38,7 +44,12 @@ $(function(){
           .show()
         .end()
         .addClass("selected");
-      updatePostTo();
+      if ($('#post_posted_to_twitter').val() === "true"){
+        $('#post_posted_to_twitter').val('false');
+      }
+      else {
+        $('#post_posted_to_twitter').val('true');
+      }
     }
   });
 
@@ -46,19 +57,5 @@ $(function(){
         
 });
 
-function updatePostTo(){
-  if( $('.facebook-icon').hasClass("selected") && $('.twitter-icon').hasClass("selected") ){
-    $('#post_post_to').val('facebook+twitter')
-  }
-  else if ($('.facebook-icon').hasClass("selected")) {
-    $('#post_post_to').val('facebook')
-  }
-  else if ($('.twitter-icon').hasClass("selected")) {
-    $('#post_post_to').val('twitter')
-  }
-  else {
-    $('#post_post_to').val('')
-  }
-}
 
 

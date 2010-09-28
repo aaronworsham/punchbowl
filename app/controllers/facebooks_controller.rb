@@ -17,8 +17,10 @@ class FacebooksController < ApplicationController
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error "Params : #{params.inspect}"
-    flash[:warning] = "Something unusual has happened so we have notified the administrators.  We are very sorry for this."
-      if @post
+    
+    flash[:warning] = "Something has happened while trying to authenticate your Facebook account.  Please try again."
+      
+    if @post
       render 'punchbowl/index'
     else
       render 'facebook/error'
@@ -56,23 +58,19 @@ class FacebooksController < ApplicationController
       redirect_to '/success'
     end
   rescue => e
+
     Rails.logger.error e.message
+    
     if e.respond_to?("response")
-
-      #in the event of an error, we clear out the token.
-      @customer.update_attribute(:facebook_token, nil)
-
       Rails.logger.error e.response.body 
       Rails.logger.error e.response.headers
-      message = if e.response.present? 
-        "Message from Facebook: #{JSON.parse(e.response.body)["error"]["message"]}"
-      else 
-        e.message
-      end
-      flash[:warning] = message
-    else
-      flash[:warning] = e.message
     end
+
+    #in the event of an error, we clear out the token.
+    @customer.update_attribute(:facebook_token, nil) if FacebookApi.token_error?(e.message)
+
+    flash[:warning] =  FacebookApi.handle_error(e.message)
+    
     if @post
       render 'punchbowl/index'
     else
