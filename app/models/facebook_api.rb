@@ -31,9 +31,13 @@ class FacebookApi
     end
   end
 
-  def initialize(customer)
+  def self.client
     settings = AppConfig.facebook
-    @client = OAuth2::Client.new(settings["key"], settings["secret"], :site => 'https://graph.facebook.com')
+    OAuth2::Client.new(settings["key"], settings["secret"], :site => 'https://graph.facebook.com')
+  end
+
+  def initialize(customer)
+    @client = FacebookApi.client 
     @customer = customer
   end
 
