@@ -33,11 +33,11 @@ class FacebookApi
 
   def self.client
     settings = AppConfig.facebook
-    OAuth2::Client.new(settings["key"], settings["secret"], :site => 'https://graph.facebook.com')
+    @client ||= OAuth2::Client.new(settings["key"], settings["secret"], :site => 'https://graph.facebook.com')
   end
 
   def self.access_token(token)
-    OAuth2::AccessToken.new(client, token)
+    @token ||= OAuth2::AccessToken.new(client, token)
   end
 
   def self.authorize_url(uri)
