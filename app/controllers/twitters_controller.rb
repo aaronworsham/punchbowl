@@ -35,7 +35,7 @@ class TwittersController < ApplicationController
     elsif params[:oauth_verifier]
 
       #Verify the oauth verifier and return a auth token and secret
-      token, secret = twitter.verify(session[:twitter_token], session[:twitter_secret], params[:oauth_verifier])
+      token, secret = twitter.verify(session[:twitter_request_token], session[:twitter_request_secret], params[:oauth_verifier])
 
       #save token and secret to the account
       ta = TwitterAccount.create(:customer => @customer, :token => token, :secret => secret)
