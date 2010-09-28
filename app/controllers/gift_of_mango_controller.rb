@@ -19,5 +19,9 @@ class GiftOfMangosController < ApplicationController
     post_to_social_media
   end
 
+  def success
+
+  end
+
 
 end

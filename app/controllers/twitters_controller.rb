@@ -47,7 +47,7 @@ class TwittersController < ApplicationController
       raise "We are missing the session code from facebook to retrieve token"
     end
 
-    redirect_to "/success"
+    redirect_to "/gift_of_mango/success"
 
   rescue => e
     Rails.logger.error e.message

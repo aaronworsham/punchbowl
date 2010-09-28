@@ -12,6 +12,8 @@ Punchbowl::Application.routes.draw do
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   
+  match 'success' => 'punchbowl#success'
+
   resource :gift_of_mango
   resource :mango_tango
   resources :mango_badges
