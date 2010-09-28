@@ -4,9 +4,6 @@ class FacebookAccount < ActiveRecord::Base
 
   
 
-  def initialize
-    @client = FacebookApi.client
-  end
 
   def valid?
     #TODO test the token with facebook?
@@ -29,7 +26,6 @@ class FacebookAccount < ActiveRecord::Base
     response
   end
 
-  private
 
   
 
