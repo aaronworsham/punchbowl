@@ -34,9 +34,7 @@ class FacebooksController < ApplicationController
     elsif params[:code]
 
       #We need to get the token and the users facebook id
-      token = facebook.get_token(params[:code], redirect_uri)
-      #We also need to get the facebook id 
-      id = facebook.get_facebook_id(token)
+      id, token = facebook.verify(params[:code], redirect_uri)
       #Then we need to record the id and token with the customer
       fba = FacebookAccount.create(:customer => @customer, :facebook_id => id, :token => token)
       #finally we need to post to the /me/feed 
@@ -81,7 +79,7 @@ class FacebooksController < ApplicationController
 
 private
   def facebook
-   FacebookApi.client 
+   FacebookApi 
   end
 
   def find_post

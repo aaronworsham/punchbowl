@@ -43,16 +43,11 @@ class FacebookApi
     )
   end
 
-  def self.get_token(code, uri)
+  def self.verify(code, uri)
     access_token = client.web_server.get_access_token(code, :redirect_uri => uri) 
-    access_token.token
-  end
-
-
-  def self.get_facebook_id(token)
-    response = JSON.parse(token.get("/me"))
+    response = JSON.parse(access_token.get("/me"))
     Rails.logger.info response.inspect
-    response["id"]
+    return [response["id"], access_token.token]
   end
 
 end
