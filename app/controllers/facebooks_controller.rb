@@ -4,10 +4,7 @@ class FacebooksController < ApplicationController
 
   def auth
     if @post and @post.posted_to_facebook? 
-      redirect_to client.web_server.authorize_url(
-        :redirect_uri => redirect_uri, 
-        :scope => 'email,publish_stream,offline_access'
-      )
+      redirect_to facebook.authroize_url(redirect_uri)
     elsif @post.nil?
       raise "Could not located the post for Facebook Auth"
     elsif !@post.posted_to_facebook?
@@ -28,18 +25,25 @@ class FacebooksController < ApplicationController
 
   def post_message
     @customer = @post.customer
-    @api = FacebookApi.new(@customer)
-    if @customer.facebook_token.present? and @customer.facebook_id.present?
-      #Post to the wall of a known facebook id
-      response = @api.post_to_wall(@post)
-    else
+    fba =  @customer.facebook_account
+    if fba.present? and fba.valid?
+
+      #Post to the wall of a known facebook id using valid token
+      response = fba.post_to_wall(@post)
+
+    elsif params[:code]
 
       #We need to get the token and the users facebook id
-      access_token = @api.get_token
+      token = facebook.get_token(params[:code], redirect_uri)
+      #We also need to get the facebook id 
+      id = facebook.get_facebook_id(token)
       #Then we need to record the id and token with the customer
-      @customer.update_attributes(@api.get_id_and_token)
+      fba = FacebookAccount.create(:customer => @customer, :facebook_id => id, :token => token)
       #finally we need to post to the /me/feed 
-      @api.post_to_my_wall(@post)
+      fba.post_to_my_wall(@post)
+
+    else
+      raise "We are missing the session code from facebook to retrieve token"
     end
 
     
@@ -59,18 +63,14 @@ class FacebooksController < ApplicationController
       Rails.logger.error e.response.body 
       Rails.logger.error e.response.headers
       flash[:warning] =  FacebookApi.handle_error(e.response.body)
-      @customer.update_attribute(:facebook_token, nil) if FacebookApi.token_error?(e.response.body)
+    #in the event of an error, we clear out the token.
+      @customer.facebook_account.update_attribute(:token, nil) if FacebookApi.token_error?(e.response.body) and @customer.facebook_account.present?
     else
       #TODO uncomment once we get an smtp server set
       #SystemMailer.warning_email(e.message).deliver
       flash[:warning] =  FacebookApi.handle_error(e.message)
     end
 
-    #in the event of an error, we clear out the token.
-    
-
-    
-    
     if @post
       render 'punchbowl/index'
     else
@@ -80,7 +80,7 @@ class FacebooksController < ApplicationController
 
 
 private
-  def client
+  def facebook
    FacebookApi.client 
   end
 

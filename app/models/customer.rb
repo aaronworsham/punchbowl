@@ -1,6 +1,7 @@
 class Customer < ActiveRecord::Base
   has_many :posts
   has_one :twitter_account
+  has_one :facebook_account
 
 #HACK
   def ensure_twitter_account
