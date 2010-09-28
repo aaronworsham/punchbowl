@@ -4,7 +4,7 @@ class TwittersController < ApplicationController
 
   def auth
     if @post and @post.posted_to_twitter?
-      redirect_to twitter.get_authorize_url(redirect_uri) 
+      redirect_to twitter.authorize_url(redirect_uri) 
     elsif @post.nil?
       raise "Could not located the post for Facebook Auth"
     elsif !@post.posted_to_twitter?
@@ -12,7 +12,7 @@ class TwittersController < ApplicationController
     end
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error "Post to param = #{params[:post_to]}"
+    Rails.logger.error "Params = #{params.inspect}"
     flash[:warning] = "Something has happened while trying to authenticate your Twitter account.  Please try again."
       if @post
       render 'punchbowl/index'
