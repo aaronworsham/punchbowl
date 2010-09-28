@@ -75,7 +75,7 @@ class TwittersController < ApplicationController
 private
 
   def twitter
-    TwitterApi.client
+    TwitterApi
   end
 
   def client
