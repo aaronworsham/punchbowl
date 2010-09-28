@@ -52,18 +52,19 @@ class FacebookApi
   end
 
   def post_to_my_wall(post)
-    response = JSON.parse(access_token.post("/me/feed", :message => post.message)) 
+    response = JSON.parse(@token.post("/me/feed", :message => post.message)) 
     Rails.logger.info response.inspect
     response
   end
 
   def get_token(code, uri)
-    @client.web_server.get_access_token(code, :redirect_uri => uri) 
+    @token = @client.web_server.get_access_token(code, :redirect_uri => uri) 
   end
 
-  def get_id_and_token
-    response = JSON.parse(access_token.get("/me"))
+  def get_id_and_token(code, uri)
+    get_token(code, uri)
+    response = JSON.parse(@token.get("/me"))
     Rails.logger.info response.inspect
-    {:facebook_token => access_token.token, :facebook_id => response["id"]}
+    {:facebook_token => @token.token, :facebook_id => response["id"]}
   end
 end
