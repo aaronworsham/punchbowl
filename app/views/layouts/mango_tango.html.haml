@@ -1,0 +1,12 @@
+!!!
+%html
+%head
+  %title Punchbowl
+  = stylesheet_link_tag :all 
+  = javascript_include_tag  "jquery-1.4.2.min", "jquery.validate.min", "application" 
+  = csrf_meta_tag 
+%body
+  .header
+    %img{:alt=>"Powered by Mango", :class=>"powered-by-mango png_img", :src=>"/images/powered-by-mango.png?1285351421"}
+  = yield 
+

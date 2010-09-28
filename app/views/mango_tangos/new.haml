@@ -1,0 +1,5 @@
+#wrap 
+  #main.png_img
+    .content
+      - semantic_form_for @tango, :url => mango_tango_path(@tango) do |form|
+        = render :partial => '/mango_tangos/dance_card', :locals => {:form => form}
