@@ -37,10 +37,11 @@ class FacebookApi
   end
 
   def self.access_token(token)
-    @token ||= OAuth2::AccessToken.new(@client, token)
+    OAuth2::AccessToken.new(client, token)
   end
 
   def self.authorize_url(uri)
+    Rails.logger.info "Authorize URL Facebook API"
     client.web_server.authorize_url(
         :redirect_uri => uri, 
         :scope => 'email,publish_stream,offline_access'
@@ -48,6 +49,7 @@ class FacebookApi
   end
 
   def self.verify(code, uri)
+    Rails.logger.info "Verifying in Facebook API" 
     fb_token = client.web_server.get_access_token(code, :redirect_uri => uri) 
     response = JSON.parse(fb_token.get("/me"))
     Rails.logger.info response.inspect

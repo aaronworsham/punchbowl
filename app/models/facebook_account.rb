@@ -13,6 +13,7 @@ class FacebookAccount < ActiveRecord::Base
   def access_token
     FacebookApi.access_token(self.token)
   end
+  memoize :access_token
 
   def post_to_wall(post)
     response = JSON.parse(access_token.post("/#{self.facebook_id}/feed", :message => post.message)) 
