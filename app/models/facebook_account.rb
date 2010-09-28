@@ -5,7 +5,7 @@ class FacebookAccount < ActiveRecord::Base
   
 
 
-  def valid?
+  def green_light?
     #TODO test the token with facebook?
     self.token.present? and self.facebook_id.present?
   end

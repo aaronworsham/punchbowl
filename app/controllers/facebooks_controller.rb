@@ -26,7 +26,7 @@ class FacebooksController < ApplicationController
   def post_message
     @customer = @post.customer
     fba =  @customer.facebook_account
-    if fba.present? and fba.valid?
+    if fba.present? and fba.green_light?
 
       #Post to the wall of a known facebook id using valid token
       response = fba.post_to_wall(@post)

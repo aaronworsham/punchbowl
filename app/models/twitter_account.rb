@@ -2,7 +2,7 @@ class TwitterAccount < ActiveRecord::Base
 
   belongs_to :customer
 
-  def valid? 
+  def green_light? 
     self.token? and self.secret?
   end
 

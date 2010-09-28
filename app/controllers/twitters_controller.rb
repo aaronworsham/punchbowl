@@ -26,7 +26,7 @@ class TwittersController < ApplicationController
 
     @customer = @post.customer
     ta =  @customer.twitter_account
-    if ta.present? and ta.valid?
+    if ta.present? and ta.green_light?
 
       #Post to the wall of a known facebook id using valid token
       ta.post(@post)
