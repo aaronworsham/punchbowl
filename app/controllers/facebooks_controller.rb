@@ -1,17 +1,16 @@
 class FacebooksController < ApplicationController
   
   before_filter :find_post, :only => [:auth, :post_message]
-  before_filter :setup_post_to
 
   def auth
-    if @post and facebook_post? 
+    if @post and @post.posted_to_facebook? 
       redirect_to client.web_server.authorize_url(
         :redirect_uri => redirect_uri, 
         :scope => 'email,publish_stream,offline_access'
       )
     elsif @post.nil?
       raise "Could not located the post for Facebook Auth"
-    elsif !facebook_post?
+    elsif !@post.posted_to_facebook?
       raise "Post does not have facebook listed in post_to but was sent to FacebookController"
     end
   rescue => e
@@ -52,8 +51,8 @@ class FacebooksController < ApplicationController
 
     
     #chain on to Twitter if requested    
-    if twitter_post?
-      redirect_to auth_post_twitter_path(@post, :post_to => paramify_post_to)
+    if @post.posted_to_twitter?
+      redirect_to auth_post_twitter_path(@post)
     else
       redirect_to '/success'
     end
@@ -90,7 +89,7 @@ private
   end
 
   def redirect_uri
-    post_message_post_facebook_url(@post, :post_to => paramify_post_to) 
+    post_message_post_facebook_url(@post) 
   end
   
 end

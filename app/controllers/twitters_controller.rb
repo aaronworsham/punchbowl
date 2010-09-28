@@ -1,7 +1,6 @@
 class TwittersController < ApplicationController
 
   before_filter :find_post, :only => [:auth, :post_message]
-  before_filter :setup_post_to
 
   def auth
     if email.nil? 
@@ -12,11 +11,11 @@ class TwittersController < ApplicationController
       redirect_to redirect_uri 
       return
     end
-    if @post and twitter_post?
+    if @post and @post.posted_to_twitter?
       redirect_to twitter.get_authorize_url(redirect_uri) 
     elsif @post.nil?
       raise "Could not located the post for Facebook Auth"
-    elsif !twitter_post?
+    elsif !@post.posted_to_twitter?
       raise "Post does not have twitter listed in post_to but was sent to TwitterController"
     end
   rescue => e
@@ -57,7 +56,7 @@ private
   end
 
   def redirect_uri
-    post_message_post_twitter_url(@post, :post_to => paramify_post_to) 
+    post_message_post_twitter_url(@post) 
   end
 
 end
