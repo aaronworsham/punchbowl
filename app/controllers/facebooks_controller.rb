@@ -35,9 +35,12 @@ class FacebooksController < ApplicationController
 
       #We need to get the token and the users facebook id
       id, token = facebook.verify(params[:code], redirect_uri)
+      Rails.logger.info "Id = :#{id} Token = :#{token}"
       #Then we need to record the id and token with the customer
+      Rails.logger.info "creating account"
       fba = FacebookAccount.create(:customer => @customer, :facebook_id => id, :token => token)
       #finally we need to post to the /me/feed 
+      Rails.logger.info "posting to wall"
       fba.post_to_my_wall(@post)
 
     else
