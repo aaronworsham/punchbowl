@@ -66,7 +66,7 @@ class FacebooksController < ApplicationController
     else
       #TODO uncomment once we get an smtp server set
       #SystemMailer.warning_email(e.message).deliver
-      flash[:warning] =  FacebookApi.handle_error(e.message)
+      flash[:warning] =  e.message
     end
 
     if @post

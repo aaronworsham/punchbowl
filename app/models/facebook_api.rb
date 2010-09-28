@@ -36,6 +36,10 @@ class FacebookApi
     OAuth2::Client.new(settings["key"], settings["secret"], :site => 'https://graph.facebook.com')
   end
 
+  def self.access_token(token)
+    @token ||= OAuth2::AccessToken.new(@client, token)
+  end
+
   def self.authorize_url(uri)
     client.web_server.authorize_url(
         :redirect_uri => uri, 
@@ -44,10 +48,10 @@ class FacebookApi
   end
 
   def self.verify(code, uri)
-    access_token = client.web_server.get_access_token(code, :redirect_uri => uri) 
-    response = JSON.parse(access_token.get("/me"))
+    fb_token = client.web_server.get_access_token(code, :redirect_uri => uri) 
+    response = JSON.parse(fb_token.get("/me"))
     Rails.logger.info response.inspect
-    return [response["id"], access_token.token]
+    return [response["id"], fb_token.token]
   end
 
 end

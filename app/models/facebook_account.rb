@@ -14,7 +14,7 @@ class FacebookAccount < ActiveRecord::Base
   end
 
   def access_token
-    @token ||= OAuth2::AccessToken.new(@client, self.token)
+    FacebookApi.access_token(self.token)
   end
 
   def post_to_wall(post)
