@@ -29,15 +29,15 @@ $(function(){
           .hide()
         .end()
         .removeClass("selected");
-      $('#post_posted_to_facebook').val('false');
+      $("#"+$(this).attr("data_hidden_input_id")).val('false')
     }
     else {
       $(this)
         .find('span')
           .show()
         .end()
-        .addClass("selected");
-      $('#post_posted_to_twitter').val('true');
+        .addClass("selected");;
+      $("#"+$(this).attr("data_hidden_input_id")).val('true');
     }
   });
 

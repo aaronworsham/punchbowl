@@ -7,11 +7,11 @@
   .icons
     To:
     %ul
-      %li.facebook-icon.selected
+      %li.facebook-icon.selected{:data_hidden_input_id => 'post_posted_to_facebook'}
         = image_tag 'facebook-icon.jpg'
         %span.facebook-check
           = image_tag 'GreenCheckbox.gif'
-      %li.twitter-icon.selected
+      %li.twitter-icon.selected{:data_hidden_input_id => 'post_posted_to_twitter'}
         = image_tag 'twitter-icon-sm.png'
         %span.twitter-check
           = image_tag 'GreenCheckbox.gif'
