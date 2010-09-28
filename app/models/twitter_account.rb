@@ -6,9 +6,13 @@ class TwitterAccount < ActiveRecord::Base
     self.token? and self.secret?
   end
 
+  def client
+    TwitterApi.client
+  end
+
   def post(message)
-    oauth.authorize_from_access(self.token, self.secret)
-    twitter = Twitter::Base.new(oauth)
+    client.authorize_from_access(self.token, self.secret)
+    twitter = Twitter::Base.new(client)
     twitter.update(message)
   end
 
