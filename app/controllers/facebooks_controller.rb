@@ -28,25 +28,18 @@ class FacebooksController < ApplicationController
 
   def post_message
     @customer = @post.customer
+    @api = FacebookApi.new(@customer)
     if @customer.facebook_token.present? and @customer.facebook_id.present?
-      
-      #We have all the information we need to post to the wall.  
-      access_token = OAuth2::AccessToken.new(client, @customer.facebook_token)
-      response = JSON.parse(access_token.post("/#{@customer.facebook_id}/feed", :message => @post.message)) 
-      Rails.logger.info response.inspect
- 
+      #Post to the wall of a known facebook id
+      response = @api.post_to_wall(@post)
     else
 
       #We need to get the token and the users facebook id
-      access_token = client.web_server.get_access_token(params[:code], :redirect_uri => redirect_uri) 
-      
-      response1 = JSON.parse(access_token.get("/me"))
-      Rails.logger.info response1.inspect
-      @customer.update_attributes(:facebook_token => access_token.token, :facebook_id => response1["id"])
-
-      response2 = JSON.parse(access_token.post("/me/feed", :message => @post.message)) 
-      Rails.logger.info response2.inspect
-
+      access_token = @api.get_token
+      #Then we need to record the id and token with the customer
+      @customer.update_attributes(@api.get_id_and_token)
+      #finally we need to post to the /me/feed 
+      @api.post_to_my_wall(@post)
     end
 
     
@@ -88,8 +81,7 @@ class FacebooksController < ApplicationController
 
 private
   def client
-    settings = AppConfig.facebook
-    OAuth2::Client.new(settings["key"], settings["secret"], :site => 'https://graph.facebook.com')
+   FacebookApi.client 
   end
 
   def find_post

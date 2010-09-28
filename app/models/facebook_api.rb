@@ -30,4 +30,36 @@ class FacebookApi
       return "Something has happened while posting to Facebook, please try again."
     end
   end
+
+  def initialize(customer)
+    settings = AppConfig.facebook
+    @client = OAuth2::Client.new(settings["key"], settings["secret"], :site => 'https://graph.facebook.com')
+    @customer = customer
+  end
+
+  def access_token
+    @token ||= access_token = OAuth2::AccessToken.new(@client, @customer.facebook_token)
+  end
+
+  def post_to_wall(post)
+    response = JSON.parse(access_token.post("/#{@customer.facebook_id}/feed", :message => post.message)) 
+    Rails.logger.info response.inspect
+    response
+  end
+
+  def post_to_my_wall(post)
+    response = JSON.parse(access_token.post("/me/feed", :message => post.message)) 
+    Rails.logger.info response.inspect
+    response
+  end
+
+  def get_token
+    @client.web_server.get_access_token(params[:code], :redirect_uri => redirect_uri) 
+  end
+
+  def get_id_and_token
+    response = JSON.parse(access_token.get("/me"))
+    Rails.logger.info response.inspect
+    {:facebook_token => access_token.token, :facebook_id => response["id"]}
+  end
 end
