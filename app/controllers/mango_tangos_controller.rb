@@ -1,2 +1,3 @@
 class MangoTangosController < ApplicationController
+
 end
