@@ -59,13 +59,15 @@ class FacebooksController < ApplicationController
   rescue => e
 
     Rails.logger.error e.message
-    
+        
     if e.respond_to?("response")
+      SystemMailer.warning_email(e.response.body).deliver
       Rails.logger.error e.response.body 
       Rails.logger.error e.response.headers
       flash[:warning] =  FacebookApi.handle_error(e.response.body)
       @customer.update_attribute(:facebook_token, nil) if FacebookApi.token_error?(e.response.body)
     else
+      SystemMailer.warning_email(e.message).deliver
       flash[:warning] =  FacebookApi.handle_error(e.message)
     end
 

@@ -9,6 +9,10 @@ development:
   facebook: 
     key:      156567211039786
     secret:   b06f11f6ffdea46f2da73d54eda5af5e
+  email:
+    default:
+      to:     aaron@sazboom.com
+      from:   punchbowl@mangolanguage.com
 production:
   url:        http://punchbowl.heroku.com
   twitter:
@@ -17,6 +21,11 @@ production:
   facebook: 
     key:      154629021224817
     secret:   48ad712fe340e5e13aaa015bc721a272
+  email:
+    default:
+      to:     aaron@sazboom.com
+      from:   punchbowl@mangolanguage.com
+
 
 test:
   url:        http://localhost.com:3000
