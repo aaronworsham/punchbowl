@@ -1,0 +1,9 @@
+#wrap 
+  #main.png_img
+    .content
+      - semantic_form_for @post, :url => '/gift_of_mango' do |form|
+        = render :partial => '/gift_of_mango/message', :locals => {:form => form}
+
+
+    
+

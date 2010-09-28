@@ -12,16 +12,11 @@ Punchbowl::Application.routes.draw do
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   
-  match 'test_facebook' => 'punchbowl#test_facebook'
-  match 'test_twitter' => 'punchbowl#test_twitter'
-  match 'success' => 'punchbowl#success'
-
-  
-  resource :facebook do
-  end
-
-  resource :twitter do
-  end
+  resource :gift_of_mango
+  resource :mango_tango
+  resources :mango_badges
+  resource :facebook 
+  resource :twitter 
 
   resources :posts do
     resource :facebook do

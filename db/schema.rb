@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100928142743) do
+ActiveRecord::Schema.define(:version => 20100928145131) do
 
   create_table "customers", :force => true do |t|
     t.string   "name"
@@ -42,6 +42,28 @@ ActiveRecord::Schema.define(:version => 20100928142743) do
     t.string   "refresh_token"
     t.datetime "expires_at"
     t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "gift_of_mangos", :force => true do |t|
+    t.integer  "post_id"
+    t.integer  "customer_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "mango_achievements", :force => true do |t|
+    t.integer  "badge_id"
+    t.integer  "post_id"
+    t.integer  "customer_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "mango_tangos", :force => true do |t|
+    t.integer  "post_id"
+    t.integer  "customer_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
