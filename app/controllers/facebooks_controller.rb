@@ -63,12 +63,15 @@ class FacebooksController < ApplicationController
     if e.respond_to?("response")
       Rails.logger.error e.response.body 
       Rails.logger.error e.response.headers
+      flash[:warning] =  FacebookApi.handle_error(e.response.body)
+    else
+      flash[:warning] =  FacebookApi.handle_error(e.message)
     end
 
     #in the event of an error, we clear out the token.
     @customer.update_attribute(:facebook_token, nil) if FacebookApi.token_error?(e.message)
 
-    flash[:warning] =  FacebookApi.handle_error(e.message)
+    
     
     if @post
       render 'punchbowl/index'
