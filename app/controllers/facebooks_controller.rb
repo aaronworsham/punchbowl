@@ -31,18 +31,25 @@ class FacebooksController < ApplicationController
       
       #We have all the information we need to post to the wall.  
       access_token = OAuth2::AccessToken.new(client, @customer.facebook_token)
-      response = JSON.parse(access_token.post("/#{@customer.facebook_id}/feed", :message => @post.message))  
+      response = JSON.parse(access_token.post("/#{@customer.facebook_id}/feed", :message => @post.message)) 
+      Rails.logger.info response.inspect
+ 
     else
 
       #We need to get the token and the users facebook id
       access_token = client.web_server.get_access_token(params[:code], :redirect_uri => redirect_uri) 
-      response = JSON.parse(access_token.get("/me")) 
-      @customer.update_attributes(:facebook_token => access_token.token, :facebook_id => response["id"])
+      
+      response1 = JSON.parse(access_token.get("/me"))
+      Rails.logger.info response1.inspect
+      @customer.update_attributes(:facebook_token => access_token.token, :facebook_id => response1["id"])
+
+      response2 = JSON.parse(access_token.post("/me/feed", :message => @post.message)) 
+      Rails.logger.info response2.inspect
+
     end
 
-    Rails.logger.info response.inspect
-
-    # chain on to Twitter if requested    
+    
+    #chain on to Twitter if requested    
     if twitter_post?
       redirect_to auth_post_twitter_path(@post, :post_to => paramify_post_to)
     else
