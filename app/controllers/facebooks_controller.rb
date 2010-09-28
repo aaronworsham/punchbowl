@@ -50,7 +50,7 @@ class FacebooksController < ApplicationController
     
     #chain on to Twitter if requested    
     if @post.posted_to_twitter?
-      if @customer.twitter_account? and @customer.twitter_account.green_light?
+      if @customer.twitter_account and @customer.twitter_account.green_light?
         redirect_to post_message_post_twitter_path(@post)
       else
         redirect_to auth_post_twitter_path(@post)
