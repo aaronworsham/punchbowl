@@ -4,7 +4,7 @@ class FacebooksController < ApplicationController
 
   def auth
     if @post and @post.posted_to_facebook? 
-      redirect_to facebook.authroize_url(redirect_uri)
+      redirect_to facebook.authorize_url(redirect_uri)
     elsif @post.nil?
       raise "Could not located the post for Facebook Auth"
     elsif !@post.posted_to_facebook?
