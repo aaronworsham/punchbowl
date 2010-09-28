@@ -29,14 +29,7 @@ $(function(){
           .hide()
         .end()
         .removeClass("selected");
-      if ($('#post_posted_to_facebook').val() === "true"){
-        $('#post_posted_to_facebook').val('false');
-      }
-      else {
-        $('#post_posted_to_facebook').val('true');
-      }
-
-
+      $('#post_posted_to_facebook').val('false');
     }
     else {
       $(this)
@@ -44,12 +37,7 @@ $(function(){
           .show()
         .end()
         .addClass("selected");
-      if ($('#post_posted_to_twitter').val() === "true"){
-        $('#post_posted_to_twitter').val('false');
-      }
-      else {
-        $('#post_posted_to_twitter').val('true');
-      }
+      $('#post_posted_to_twitter').val('true');
     }
   });
 
