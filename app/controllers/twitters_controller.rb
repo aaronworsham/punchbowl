@@ -4,7 +4,8 @@ class TwittersController < ApplicationController
 
   def auth
     if @post and @post.posted_to_twitter?
-      redirect_to twitter.authorize_url(redirect_uri) 
+      url, session[:twitter_request_token], session[:twitter_request_secret] = twitter.authorize_url(redirect_uri)
+      redirect_to url
     elsif @post.nil?
       raise "Could not located the post for Facebook Auth"
     elsif !@post.posted_to_twitter?
@@ -34,7 +35,7 @@ class TwittersController < ApplicationController
     elsif params[:oauth_verifier]
 
       #Verify the oauth verifier and return a auth token and secret
-      token, secret = twitter.verify(params[:oauth_verifier])
+      token, secret = twitter.verify(session[:twitter_token], session[:twitter_secret], params[:oauth_verifier])
 
       #save token and secret to the account
       ta = TwitterAccount.create(:customer => @customer, :token => token, :secret => secret)

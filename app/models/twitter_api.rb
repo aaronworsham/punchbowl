@@ -15,15 +15,13 @@ class TwitterApi
   end
 
   def self.authorize_url(uri) 
-    client.set_callback_url(uri)
-    session[:twitter_request_token] = client.request_token.token
-    session[:twitter_request_secret] = client.request_token.secret
-    client.request_token.authorize_url
+    client.set_callback_url(uri) 
+    return [client.request_token.authorize_url, client.request_token.token, client.request_token.secret]
   end
 
-  def verify(verifier) 
-    if session[:twitter_token] and session[:twitter_secret]
-      client.authorize_from_request(self.token, self.secret, verifier)
+  def verify(token, secret, verifier) 
+    if token and secret and verifier
+      client.authorize_from_request(token, secret, verifier)
       Twitter::Base.new(client).verify_credentials
       return [client.access_token.token, client.access_token.secret]
     else
