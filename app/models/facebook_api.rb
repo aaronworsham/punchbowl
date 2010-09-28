@@ -57,8 +57,8 @@ class FacebookApi
     response
   end
 
-  def get_token
-    @client.web_server.get_access_token(params[:code], :redirect_uri => redirect_uri) 
+  def get_token(code, uri)
+    @client.web_server.get_access_token(code, :redirect_uri => uri) 
   end
 
   def get_id_and_token

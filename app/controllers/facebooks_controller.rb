@@ -35,7 +35,7 @@ class FacebooksController < ApplicationController
     else
 
       #We need to get the token and the users facebook id
-      access_token = @api.get_token
+      access_token = @api.get_token(params[:code], redirect_uri)
       #Then we need to record the id and token with the customer
       @customer.update_attributes(@api.get_id_and_token)
       #finally we need to post to the /me/feed 
