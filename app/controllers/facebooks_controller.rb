@@ -59,9 +59,7 @@ class FacebooksController < ApplicationController
           redirect_to @post.success_url
         end
       }
-      wants.json {
-        render :json => {:success => true, :message => "Success"}
-      }
+      wants.json { render :json => {:success => true, :message => "Success"}.to_json }
     end
 
   rescue => e

@@ -49,7 +49,7 @@ class TwittersController < ApplicationController
 
     respond_to do |wants|
       wants.html { redirect_to @post.success_url }
-      wants.json { render :json => {:success => true, :message => "Success"} }
+      wants.json { render :json => {:success => true, :message => "Success"}.to_json }
     end
 
 
