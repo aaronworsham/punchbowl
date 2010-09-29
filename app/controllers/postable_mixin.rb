@@ -21,7 +21,7 @@ module PostableMixin
         url = auth_post_facebook_path(@post)
       elsif @post.twitter? and !@post.facebook?
         Rails.logger.info "Postable = Twitter redlit" 
-        url = auth_post_facebook_path(@post)
+        url = auth_post_twitter_path(@post)
       end
     end
     respond_with(@post) do |format|
