@@ -35,11 +35,16 @@ module PostableMixin
   def json_get(url)
     conn.get do |req|
       req.url  url
-      req["content_type"] = 'application/json'
+      req.content_type  'application/json'
     end
   end
 
   def conn
-    Faraday::Connection.new(:url => AppConfig.site_domain)
+    conn = Faraday::Connection.new(:url => 'http://sushi.com') do |builder|
+      builder.use Faraday::Request::Yajl     # convert body to json with Yajl lib
+      builder.use Faraday::Adapter::Logger   # log the request somewhere?
+      builder.use Faraday::Adapter::Typhoeus # make http request with typhoeus
+      builder.use Faraday::Response::Yajl    # # parse body with yajl
+    end
   end
 end
