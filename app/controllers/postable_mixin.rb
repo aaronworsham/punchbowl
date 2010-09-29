@@ -35,7 +35,7 @@ module PostableMixin
   def json_get(url)
     conn.get do |req|
       req.url  url
-      req[:content_type] = 'application/json'
+      req["conent_type"] = 'application/json'
     end
   end
 
