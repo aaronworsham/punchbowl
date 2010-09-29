@@ -1,6 +1,9 @@
 class GiftOfMangosController < ApplicationController
   layout 'gift_of_mango'
   include PostableMixin
+  
+  respond_to :html, :xml, :json
+  
   def new
     @post = Post.new
   end

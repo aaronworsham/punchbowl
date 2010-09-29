@@ -41,7 +41,7 @@ class TwittersController < ApplicationController
       ta = TwitterAccount.create(:customer => @customer, :token => token, :secret => secret)
 
       #finally we need to post to the twitter account
-      ta.post(@post.message)
+      ta.post(@post)
 
     else
       raise "We are missing the session code from facebook to retrieve token"

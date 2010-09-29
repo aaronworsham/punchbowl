@@ -1,9 +1,8 @@
 common:
   site_name:  Punchbowl
-  site_domain: http://punchbowl.heroku.com 
   facebook_url: 
 development:
-  url:        http://localhost.com:3000
+  url:        http://localhost:3000
   twitter:
     key:      CXgfZm05277FOxb7HBTkUg
     secret:   ky0oGma6zfy4qt8q3Z27JIQpIopbr2aMBhKxbNZ1c    

@@ -4,6 +4,30 @@ class Post < ActiveRecord::Base
 
   attr_accessor :email, :post_to
 
+  def green_lit?
+    facebook_green = if facebook? 
+      customer.facebook_account and customer.facebook_account.green_light?
+    else
+      true
+    end
+
+    twitter_green = if twitter? 
+      customer.twitter_account and customer.twitter_account.green_light?
+    else
+      true
+    end
+    facebook_green and twitter_green
+  end
+
+  def facebook?
+    !!posted_to_facebook
+  end
+
+  def twitter?
+    !!posted_to_twitter
+  end
+
+
   def success_url
     case postable_type
     when "GiftOfMango"

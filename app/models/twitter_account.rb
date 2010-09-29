@@ -10,10 +10,10 @@ class TwitterAccount < ActiveRecord::Base
     TwitterApi.client
   end
 
-  def post(message)
+  def post(post)
     client.authorize_from_access(self.token, self.secret)
     twitter = Twitter::Base.new(client)
-    twitter.update(message)
+    twitter.update(post.message)
   end
 
 end
