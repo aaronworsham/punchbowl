@@ -15,8 +15,8 @@ class TwittersController < ApplicationController
     Rails.logger.error e.message
     Rails.logger.error "Params = #{params.inspect}"
     flash[:warning] = "Something has happened while trying to authenticate your Twitter account.  Please try again."
-      if @post
-      render 'punchbowl/index'
+    if @post
+      render @post.update_template
     else
       render 'twitter/error'
     end
@@ -47,7 +47,7 @@ class TwittersController < ApplicationController
       raise "We are missing the session code from facebook to retrieve token"
     end
 
-    redirect_to "/success"
+    redirect_to @post.success_url 
 
   rescue => e
     Rails.logger.error e.message
@@ -57,21 +57,17 @@ class TwittersController < ApplicationController
       #SystemMailer.warning_email(e.response.body).deliver
       Rails.logger.error e.response.inspect
       Rails.logger.error e.response.headers
-      flash[:warning] =  TwitterkApi.handle_error(e.response)
     #in the event of an error, we clear out the token.
       @customer.twitter_account.update_attribute(:token, nil) if TwitterApi.token_error?(e.response) and @customer.twitter_account.present?
+      @customer.update_attribute(:last_error, e.response) 
+      render :json => FacebookApi.handle_error(e.response) 
     else
       #TODO uncomment once we get an smtp server set
       #SystemMailer.warning_email(e.message).deliver
-      flash[:warning] =  TwitterApi.handle_error(e.message)
+      @customer.update_attribute(:last_error, e.message) 
+      render :json => e.message.to_json    
     end
-
-    if @post
-      render 'punchbowl/index'
-    else
-      render 'facebook/error'
-    end
-  end
+   end
 
 private
 

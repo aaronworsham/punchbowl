@@ -1,5 +1,6 @@
 class GiftOfMangosController < ApplicationController
-  
+  layout 'gift_of_mango'
+  include PostableMixin
   def new
     @post = Post.new
   end
@@ -10,31 +11,15 @@ class GiftOfMangosController < ApplicationController
     @customer = Customer.find_or_create_by_email(:email => email)
     @post = Post.create(params[:post].merge(:customer => @customer))
     GiftOfMango.create(:post => @post, :customer => @customer)
-    redirect_post
+    post_to_social_media
   end
 
   def update
     @post = Post.find params[:id]
     @customer = @post.customer
-    redirect_post
+    post_to_social_media
   end
 
   private
   
-  def redirect_post
-    if @post.posted_to_facebook?
-      if @customer.facebook_account 
-        redirect_to post_message_post_facebook_path(@post)
-      else
-        redirect_to auth_post_facebook_path(@post)
-      end
-    elsif @post.posted_to_twitter?
-      if @customer.twitter_account
-        redirect_to post_message_post_twitter_path(@post)
-      else
-        redirect_to auth_post_twitter_path(@post)
-      end
-    end
-  end
-
 end

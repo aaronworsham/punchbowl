@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100928165953) do
+ActiveRecord::Schema.define(:version => 20100929120340) do
 
   create_table "customers", :force => true do |t|
     t.string   "name"
@@ -21,11 +21,25 @@ ActiveRecord::Schema.define(:version => 20100928165953) do
     t.string   "facebook_id"
     t.string   "twitter_token"
     t.string   "twitter_id"
+    t.text     "last_error"
   end
 
   create_table "dance_partners", :force => true do |t|
     t.string   "email"
     t.integer  "mango_tango_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.text     "locked_by"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

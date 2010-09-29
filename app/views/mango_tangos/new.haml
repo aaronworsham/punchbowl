@@ -1,5 +1,10 @@
+- content_for :header_tag do
+  %h3 Are you ready to Tango with Mango?
+ 
+
 #wrap 
   #main.png_img
     .content
-      - semantic_form_for @tango, :url => mango_tango_path(@tango) do |form|
-        = render :partial => '/mango_tangos/dance_card', :locals => {:form => form}
+      .mango_tango
+        - semantic_form_for @tango, :url => mango_tango_path(@tango) do |form|
+          = render :partial => '/mango_tangos/dance_card', :locals => {:form => form}

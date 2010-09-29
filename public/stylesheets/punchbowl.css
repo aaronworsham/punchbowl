@@ -319,8 +319,7 @@ input.bt_medium {
   position: relative;
   margin-top: 10px;
   margin-bottom: 0;
-  padding-top: 30px;
-  background: url(/images/postcard.jpg) top left no-repeat; }
+  padding-top: 30px; }
   #main .content-img-top {
     position: absolute;
     top: 12px;
@@ -340,10 +339,10 @@ input.bt_medium {
     position: absolute;
     top: 58px;
     left: 42px;
-    width: 750px;
+    width: 900px;
     z-index: 2;
     padding-top: 10px;
-    height: 520px;
+    height: 650px;
     overflow: hidden; }
 
 #nav {

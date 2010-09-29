@@ -1,5 +1,6 @@
 common:
-  site_name:  Punchbowl 
+  site_name:  Punchbowl
+  site_domain: http://punchbowl.heroku.com 
   facebook_url: 
 development:
   url:        http://localhost.com:3000

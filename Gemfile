@@ -6,6 +6,7 @@ gem 'formtastic'
 gem 'twitter'
 gem 'oauth2'
 gem 'json'
+gem 'delayed_job', '2.1.0.pre2'
 
 group :development, :test do
   gem 'sqlite3-ruby', '1.2.5', :require => 'sqlite3'

@@ -12,68 +12,81 @@ The following style may be *conditionally* included for improved support on olde
 form.formtastic fieldset ol li fieldset legend { margin-left: -6px;}
 
 --------------------------------------------------------------------------------------------------*/
+
 .post_message {
   width: 100%;
   height: 100%;
-  background: url(/images/postcard.png) top left no-repeat; }
-  .post_message form.formtastic {
-    position: absolute; }
-    .post_message form.formtastic textarea {
+  background: url(/images/postcard.png) top left no-repeat; 
+  form.formtastic {
+    position: absolute;
+    textarea {
       width: 350px;
       height: 350px;
       border: 0px;
       font-size: 30px;
       background-color: transparent; }
-    .post_message form.formtastic #post_message {
+    #post_message{
       position: relative;
       top: 70px;
-      right: -20px; }
-    .post_message form.formtastic input {
+      right: -20px;
+    }
+    input {
       border: 0px;
       font-size: 14px;
       background-color: transparent; }
-    .post_message form.formtastic .submit_button {
+    .submit_button {
       position: relative;
       bottom: -55px;
       right: -300px; }
-    .post_message form.formtastic #post_email {
+    #post_email {
       width: 350px; }
-    .post_message form.formtastic .icons {
+    .icons {
       padding-top: 20px; }
-    .post_message form.formtastic .left {
+    .left {
       float: left; }
-    .post_message form.formtastic .right {
+    .right {
       float: right; }
-    .post_message form.formtastic #message_area {
+    #message_area {
       width: 50%; }
-    .post_message form.formtastic #address_area {
+    #address_area {
       position: relative;
       top: 250px;
       right: -50px;
       width: 40%; }
-    .post_message form.formtastic li {
-      list-style-type: none; }
-    .post_message form.formtastic .facebook-icon {
+    li {
+      list-style-type: none; 
+    } 
+    .facebook-icon {
       position: relative;
       top: 20px;
-      right: -80px; }
-    .post_message form.formtastic .twitter-icon {
+      right: -80px;
+    }
+    .twitter-icon {
       position: relative;
       top: 30px;
-      right: -80px; }
+      right: -80px;
+    }
 
+  }
+}
 .mango_tango {
+   
   position: relative;
   top: 40px;
-  right: -50px; }
-  .mango_tango form.formtastic label {
-    width: 15%; }
-  .mango_tango form.formtastic input {
-    border: 0px;
-    font-size: 14px; }
-  .mango_tango form.formtastic .submit_button {
-    position: relative;
-    bottom: -55px;
-    right: -300px; }
-  .mango_tango form.formtastic li {
-    list-style-type: none; }
+  right: -50px;
+  form.formtastic {
+    label {
+      width: 15%;}
+    input {
+      border: 0px;
+      font-size: 14px;}
+    .submit_button {
+      position: relative;
+      bottom: -55px;
+      right: -300px; }
+    li {
+      list-style-type: none; 
+    } 
+  }
+}
+

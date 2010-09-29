@@ -1,9 +1,10 @@
+- content_for :header_tag do
+  %h3 You have given the Gift of Mango, Now share with the world!
+
 #wrap 
   #main.png_img
-    .content
-      - semantic_form_for @post, :url => '/gift_of_mango' do |form|
-        = render :partial => '/gift_of_mangos/message', :locals => {:form => form}
-
+    .content    
+      = render :partial => '/shared/message', :locals => {:url => '/gift_of_mango'}
 
     
 

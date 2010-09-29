@@ -17,7 +17,7 @@ class FacebooksController < ApplicationController
     flash[:warning] = "Something has happened while trying to authenticate your Facebook account.  Please try again."
       
     if @post
-      render 'punchbowl/index'
+      render @post.update_template
     else
       render 'facebook/error'
     end
@@ -56,7 +56,7 @@ class FacebooksController < ApplicationController
         redirect_to auth_post_twitter_path(@post)
       end
     else
-      redirect_to '/success'
+      redirect_to @post.success_url
     end
   rescue => e
 
@@ -67,20 +67,17 @@ class FacebooksController < ApplicationController
       #SystemMailer.warning_email(e.response.body).deliver
       Rails.logger.error e.response.body 
       Rails.logger.error e.response.headers
-      flash[:warning] =  FacebookApi.handle_error(e.response.body)
-    #in the event of an error, we clear out the token.
+          #in the event of an error, we clear out the token.
       @customer.facebook_account.update_attribute(:token, nil) if FacebookApi.token_error?(e.response.body) and @customer.facebook_account.present?
+      @customer.update_attribute(:last_error, e.response.body)
+      render :json => FacebookApi.handle_error(e.response.body) 
     else
       #TODO uncomment once we get an smtp server set
       #SystemMailer.warning_email(e.message).deliver
-      flash[:warning] =  e.message
+      @customer.update_attribute(:last_error, e.message) 
+      render :json => e.message.to_json
     end
 
-    if @post
-      render 'punchbowl/index'
-    else
-      render 'facebook/error'
-    end
   end
 
 
