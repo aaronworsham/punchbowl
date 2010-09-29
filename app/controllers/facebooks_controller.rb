@@ -49,14 +49,16 @@ class FacebooksController < ApplicationController
 
     
     #chain on to Twitter if requested    
-    if @post.posted_to_twitter?
+    if @post.posted_to_twitter? and params[:from_auth] == "true"
       if @customer.twitter_account and @customer.twitter_account.green_light?
         redirect_to post_message_post_twitter_path(@post)
       else
         redirect_to auth_post_twitter_path(@post)
       end
-    else
+    elsif params[:from_auth] == "true"
       redirect_to @post.success_url
+    else
+      render :json => {:success => true, :message => "Success"}
     end
   rescue => e
 
@@ -91,7 +93,7 @@ private
   end
 
   def redirect_uri
-    post_message_post_facebook_url(@post) 
+    post_message_post_facebook_url(@post, :from_auth => "true") 
   end
   
 end

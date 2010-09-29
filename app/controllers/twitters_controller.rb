@@ -46,8 +46,12 @@ class TwittersController < ApplicationController
     else
       raise "We are missing the session code from facebook to retrieve token"
     end
+    if params[:from_auth] == "true"
+      redirect_to @post.success_url 
+    else
+      render :json => {:success => true, :message => "Success"}
+    end
 
-    redirect_to @post.success_url 
 
   rescue => e
     Rails.logger.error e.message
@@ -85,7 +89,7 @@ private
   end
 
   def redirect_uri
-    post_message_post_twitter_url(@post) 
+    post_message_post_twitter_url(@post, :from_auth => "true") 
   end
 
 end

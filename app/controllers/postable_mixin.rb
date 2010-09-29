@@ -1,7 +1,17 @@
 module PostableMixin
 
   def post_to_social_media
-    if @post.posted_to_facebook?
+    if @post.posted_to_facebook? and @post.posted_to_twitter?
+      if @customer.facebook_account.green_light? and @customer.twitter_account.green_light?
+        Rails.logger.info "Postable = Facebook and Twitter greenlit" 
+        conn.get post_message_post_facebook_path(@post)
+        conn.get post_message_post_twitter_path(@post)
+        redirect_to @post.success_url
+      else
+        Rails.logger.info "Postable = Facebook or Twitter redlit" 
+        redirect_to auth_post_facebook_path(@post)
+      end
+    elsif @post.posted_to_facebook?
       if @customer.facebook_account and @customer.facebook_account.green_light?
         Rails.logger.info "Postable = Facebook greenlit" 
         conn.get post_message_post_facebook_path(@post)
@@ -12,11 +22,11 @@ module PostableMixin
       end
     elsif @post.posted_to_twitter?
       if @customer.twitter_account and @customer.twitter_account.green_light?
-        Rails.logger.info "Postable = twitter greenlit" 
+        Rails.logger.info "Postable = Twitter greenlit" 
         conn.get post_message_post_twitter_path(@post)
         redirect_to @post.success_url
       else
-        Rails.logger.info "Postable = Facebook redlit" 
+        Rails.logger.info "Postable = Twitter redlit" 
         redirect_to auth_post_twitter_path(@post)
       end
     end
