@@ -47,19 +47,23 @@ class FacebooksController < ApplicationController
       raise "We are missing the session code from facebook to retrieve token"
     end
 
-    
-    #chain on to Twitter if requested    
-    if @post.posted_to_twitter? and params[:from_auth] == "true"
-      if @customer.twitter_account and @customer.twitter_account.green_light?
-        redirect_to post_message_post_twitter_path(@post)
-      else
-        redirect_to auth_post_twitter_path(@post)
-      end
-    elsif params[:from_auth] == "true"
-      redirect_to @post.success_url
-    else
-      render :json => {:success => true, :message => "Success"}
+    respond_to do |wants|
+      wants.html {
+        if @post.posted_to_twitter? 
+          if @customer.twitter_account and @customer.twitter_account.green_light?
+            redirect_to post_message_post_twitter_path(@post)
+          else
+            redirect_to auth_post_twitter_path(@post)
+          end
+        else
+          redirect_to @post.success_url
+        end
+      }
+      wants.json {
+        render :json => {:success => true, :message => "Success"}
+      }
     end
+
   rescue => e
 
     Rails.logger.error e.message

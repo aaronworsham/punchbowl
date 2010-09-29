@@ -46,10 +46,10 @@ class TwittersController < ApplicationController
     else
       raise "We are missing the session code from facebook to retrieve token"
     end
-    if params[:from_auth] == "true"
-      redirect_to @post.success_url 
-    else
-      render :json => {:success => true, :message => "Success"}
+
+    respond_to do |wants|
+      wants.html { redirect_to @post.success_url }
+      wants.json { render :json => {:success => true, :message => "Success"} }
     end
 
 
