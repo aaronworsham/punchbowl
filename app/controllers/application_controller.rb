@@ -5,6 +5,10 @@ class ApplicationController < ActionController::Base
     session[:email] ||= params[:email]
   end
 
+  def uuid
+    session[:uuid] ||= params[:uuid]
+  end
+
   def email=(e)
     session[:email] = e
   end

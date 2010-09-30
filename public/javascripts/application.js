@@ -41,6 +41,16 @@ $(function(){
     }
   });
 
+  $('#new_mango_tango').submit(function(){
+    $.post('/mango_tango', $(this).serialize());
+    $.colorbox({innerWidth:"799", innerHeight:"575", scrolling:false, iframe:true, href:"/posts/new?source=tango"});
+    $('#mango_tango_submit').val('Emails Sent!').css("background-color", "#aaffaa").attr("disabled", true);
+    return false;
+  });
+
+  $("#envelope").click(function(){
+    $.colorbox({innerWidth:"799", innerHeight:"575", scrolling:false, iframe:true, href:"/posts/new?source=gift"});
+  });
 
         
 });

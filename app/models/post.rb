@@ -33,7 +33,7 @@ class Post < ActiveRecord::Base
     when "GiftOfMango"
       "/gift_of_mango/success"
     else
-      "/"
+      "/posts/success"
     end
   end
 

@@ -13,12 +13,8 @@ form.formtastic fieldset ol li fieldset legend { margin-left: -6px;}
 
 --------------------------------------------------------------------------------------------------*/
 
-.post_message {
-  width: 100%;
-  height: 100%;
-  background: url(/images/postcard.png) top left no-repeat; 
+#post_message_form {
   form.formtastic {
-    position: absolute;
     textarea {
       width: 350px;
       height: 350px;
@@ -70,20 +66,31 @@ form.formtastic fieldset ol li fieldset legend { margin-left: -6px;}
   }
 }
 .mango_tango {
-   
   position: relative;
-  top: 40px;
-  right: -50px;
+  right: -30px;
   form.formtastic {
+    ol li {
+      margin-bottom: 1em;
+    }
     label {
-      width: 15%;}
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 16px;
+    }
     input {
-      border: 0px;
-      font-size: 14px;}
-    .submit_button {
+      width: 240px;
+      border: 1px solid #A47858;
+      padding: 4px;
+      font-size: 14px;
+      color: #444;
+    }
+    #mango_tango_submit {
       position: relative;
-      bottom: -55px;
-      right: -300px; }
+      width: 240px;
+      right: -190px;
+      vertical-align: middle;
+      cursor: pointer;
+    }
     li {
       list-style-type: none; 
     } 

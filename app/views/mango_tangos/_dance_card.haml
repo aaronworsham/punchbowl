@@ -1,4 +1,5 @@
 = render :partial => 'customer'
+%hr
 - 10.times do |i|
   = render :partial => 'dance_partner', :locals => {:index => i} 
 = form.commit_button :button_html => { :value => "Submit Dance Card" } 

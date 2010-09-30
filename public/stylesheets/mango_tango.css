@@ -1,3 +1,4 @@
-#main .content {
-  background: url(/images/dance_card.png) top left no-repeat;
-  height: 1000px; }
+#main .content hr {
+  border: 0;
+  width: 80%;
+  background-color: #A47858; }

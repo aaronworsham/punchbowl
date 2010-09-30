@@ -27,6 +27,8 @@ module PostableMixin
     respond_with(@post) do |format|
       format.html{redirect_to url }
     end
+  rescue 
+   raise
   end 
 
 end

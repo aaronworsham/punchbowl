@@ -15,6 +15,7 @@ Punchbowl::Application.routes.draw do
   match 'success' => 'punchbowl#success'
   match 'mango_tango/success' => 'mango_tangos#success'
   match 'gift_of_mango/success' => 'gift_of_mangos#success'
+  match 'posts/success' => 'posts#success'
 
   resource :gift_of_mango
   resource :mango_tango
