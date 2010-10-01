@@ -6,7 +6,12 @@ class TwitterApi
   end
 
   def self.handle_error(msg)
-    return "Something has happened while posting to Twitter, please try again."
+    case msg
+    when /403/
+      return "That message has already been posted to your wall"
+    else
+      return "Something has happened while posting to Twitter, please try again."
+    end
   end
 
   def self.client 

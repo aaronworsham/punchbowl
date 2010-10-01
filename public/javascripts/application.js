@@ -1,58 +1,57 @@
-$(function(){
-  $("#new_post").validate({
-    rules: {
-      "post[message]": {
-        required: true,
-        maxlength: 130,
-      },
-      "post[email]": {
-        required: true,
-        email: true
-      }
+
+
+function _ajax_request(url, data, callback, type, method) {
+    if (jQuery.isFunction(data)) {
+        callback = data;
+        data = {};
+    }
+    return jQuery.ajax({
+        type: method,
+        url: url,
+        data: data,
+        success: callback,
+        dataType: type
+        });
+}
+
+function _ajax_json_request(url, data, callback, type, method) {
+    if (jQuery.isFunction(data)) {
+        callback = data;
+        data = {};
+    }
+    return jQuery.ajax({
+        beforeSend: function(xhrObj){
+                xhrObj.setRequestHeader("Content-Type","application/json");
+                xhrObj.setRequestHeader("Accept","application/json");
+        }, 
+        type: method,
+        url: url,
+        data: data,
+        success: callback,
+        dataType: type
+        });
+}
+
+
+
+jQuery.extend({
+    put: function(url, data, callback, type) {
+        return _ajax_request(url, data, callback, type, 'PUT');
     },
-    messages: {
-      "post[message]": {
-        required:  "A blank postcard is no fun at all.", 
-        maxlength: "We need to keep the postcard short."
-      },
-      "post[email]": {
-        required: "We need to know who is sending this postcard",
-        email: "Your email address must be in the format of name@domain.com"
-      }
+    delete_: function(url, data, callback, type) {
+        return _ajax_request(url, data, callback, type, 'DELETE');
+    },
+    put_json: function(url, data, callback, type) {
+        return _ajax_json_request(url, data, callback, type, 'PUT');
+    },
+    post_json: function(url, data, callback, type) {
+        return _ajax_json_request(url, data, callback, type, 'POST');
+    },
+    get_json: function(url, data, callback, type) {
+        return _ajax_json_request(url, data, callback, type, 'GET');
     }
-  });
 
-  $(".icons li").click(function(){
-    if($(this).hasClass("selected")){
-      $(this)
-        .find('span')
-          .hide()
-        .end()
-        .removeClass("selected");
-      $("#"+$(this).attr("data_hidden_input_id")).val('false')
-    }
-    else {
-      $(this)
-        .find('span')
-          .show()
-        .end()
-        .addClass("selected");;
-      $("#"+$(this).attr("data_hidden_input_id")).val('true');
-    }
-  });
 
-  $('#new_mango_tango').submit(function(){
-    $.post('/mango_tango', $(this).serialize());
-    $.colorbox({innerWidth:"799", innerHeight:"575", scrolling:false, iframe:true, href:"/posts/new?source=tango"});
-    $('#mango_tango_submit').val('Emails Sent!').css("background-color", "#aaffaa").attr("disabled", true);
-    return false;
-  });
-
-  $("#envelope").click(function(){
-    $.colorbox({innerWidth:"799", innerHeight:"575", scrolling:false, iframe:true, href:"/posts/new?source=gift"});
-  });
-
-        
 });
 
 

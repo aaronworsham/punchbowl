@@ -14,7 +14,8 @@ module PostableMixin
         response = @customer.twitter_account.post(@post)
         Rails.logger.info response.inspect
       end
-      url = @post.success_url
+      url = posts_success_path(:from => "lightbox")
+      type = "success"
     else
       if @post.facebook?
         Rails.logger.info "Postable = Facebook redlit"
@@ -23,9 +24,11 @@ module PostableMixin
         Rails.logger.info "Postable = Twitter redlit" 
         url = auth_post_twitter_path(@post)
       end
+      type = "authenticate"
     end
     respond_with(@post) do |format|
       format.html{redirect_to url }
+      format.json{ render :json => {:redirect => url, :status => type}.to_json}
     end
   rescue 
    raise

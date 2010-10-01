@@ -1,11 +1,10 @@
 class PostsController < ApplicationController
   include PostableMixin
   respond_to :html, :json
-  layout 'application'
+  layout 'post'
   def new
-    @post = Post.new
-    @source = params[:source]
-    render :layout => 'post'
+    @post = Post.new(:postable_type => params[:source].classify)
+    render :layout => 'message'
   end
   def create
     if email.present?
@@ -28,8 +27,24 @@ class PostsController < ApplicationController
   end
 
   def success
-
+    if params[:from] == "lightbox"
+      render :template => 'posts/success_for_lightbox', :layout => 'message'
+    else
+      render :layout => 'post'
+    end
   end
-  
+
+  def error
+    render :layout => 'message'
+  end
+ 
+ private
+  def email
+    params[:post][:email] || session[:email]    
+  end
+
+  def uuid
+    params[:post][:uuid] || session[:uuid]
+  end 
 
 end

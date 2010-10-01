@@ -1,17 +1,17 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  def email
-    session[:email] ||= params[:email]
-  end
+  layout :layout_by_resource
 
-  def uuid
-    session[:uuid] ||= params[:uuid]
+  def layout_by_resource
+    if devise_controller?
+      "devise"
+    else
+      "application"
+    end
   end
+  
 
-  def email=(e)
-    session[:email] = e
-  end
 
   def current_customer 
     Customer.find_or_create_by_email email

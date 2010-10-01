@@ -2,8 +2,16 @@
 %html
 %head
   %title Punchbowl
-  = stylesheet_link_tag "post", "formtastic", "formtastic_changes"
-  = javascript_include_tag  "jquery-1.4.2.min", "jquery.validate.min", "application"
+  = stylesheet_link_tag "pb2", "punchbowl", "mango_tango", "formtastic", "formtastic_changes", "colorbox"
+  = javascript_include_tag  "jquery-1.4.2.min", "jquery.validate.min", "jquery.colorbox.min", "application", "tango"
   = csrf_meta_tag 
 %body
-  = yield 
+  #wrap
+    #header
+      %img{:alt=>"Powered by Mango", :class=>"powered-by-mango png_img", :src=>"/images/powered-by-mango.png?1285351421"}
+      = yield :header_tag
+    #main.png_img
+      = image_tag "/images/content-center.jpg", :class=>"content-img-middle"
+      = image_tag "/images/content-top-no-menu.jpg",  :class=>"content-img-top"
+      = yield 
+

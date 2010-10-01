@@ -12,6 +12,7 @@ class MangoTangosController < ApplicationController
        tango.dance_partners << DancePartner.create(:email => params[:mango_tango][:dance_partners][i.to_s][:email]) 
      end
    end
+   render :nothing => true
   end
   def success
     @post = Post.new

@@ -19,9 +19,9 @@ class FacebookApi
     msg = JSON.parse(msg)
     if msg["error"].present?
       case msg["error"]["message"]
-      when "(#341) Feed action request limit reached"
+      when /341/
         return "We have posted too many times to your wall today, please try again tomorrow."
-      when "(#506) Duplicate status message"
+      when /506/
         return "That message has already been posted to your wall"
       else
         return "Something has happened while posting to Facebook, please try again."

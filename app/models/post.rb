@@ -27,22 +27,20 @@ class Post < ActiveRecord::Base
     !!posted_to_twitter
   end
 
+  def create_url
+    return "/" unless postable_type
+    case postable_type
+    when "GiftOfMango"
+      "/gift_of_mango/"
+    when "MangoTango"
+      "/mango_tango/"
+    else
+      "/posts"
+    end
+  end
 
   def success_url
-    case postable_type
-    when "GiftOfMango"
-      "/gift_of_mango/success"
-    else
-      "/posts/success"
-    end
+    "/posts/success"
   end
 
-  def update_template
-    case postable_type
-    when "GiftOfMango"
-      "/gift_of_mango/new"
-    else
-      "/"
-    end
-  end
 end

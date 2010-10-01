@@ -1,11 +1,15 @@
 class TwittersController < ApplicationController
 
+  respond_to :html, :json
   before_filter :find_post, :only => [:auth, :post_message]
 
   def auth
     if @post and @post.posted_to_twitter?
       url, session[:twitter_request_token], session[:twitter_request_secret] = twitter.authorize_url(redirect_uri)
-      redirect_to url
+      respond_with(@post) do |format|
+        format.html{redirect_to url }
+        format.json{ render :json => {:redirect => url}.to_json}
+      end 
     elsif @post.nil?
       raise "Could not located the post for Facebook Auth"
     elsif !@post.posted_to_twitter?
@@ -48,30 +52,15 @@ class TwittersController < ApplicationController
     end
 
     respond_to do |wants|
-      wants.html { redirect_to @post.success_url }
+      wants.html { redirect_to posts_success_path(:from => "auth")}
       wants.json { render :json => {:success => true, :message => "Success"}.to_json }
     end
 
 
   rescue => e
-    Rails.logger.error e.message
-        
-    if e.respond_to?("response")
-      #TODO uncomment once we get an smtp server set
-      #SystemMailer.warning_email(e.response.body).deliver
-      Rails.logger.error e.response.inspect
-      Rails.logger.error e.response.headers
-    #in the event of an error, we clear out the token.
-      @customer.twitter_account.update_attribute(:token, nil) if TwitterApi.token_error?(e.response) and @customer.twitter_account.present?
-      @customer.update_attribute(:last_error, e.response) 
-      render :json => FacebookApi.handle_error(e.response) 
-    else
-      #TODO uncomment once we get an smtp server set
-      #SystemMailer.warning_email(e.message).deliver
-      @customer.update_attribute(:last_error, e.message) 
-      render :json => e.message.to_json    
-    end
-   end
+    flash[:warning] = e.message
+    render '/posts/error'
+  end
 
 private
 

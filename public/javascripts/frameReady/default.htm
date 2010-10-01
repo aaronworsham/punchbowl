@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>I'm the root document</title>
+<script language="JavaScript" type="text/javascript" src="/js/jquery.js"></script>
+<script language="JavaScript" type="text/javascript" src="/js/firebug.js"></script>
+<script language="JavaScript" type="text/javascript" src="_dist/jquery.frameReady-packed.js"></script>
+<script language="JavaScript" type="text/javascript">
+$(document).ready(function(){ 
+	window.name = "root";
+	
+	$daemach.debug = true;
+
+	$.frameReady(function(){
+		$('<div align="center" class="box">A:) The function that created me was run within the context of: (' + window.name + ')</div>').hide().prependTo("body").fadeIn(2000);
+	},"top.iFrame.topFrame", { load: {type:"stylesheet",src:"includes/frameReady.css"} } );
+	
+	$.frameReady(function(){
+		$('<div align="center" class="box">B:) The function that created me was run within the context of: (' + window.name + ')</div>').hide().prependTo("body").fadeIn(2000);	
+		
+		// Once the main frame is ready, have it run a function in the top frame.
+		$.frameReady(function(){
+			$('<div class="box2">C:) The function that created me was run within the context of: (' + window.name + ')</div>').hide().prependTo("#frameWrapper").fadeIn(2000);
+			$("body").addClass("lighter");
+		},"top", { load: {type:"stylesheet",src:"includes/frameReady.css"} } );
+		
+		// Once the main frame is ready, have it create itself a dynamic iframe then do something with it.
+		$('<hr /><div id="dyniFrameWrapper" align="center"><iframe id="dyniFrame" name="dyniFrame" width="500" height="150" src="dyniframe.htm" /></div>').appendTo("body");
+		var frData = "I am data passed from " + window.name;
+		
+		$.frameReady(function(){
+			$('<br /><div class="box">D:) The function that created me was run within the context of: (' + window.name + ').  This call also included the following data: ('+frData.someData+')</div>').hide().prependTo("body").fadeIn(1000);
+			
+			var waitforit = setTimeout(trick,3000);
+			
+			function trick(){
+				$('<hr /><div class="box2" align="center">I, (' + window.name + '), am going to do something inside of topFrame.</div>').hide().appendTo("body").fadeIn(2000);
+				var okdoit = setTimeout(tricki,2000);
+			}
+			function tricki(){
+				$.frameReady(function(){ $('<hr /><div align="center" class="box2">View my source.</div>').appendTo("body"); },"top.iFrame.topFrame");
+			}
+		},"top.iFrame.mainFrame.dyniFrame", { data:{someData: frData},load: [{type:"stylesheet",src:"includes/frameReady.css"},{type:"script",id:"_fr",src:"_dist/jquery.frameReady-packed.js",test: "$.frameReady"}] } );		
+		
+		
+	},"top.iFrame.mainFrame", 
+		{	load: [	
+						{type:"script",id:"_fr",src:"_dist/jquery.frameReady-packed.js",test: "$.frameReady"},
+						{type:"stylesheet",src:"includes/frameReady.css"}		
+					]
+		}
+	);
+	
+ });
+</script>
+
+</head>
+<body>
+
+
+
+<h3>FrameReady demo</h3>
+The best way to see how this works is to view source for the root document and each frame, then inspect the HTML and DOM inside firebug.  <p />
+To see a demo of loading content into a div inside an iFrame using ajax: <a href="ajaxloaddemo.htm">Click here</a><p />
+To download just the frameReady source: <a href="src/jQuery.frameReady.js">Click here</a><p />
+To download a zip file with all the source code and css: <a href="frameReady.zip">Click here</a>
+<hr />
+
+<strong>All of the code used to generate the content and load the stylesheets in each frame actually lives in the root document.</strong>
+
+<hr />
+	<div id="frameWrapper" style="width:600px;">
+<br />
+
+	<iframe id="iFrame" name="iFrame" width="600" height="500" src="frametest.htm" />
+	</div>
+
+</body>
+</html>
+
+

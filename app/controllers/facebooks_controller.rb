@@ -2,6 +2,8 @@ class FacebooksController < ApplicationController
   
   before_filter :find_post, :only => [:auth, :post_message]
 
+  respond_to :html, :json
+
   def auth
     if @post and @post.posted_to_facebook? 
       redirect_to facebook.authorize_url(redirect_uri)
@@ -15,12 +17,7 @@ class FacebooksController < ApplicationController
     Rails.logger.error "Params : #{params.inspect}"
     
     flash[:warning] = "Something has happened while trying to authenticate your Facebook account.  Please try again."
-      
-    if @post
-      render @post.update_template
-    else
-      render 'facebook/error'
-    end
+    render "/posts/error"
   end
 
   def post_message
@@ -56,32 +53,15 @@ class FacebooksController < ApplicationController
             redirect_to auth_post_twitter_path(@post)
           end
         else
-          redirect_to @post.success_url
+          redirect_to posts_success_path(:from => "auth")
         end
       }
       wants.json { render :json => {:success => true, :message => "Success"}.to_json }
     end
 
   rescue => e
-
-    Rails.logger.error e.message
-        
-    if e.respond_to?("response")
-      #TODO uncomment once we get an smtp server set
-      #SystemMailer.warning_email(e.response.body).deliver
-      Rails.logger.error e.response.body 
-      Rails.logger.error e.response.headers
-          #in the event of an error, we clear out the token.
-      @customer.facebook_account.update_attribute(:token, nil) if FacebookApi.token_error?(e.response.body) and @customer.facebook_account.present?
-      @customer.update_attribute(:last_error, e.response.body)
-      render :json => FacebookApi.handle_error(e.response.body) 
-    else
-      #TODO uncomment once we get an smtp server set
-      #SystemMailer.warning_email(e.message).deliver
-      @customer.update_attribute(:last_error, e.message) 
-      render :json => e.message.to_json
-    end
-
+    flash[:warning] = e.message
+    render '/posts/error'
   end
 
 

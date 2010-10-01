@@ -1,0 +1,28 @@
+<h1>Listing admin_badges</h1>
+
+<table style="width:700px">
+  <tr>
+    <th>Name</th>
+    <th>Image Path</th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <% @admin_badges.each do |admin_badge| %>
+    <% next unless admin_badge.image_path %>
+  <tr>
+    <td><%= admin_badge.name %></td>
+    <td><%= admin_badge.image_path %></td>
+    <td><%= image_tag admin_badge.image_path %></td>
+    <td><%= link_to 'Show', admin_badge %></td>
+    <td><%= link_to 'Edit', edit_admin_badge_path(admin_badge) %></td>
+    <td><%= link_to 'Destroy', admin_badge, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Badge', new_admin_badge_path %>
