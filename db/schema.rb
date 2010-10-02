@@ -10,14 +10,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101001155854) do
+ActiveRecord::Schema.define(:version => 20101001233756) do
 
   create_table "accomplishments", :force => true do |t|
     t.integer  "customer_id"
-    t.integer  "badge_id"
-    t.integer  "post_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "language_id"
   end
 
   create_table "admins", :force => true do |t|
@@ -104,6 +103,13 @@ ActiveRecord::Schema.define(:version => 20101001155854) do
   create_table "gift_of_mangos", :force => true do |t|
     t.integer  "post_id"
     t.integer  "customer_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "languages", :force => true do |t|
+    t.string   "name"
+    t.integer  "badge_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

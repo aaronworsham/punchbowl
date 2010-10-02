@@ -1,0 +1,25 @@
+<h1>Listing languages</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Badge</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @languages.each do |language| %>
+  <tr>
+    <td><%= language.name %></td>
+    <td><%= image_tag language.badge.image_path %></td>
+    <td><%= link_to 'Show', admin_languages_path %></td>
+    <td><%= link_to 'Edit', edit_admin_language_path(language) %></td>
+    <td><%= link_to 'Destroy', admin_languages_path, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Language', new_admin_language_path %>

@@ -5,4 +5,5 @@
     .hidden
       %div{:id => b.name + "_blurb"}
         %h3="Learn more about the #{b.name} accomplishment badge"
-        = image_tag(b.image_path, :name => b.name, :alt => b.name) 
+        = image_tag(b.image_path, :name => b.name, :alt => b.name)
+        = link_to "Test Post this Badge", "#", :class => 'test_post', :rel => b.name 

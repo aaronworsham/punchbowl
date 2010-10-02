@@ -1,4 +1,8 @@
 Punchbowl::Application.routes.draw do
+  get "accomplishments/new"
+
+  get "accomplishments/create"
+
   get "badges/show"
 
   devise_for :users
@@ -68,6 +72,7 @@ Punchbowl::Application.routes.draw do
   resources :badges
     namespace :admin do
       resources :badges
+      resources :languages
     end
 
   # You can have the root of your site routed with "root"
