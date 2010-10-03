@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101001233756) do
+ActiveRecord::Schema.define(:version => 20101003124742) do
 
   create_table "accomplishments", :force => true do |t|
     t.integer  "customer_id"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(:version => 20101001233756) do
     t.string   "image_path"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "language_id"
   end
 
   create_table "customers", :force => true do |t|
@@ -55,7 +56,11 @@ ActiveRecord::Schema.define(:version => 20101001233756) do
     t.string   "twitter_token"
     t.string   "twitter_id"
     t.text     "last_error"
+    t.integer  "uuid"
   end
+
+  add_index "customers", ["email"], :name => "index_customers_on_email"
+  add_index "customers", ["uuid"], :name => "index_customers_on_uuid"
 
   create_table "dance_partners", :force => true do |t|
     t.string   "email"

@@ -27,6 +27,7 @@ Punchbowl::Application.routes.draw do
   resources :mango_badges
   resource :facebook 
   resource :twitter 
+  resources :accomplishments
 
   resources :posts do
     resource :facebook do

@@ -10,14 +10,5 @@ class ApplicationController < ActionController::Base
       "application"
     end
   end
-  
-
-
-  def current_customer 
-    Customer.find_or_create_by_email email
-  end
-
-
-
 
 end

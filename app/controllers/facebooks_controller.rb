@@ -29,6 +29,7 @@ class FacebooksController < ApplicationController
       response = fba.post_to_wall(@post)
 
     elsif params[:code]
+      Rails.logger.info "Post message 1"
 
       #We need to get the token and the users facebook id
       id, token = facebook.verify(params[:code], redirect_uri)

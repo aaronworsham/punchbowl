@@ -27,6 +27,10 @@ class Post < ActiveRecord::Base
     !!posted_to_twitter
   end
 
+  def accomplishment?
+    postable_type == "Accomplishment"
+  end
+
   def create_url
     return "/" unless postable_type
     case postable_type
