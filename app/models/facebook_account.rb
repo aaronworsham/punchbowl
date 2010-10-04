@@ -57,7 +57,7 @@ class FacebookAccount < ActiveRecord::Base
     if post.accomplishment?
       {
         :message => post.message,
-        :picture => "http://punchbowl.heroku.com/images/badges/Badge_Thailand.png",
+        :picture => "http://a0.twimg.com/profile_images/52972920/fables_charming_50x50_bigger.jpg",
         :caption => post.postable.language.name
       }
     else
