@@ -77,7 +77,7 @@ class FacebookAccount < ActiveRecord::Base
     if post.accomplishment?
       {
         :message => post.message,
-        :picture => "http://punchbowl.heroku.com/" + post.postable.language.badge.image_path,
+        :picture => "http://punchbowl.heroku.com" + post.postable.language.badge.image_path,
         :caption => post.postable.language.name
       }
     else
@@ -95,7 +95,7 @@ class FacebookAccount < ActiveRecord::Base
       {
         :media => [{
             :type => 'image',
-            :src  => "http://punchbowl.heroku.com/" + post.postable.language.badge.image_path,
+            :src  => "http://punchbowl.heroku.com" + post.postable.language.badge.image_path,
             :href => "http://punchbowl.heroku.com/badges",
           }]
       
