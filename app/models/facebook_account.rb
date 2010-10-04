@@ -74,12 +74,10 @@ class FacebookAccount < ActiveRecord::Base
   end
 
   def build_message(post)
-    picture_url = "http://punchbowl.heroku.com#{post.postable.language.badge.image_path}"
-    Rails.logger.info "Picture URL = #{picture_url}"
     if post.accomplishment?
       {
         :message => post.message,
-        :picture => picture_url,
+        :picture => "http://punchbowl.heroku.com#{post.postable.language.badge.image_path}",
         :caption => post.postable.language.name
       }
     else
