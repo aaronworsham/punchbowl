@@ -29,7 +29,6 @@ class FacebooksController < ApplicationController
       response = fba.post_to_wall(@post)
 
     elsif params[:code]
-      Rails.logger.info "Post message 1"
 
       #We need to get the token and the users facebook id
       id, token = facebook.verify(params[:code], redirect_uri)
@@ -39,7 +38,7 @@ class FacebooksController < ApplicationController
       fba = FacebookAccount.create(:customer => @customer, :facebook_id => id, :token => token)
       #finally we need to post to the /me/feed 
       Rails.logger.info "posting to wall"
-      fba.post_to_my_wall(@post)
+      fba.post_to_wall(@post)
 
     else
       raise "We are missing the session code from facebook to retrieve token"

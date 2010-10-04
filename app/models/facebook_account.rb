@@ -53,26 +53,6 @@ class FacebookAccount < ActiveRecord::Base
     resp
   end
 
-  def post_to_my_wall(post)
-    response = JSON.parse(access_token.post("/me/feed", build_message(post))) 
-    Rails.logger.info response.inspect
-    post.update_attribute("facebook_id", response["id"]) if response["id"].present?
-    response
-  rescue => e
-    Rails.logger.info e.message
-      Rails.logger.info "Has a repsonse"
-      Rails.logger.error e.response.body
-      Rails.logger.error e.response.headers
-
-    #TODO uncomment once we get an smtp server set
-    #SystemMailer.warning_email(e.response.body).deliver
-    customer.update_attribute(:last_error, e.message) 
-    self.update_attributes(:token => nil) if FacebookApi.token_error?(e.response.body) 
-        
-      raise FacebookApi.handle_error(e.response.body)
-
-  end
-
   def build_message(post)
     if post.accomplishment?
       {
