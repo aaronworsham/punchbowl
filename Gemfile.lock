@@ -50,6 +50,7 @@ GEM
     cucumber-rails (0.3.2)
       cucumber (>= 0.8.0)
     culerity (0.2.12)
+    curb (0.7.8)
     daemons (1.1.0)
     delayed_job (2.1.0.pre2)
       activesupport (~> 3.0)
@@ -142,6 +143,8 @@ GEM
       httparty (~> 0.5.0)
       oauth (~> 0.4.1)
       yajl-ruby (~> 0.7.0)
+    typhoeus (0.1.31)
+      rack
     tzinfo (0.3.23)
     warden (0.10.7)
       rack (>= 1.0.0)
@@ -154,6 +157,7 @@ DEPENDENCIES
   capybara
   cucumber
   cucumber-rails
+  curb
   delayed_job (= 2.1.0.pre2)
   devise
   faker
@@ -168,3 +172,4 @@ DEPENDENCIES
   spork
   sqlite3-ruby (= 1.2.5)
   twitter
+  typhoeus

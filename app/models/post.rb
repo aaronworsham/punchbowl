@@ -4,6 +4,8 @@ class Post < ActiveRecord::Base
 
   attr_accessor :email, :post_to
 
+  named_scope :accomplishments, :conditions => ['posts.postable_type = ?', "Accomplishment"]
+
   def green_lit?
     facebook_green = if facebook? 
       customer.facebook_account and customer.facebook_account.green_light?
@@ -22,6 +24,12 @@ class Post < ActiveRecord::Base
   def facebook?
     !!posted_to_facebook
   end
+
+  def facebook_url
+    return false unless facebook_id.present?
+    'https://graph.facebook.com/' + self.facebook_id + "?access_token=" + self.customer.facebook_account.token
+  end
+
 
   def twitter?
     !!posted_to_twitter

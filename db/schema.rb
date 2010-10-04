@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101003124742) do
+ActiveRecord::Schema.define(:version => 20101003153948) do
 
   create_table "accomplishments", :force => true do |t|
     t.integer  "customer_id"
@@ -143,6 +143,8 @@ ActiveRecord::Schema.define(:version => 20101003124742) do
     t.integer  "customer_id"
     t.boolean  "posted_to_facebook",                :default => false
     t.boolean  "posted_to_twitter",                 :default => false
+    t.string   "facebook_id"
+    t.string   "twitter_id"
   end
 
   create_table "twitter_accounts", :force => true do |t|

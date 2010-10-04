@@ -5,7 +5,7 @@ class FacebookApi
     msg = JSON.parse(msg)
     if msg["error"].present? 
       case msg["error"]["message"]
-      when "Error processing access token."
+      when /100/
         return true
       else
         return false
@@ -23,6 +23,8 @@ class FacebookApi
         return "We have posted too many times to your wall today, please try again tomorrow."
       when /506/
         return "That message has already been posted to your wall"
+      when /100/
+        return "We could not locate your user account at Facebook, please try again"
       else
         return "Something has happened while posting to Facebook, please try again."
       end
@@ -38,6 +40,10 @@ class FacebookApi
 
   def self.access_token(token)
     @token ||= OAuth2::AccessToken.new(client, token)
+  end
+
+  def self.rest_connection
+    Faraday::Connection.new(:url => 'https://api.facebook.com')
   end
 
   def self.authorize_url(uri)
