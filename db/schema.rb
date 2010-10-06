@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101003153948) do
+ActiveRecord::Schema.define(:version => 20101006013450) do
 
   create_table "accomplishments", :force => true do |t|
     t.integer  "customer_id"
@@ -37,6 +37,12 @@ ActiveRecord::Schema.define(:version => 20101003153948) do
 
   add_index "admins", ["email"], :name => "index_admins_on_email", :unique => true
   add_index "admins", ["reset_password_token"], :name => "index_admins_on_reset_password_token", :unique => true
+
+  create_table "app_stats", :force => true do |t|
+    t.integer  "tango_reward_week"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "badges", :force => true do |t|
     t.string   "name"
@@ -145,6 +151,22 @@ ActiveRecord::Schema.define(:version => 20101003153948) do
     t.boolean  "posted_to_twitter",                 :default => false
     t.string   "facebook_id"
     t.string   "twitter_id"
+  end
+
+  create_table "rewards", :force => true do |t|
+    t.integer  "customer_id"
+    t.datetime "issued_at"
+    t.datetime "redeemed_at"
+    t.string   "token"
+    t.integer  "rewardable_id"
+    t.string   "rewardable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "street_address"
+    t.string   "city"
+    t.string   "state_or_province"
+    t.string   "postal_code"
+    t.string   "country"
   end
 
   create_table "twitter_accounts", :force => true do |t|

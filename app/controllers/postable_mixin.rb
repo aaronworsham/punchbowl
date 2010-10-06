@@ -4,7 +4,7 @@ module PostableMixin
 
     #Post is for Facebook and Twitter
     if @post.green_lit?
-      if @post.facebook?
+      if @post.facebook
         Rails.logger.info "Postable :: Facebook greenlit" 
         response = @customer.facebook_account.post_to_wall(@post)
         Rails.logger.info response.inspect

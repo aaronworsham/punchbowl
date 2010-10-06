@@ -1,0 +1,12 @@
+<h3>Fufillment for this weeks Mango Tango winners<h3>
+    <% @rewards.each do |r| %>
+      <ol>
+        <li><%= r.customer.name if r.customer %>      </li>
+        <ul>
+          <li><%= r.street_address %>     </li>
+          <li><%= r.city %>               </li>
+          <li><%= r.state_or_province %>  </li>
+          <li><%= r.country %>            </li>
+        </ul>      
+    </ol>
+    <% end %> 

@@ -1,0 +1,5 @@
+.content
+  - semantic_form_for @reward do |form|
+    = form.input :name, :for => :customer
+    = form.inputs :street_address, :city, :state_or_province, :country
+    = form.submit

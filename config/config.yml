@@ -13,6 +13,9 @@ development:
     default:
       to:     aaron@sazboom.com
       from:   punchbowl@mangolanguage.com
+  rewards:
+    tango:
+      start_date: "01/01/2010"
 production:
   url:        http://punchbowl.heroku.com
   twitter:
@@ -25,6 +28,10 @@ production:
     default:
       to:     aaron@sazboom.com
       from:   punchbowl@mangolanguage.com
+  rewards:
+    tango:
+      start_date: "01/01/2010"
+
 
 
 test:

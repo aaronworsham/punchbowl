@@ -21,6 +21,7 @@ Punchbowl::Application.routes.draw do
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   
   match 'posts/success' => 'posts#success'
+  match 'rewards/token/:token' => 'rewards#edit', :as => :rewards_token
 
   resource :gift_of_mango
   resource :mango_tango
@@ -28,6 +29,7 @@ Punchbowl::Application.routes.draw do
   resource :facebook 
   resource :twitter 
   resources :accomplishments
+  resources :rewards
 
   resources :posts do
     resource :facebook do
