@@ -14,36 +14,34 @@ namespace :pb do
     desc "Run rewards for Tango"
     task :send_tango => :environment do
       reward_week = AppStat.first.tango_reward_week
-      start_date = Time.parse( AppConfig.rewards["tango"]["start_date"] ).advance(:weeks => reward_week)
-      tangos = MangoTango.joins("INNER JOIN rewards, customers 
-                                ON mango_tangos.id != rewards.rewardable_id and 
-                                rewards.rewardable_type = 'MangoTango' and
-                                mango_tangos.created_at > '#{start_date.to_s(:db)}' and
-                                mango_tangos.customer_id = customers.id and
-                                customers.email is not null")
+
+      #grap submitted tangos that have no reward yet, have an email, and were created this week
+      potential_winners = MangoTango.potential_winners
       if reward_week < 5
-        tangos.each do |t|
+        potential_winners.each do |t|
           tango_reward t
         end
       else
-        best_tangos = DancePartner.find_by_sql("SELECT mango_tango_id,count(*) as num_partners 
-                                                FROM dance_partners 
-                                                GROUP by mango_tango_id 
-                                                ORDER by num_partners desc limit 5")
-        best_tangos.each do |bt|
-          t = MangoTango.find bt.mango_tango_id
-          tango_reward t
+        #Find the top five tangos with most dance partners, that have an email, no reward yet and created this week
+        top5 = MangoTango.top_5
+        top5.each do |m|
+          tango_reward m
         end
+        #subtract top five winners from potential winners
+        new_potential_winners = potential_winners - top5
+
+        #take remaining potential winners, rand select them, remove them from the list, send them an email, and break when 0 left
         20.times do |i|
-          tango_reward tangos.rand
+          winner = new_potential_winners.rand
+          tango_reward winner
+          new_potential_winners = new_potential_winners.delete winner
+          break if new_potential_winners == 0
         end
       end
     end
     desc "Fulfill rewards for Tango"
     task :fulfill_tango => :environment do
-      reward_week = AppStat.first.tango_reward_week
-      start_date = Time.parse( AppConfig.rewards["tango"]["start_date"] ).advance(:weeks => reward_week)
-      rewards = Reward.where('rewards.redeemed_at > ? and rewards.rewardable_type = ?', start_date.to_s(:db), "MangoTanog").all
+      rewards = Reward.where('rewards.redeemed_at > ? and rewards.rewardable_type = ?', MangoTango.start_date.to_s(:db), "MangoTango").all
       TangoMailer.fulfill(rewards).deliver if rewards.present?
     end
 

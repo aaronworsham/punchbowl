@@ -9,4 +9,19 @@ class Customer < ActiveRecord::Base
   def ensure_twitter_account
     self.twitter_account = TwitterAccount.new if self.twitter_account.nil?
   end
+ 
+  def green_lit?
+    facebook_green = if facebook_user? 
+      facebook_account and facebook_account.green_light?
+    else
+      true
+    end
+
+    twitter_green = if twitter_user? 
+      twitter_account and twitter_account.green_light?
+    else
+      true
+    end
+    facebook_green and twitter_green
+  end
 end

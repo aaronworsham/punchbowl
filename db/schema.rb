@@ -10,13 +10,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101006013450) do
+ActiveRecord::Schema.define(:version => 20101010154345) do
 
   create_table "accomplishments", :force => true do |t|
     t.integer  "customer_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "language_id"
+    t.integer  "badge_id"
   end
 
   create_table "admins", :force => true do |t|
@@ -63,6 +64,10 @@ ActiveRecord::Schema.define(:version => 20101006013450) do
     t.string   "twitter_id"
     t.text     "last_error"
     t.integer  "uuid"
+    t.boolean  "wants_to_share",    :default => true
+    t.boolean  "wants_to_be_asked", :default => false
+    t.boolean  "twitter_user",      :default => false
+    t.boolean  "facebook_user",     :default => false
   end
 
   add_index "customers", ["email"], :name => "index_customers_on_email"

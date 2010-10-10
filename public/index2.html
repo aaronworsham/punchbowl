@@ -1,0 +1,47 @@
+<html>
+  
+  <head>
+    
+    <style type='text/css'>
+      html, body {background: #3B362D; font-family: arial, sans-serif; font-size: 10pt; text-align: center;}
+      .dialog {width: 640px; height: 210px; border: green 2px solid; -moz-border-radius: 10px; -webkit-border-radius: 10px; background-color: #2B2624; color: #e5e5c0; text-align: left; margin: 2in auto; font-size: 11pt; position: relative;}
+      .dialog .content {margin: 20px 20px 20px 200px;}
+      .dialog h2 {font-weight: 300; font-size: 11pt;} 
+      .facebook, .twitter {margin-bottom: 4px;}
+      .buttons {margin-top: 15px; height: 40px;}
+      .buttons a {display: block; float: left; margin-right: 8px; border: 1px solid #eee; background-color: #D3842B; color: #eee; padding: 5px 8px; font-weight: 500; text-decoration: none;}
+      .preferences {clear:both; margin-top: 2px; color: #999; font-size: 90%; font-weight: 300;}
+      .badge {position: absolute; top: 20px; left: 20px; width: 156px; height: 156px; background: #607D25; border: 2px solid #7FA631; color: #eee; text-align: center;}
+    </style>
+    
+  </head>
+  <body>
+    
+    <div class="dialog">
+      <div class="content">
+        <h2>Would you like to announce to your Facebook and Twitter friends that you completed lesson 2 of French?</h2>
+        <div class='twitter'>
+          <input id="send_a_tweet" type="checkbox"> <label for="send_a_tweet">Post on Twitter!</label>
+        </div>
+        <div class='facebook'>
+          <input id="post_on_facebook" type="checkbox"> <label for="post_on_facebook">Post on Facebook!</label>
+        </div>
+        <div class='buttons'>
+          <a href='#'>Post messages</a>
+          <a href='#'>No, thanks</a>
+        </div>
+        <div class="preferences">
+          <div class='never_again'>
+            <input id="never_again" type="checkbox"> <label for="never_again">Remember my preference and don't show me this message again.</label>
+          </div>          
+        </div>
+        <div class="badge">
+          <div style="margin-top: 70px;">
+            Badge
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </body>
+</html>

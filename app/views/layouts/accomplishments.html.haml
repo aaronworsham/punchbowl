@@ -1,0 +1,14 @@
+!!!
+%html
+%head
+  %title Punchbowl
+  = stylesheet_link_tag  "accomplishments", "formtastic", "formtastic_changes", "jquery.punchbowl"
+  = javascript_include_tag  "jquery-1.4.2.min", "jquery.validate.min", "jquery.colorbox.min", "json2", "jquery.punchbowl"
+  = csrf_meta_tag 
+%body
+  #wrap
+    #main.png_img
+      = yield 
+
+
+

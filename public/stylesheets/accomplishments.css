@@ -1,0 +1,5 @@
+html, body {background: #3B362D; font-family: arial, sans-serif; font-size: 10pt; text-align: center;}
+ul {list-style: none; color: #eee;font-weight: 300; font-size: 11pt; text-align: left;}
+ul a {text-decoration: none; color: #eee;}
+ul li{  border: 1px solid #eee; }
+
