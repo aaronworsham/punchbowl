@@ -11,8 +11,7 @@ class GiftOfMangosController < ApplicationController
   def create
     email= params[:post].delete(:email)
     @customer = Customer.find_or_create_by_email(:email => email)
-    @post = Post.create(params[::conf q
-                        post].merge(:customer => @customer))
+    @post = Post.create(params[:post].merge(:customer => @customer))
     GiftOfMango.create(:post => @post, :customer => @customer)
     post_to_social_media
   rescue => e
