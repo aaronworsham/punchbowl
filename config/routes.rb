@@ -22,7 +22,8 @@ Punchbowl::Application.routes.draw do
   
   match 'posts/success' => 'posts#success'
   match 'rewards/token/:token' => 'rewards#edit', :as => :rewards_token
-  match 'customers/uuid/:uuid' => 'customers#show', :as => :customer_by_uuid
+  match 'customers/uuid/:uuid' => 'customers#show', :as => :customer_by_uuid, :via => :get
+  match 'customers/uuid/:uuid' => 'customers#update', :as => :customer_by_uuid, :via => :put
   match 'customers/test/uuid/:uuid' => 'customers#test', :as => :test_customer_by_uuid
   match 'customers/email/:email' => 'customers#show', :as => :customer_by_email
   match 'badges/name/:badge_name' => 'badges#show', :as => :badge_by_name
@@ -34,8 +35,7 @@ Punchbowl::Application.routes.draw do
   resource :twitter 
   resources :accomplishments
   resources :rewards
-  resources :customers
-
+  resources :customers 
   resources :posts do
     resource :facebook do
       member do

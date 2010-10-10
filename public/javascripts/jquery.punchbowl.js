@@ -2,8 +2,9 @@
 
   var Punchbowl = {
     url  : "http://localhost:3000",
-    debug : true,
-    showOverlay : function(overlay, content, disableRemember){
+    debug : false,
+    testMode : false,
+    showOverlay : function(overlay, content, customer, disableRemember){
       if (content) {   
         $(overlay).html(Dialog)
         // Clear out the remember link if not needed
@@ -25,6 +26,15 @@
             $('.content h2').text('Please select Twitter or Facebook before hitting the Post buttom');
           }
         });
+
+        // Add an user update event for No Thanks button
+        $('#dialog_no_thanks').click(function(){
+          if (content.uuid && customer && customer.wants_to_be_asked !== true) {
+            $.put_json(Punchbowl.url + "/customers/uuid/"+ content.uuid, JSON.stringify({"customer":{"wants_to_be_asked":false}}));
+          }
+          $(overlay).fadeOut("fast");
+        });
+
         // Get the badge image url from PB and append to dialog
         $.post_json(Punchbowl.url + '/badges/name/'+content.badge_name, function(data){
           $('.dialog .badge').html('<img src='+data.badge.image_path+'>');
@@ -50,7 +60,13 @@
       return this.each(function(i, e){
         if (content && content.badge_name && content.message  && content.language) {          
           if (content.uuid){
-            $.get_json(Punchbowl.url + "/customers/test/uuid/"+content.uuid, function(customer){
+            if ( Punchbowl.testMode ) {
+              var customer_url = Punchbowl.url + "/customers/test/uuid/"+content.uuid
+            } 
+            else {
+              var customer_url = Punchbowl.url + "/customers/uuid/"+content.uuid
+            }
+            $.get_json(customer_url, function(customer){
               // console.log(customer);
               if (customer){
                 // We have a customer by this uuid
@@ -62,31 +78,31 @@
                 else if (customer.wants_to_be_asked === true){
                   if ( Punchbowl.debug ) {console.log("user whats to be asked");}
                   // Customer wants to always be asked
-                  Punchbowl.showOverlay(e, content, true);
+                  Punchbowl.showOverlay(e, content, customer, true);
                 }
                 else if (customer.green_lit === false){
                   if ( Punchbowl.debug ) {console.log("user is not green lit");}
                   //Customer is not green lit on 
                   //selected social media sites
-                  Punchbowl.showOverlay(e, content, false);
+                  Punchbowl.showOverlay(e, content, customer, false);
                    }
                 else{
                   if ( Punchbowl.debug ) {console.log("user is ready to post to social media");}
                   //Is ready to be posted
-                  $.post_json(Punchbowl.url + "/accomplishments", JSON.stringify(content));
+                  $.post_json(Punchbowl.url + "/accomplishments", content);
                 }
               }
               else {
                 if ( Punchbowl.debug ) {console.log("user does not exist on PB");}
                //The User does not exist on PB by that uuid
-                Punchbowl.showOverlay(e, content, false);
+                Punchbowl.showOverlay(e, content, customer, false);
               }
             });
           }
           else{
             if ( Punchbowl.debug ) {console.log("user is anonymous");}
             //User is anonymous in the Mango system
-            Punchbowl.showOverlay(e, content, true);
+            Punchbowl.showOverlay(e, content, null, true);
           }
         }
         else {
@@ -113,7 +129,7 @@
                 '</div>'+
                 '<div class="buttons">'+
                 '<a href="#" id="dialog_form_submit">Post messages</a>'+
-                '<a href="#">No, thanks</a>'+
+                '<a href="#" id="dialog_no_thanks">No, thanks</a>'+
                 '</div>'+
                 '<div class="preferences">'+
                 '<div class="never_again" style="display: block; ">'+

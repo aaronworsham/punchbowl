@@ -2,31 +2,22 @@
 
 <script>
   $(function(){
+    $('#overlay').punchbowl({ debug : true, testMode : true });
     $('.test_link#1').click(function(){
       $('#overlay').punchbowl('post', { uuid : '1', badge_name : 'English', message : 'Completed lesson in English', language : 'English' });
     });
-  });
-  $(function(){
     $('.test_link#2').click(function(){
       $('#overlay').punchbowl('post', { uuid : null, badge_name : 'English', message : 'Completed lesson in English', language : 'English' });
     });
-  });
-  $(function(){
     $('.test_link#3').click(function(){
       $('#overlay').punchbowl('post', { uuid : 'unknown', badge_name : 'English', message : 'Completed lesson in English', language : 'English' });
     });
-  });
-  $(function(){
     $('.test_link#4').click(function(){
       $('#overlay').punchbowl('post', { uuid : 'no_sharing', badge_name : 'English', message : 'Completed lesson in English', language : 'English' });
     });
-  });
-  $(function(){
     $('.test_link#5').click(function(){
       $('#overlay').punchbowl('post', { uuid : 'ask_first', badge_name : 'English', message : 'Completed lesson in English', language : 'English' });
     });
-  });
-  $(function(){
     $('.test_link#6').click(function(){
       $('#overlay').punchbowl('post', { uuid : 'red_lit', badge_name : 'English', message : 'Completed lesson in English', language : 'English' });
     });
@@ -40,7 +31,7 @@
     <%= link_to "Test Known user with Customer record, wants to share, doesnt want to be asked and is green lit for facebook", "#", :class => "test_link", :id => "1" %>
     </li>
     <li>
-    <%= link_to "Test anonymour user", "#", :class => "test_link", :id => "2" %>
+    <%= link_to "Test anonymous user", "#", :class => "test_link", :id => "2" %>
     </li>
     <li>
     <%= link_to "Test Known user with no currend customer record", "#", :class => "test_link", :id => "3"%>

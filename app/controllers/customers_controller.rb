@@ -18,6 +18,18 @@ class CustomersController < ApplicationController
       }      
     end
   end
+
+  def update
+    if params[:uuid]
+      @customer = Customer.find_by_uuid(params[:uuid])
+    elsif params[:email]
+      @customer = Customer.find_by_email(params[:email])
+    end
+    if params[:customer] and @customer
+      @customer.update_attributes(params[:customer])
+    end
+    render :nothing => true
+  end
   def test
     case params[:uuid]
     when "1"
