@@ -3,11 +3,11 @@
     = form.input :posted_to_facebook, :as => :hidden, :input_html => { :value => true}
     = form.input :posted_to_twitter, :as => :hidden, :input_html => { :value => true}
     .left#message_area
-      = form.input :message, :as => :text, :label => false, :input_html => { :value => default_message_copy, :maxlength =>"130" }
+      = form.input :message, :as => :text, :label => "Message", :input_html => { :value => default_message_copy(source), :maxlength =>"130", :class => 'required' }
     .left#address_area
-      = form.input :email, :as => :string, :label => "From", :input_html => { :placeholder => "Your email address here...", :size => 60, :class => "email" }
+      = form.input :email, :as => :string, :label => "From", :input_html => { :placeholder => "Your email address here...", :size => 60, :class => "required email", :value => email }
       .icons
-        To:
+        %label To:
         %ul
           %li.facebook-icon.selected{:data_hidden_input_id => 'post_posted_to_facebook'}
             = image_tag 'facebook-icon.jpg'

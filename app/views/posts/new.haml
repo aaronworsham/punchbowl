@@ -1,6 +1,7 @@
-#post_message_box
-  -if @source == "tango"
+.content
+  #post_message_box
+  -if @source == "mango_tango"
     %h3 While we contact your partners, while not share with the world!
-  -elsif @source == "gift"
+  -elsif @source == "gift_of_mango"
     %h3 You gave the Gift of Mango, now share with the world!
-  = render :partial => '/shared/message', :locals => {:url => @post.create_url}
+  = render :partial => '/shared/message', :locals => {:url => @post.create_url, :email => @email, :source => @source}

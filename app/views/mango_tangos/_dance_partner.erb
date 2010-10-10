@@ -2,7 +2,8 @@
   <ol>
     <li class="string required" id="mango_tango_dance_partners_<%= index %>_email_input">
       <label for="mango_tango_dance_partners_<%= index %>_email"><%= index.next %>) Dance Partner</label>
-      <input id="mango_tango_dance_partners_<%= index %>_email" name="mango_tango[dance_partners][<%= index %>][email]" size="30" type="text" placeholder="Email">
+      <input id="mango_tango_dance_partners_<%= index %>_name" name="mango_tango[dance_partners][<%= index %>][name]" class="mango_tango_name_input" size="15" type="text" placeholder="First name">
+      <input id="mango_tango_dance_partners_<%= index %>_email" class="email" name="mango_tango[dance_partners][<%= index %>][email]" size="30" type="text" placeholder="Email">
       </li>
   </ol>
 </fieldset>

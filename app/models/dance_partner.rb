@@ -4,6 +4,6 @@ class DancePartner < ActiveRecord::Base
   after_create :email_tango
 
   def email_tango
-    TangoMailer.invitation(self).deliver
+    TangoMailer.invitation(mango_tango.customer, self).deliver
   end
 end

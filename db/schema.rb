@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101010154345) do
+ActiveRecord::Schema.define(:version => 20101010190422) do
 
   create_table "accomplishments", :force => true do |t|
     t.integer  "customer_id"
@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(:version => 20101010154345) do
     t.integer  "mango_tango_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
   end
 
   create_table "delayed_jobs", :force => true do |t|

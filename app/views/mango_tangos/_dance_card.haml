@@ -1,5 +1,11 @@
+%h2 Now you’re doing the Mango Tango!
+%h3 
+  Just enter your friend’s email address below, and we’ll send them a 10% discount code to use with 
+  their Mango purchase. In no time at all, they’ll be using their new language skills to thank you.
+
+<ul id="messageBox"></ul>
 = render :partial => 'customer'
 %hr
-- 10.times do |i|
+- 5.times do |i|
   = render :partial => 'dance_partner', :locals => {:index => i} 
 = form.commit_button :button_html => { :value => "Submit Dance Card" } 

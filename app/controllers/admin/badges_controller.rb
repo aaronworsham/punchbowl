@@ -62,7 +62,7 @@ class Admin::BadgesController < ApplicationController
 
     respond_to do |format|
       if @admin_badge.update_attributes(params[:badge])
-        format.html { redirect_to(@admin_badge, :notice => 'Badge was successfully updated.') }
+        format.html { redirect_to(admin_badges_path, :notice => 'Badge was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

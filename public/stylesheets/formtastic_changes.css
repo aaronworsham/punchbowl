@@ -12,6 +12,10 @@ The following style may be *conditionally* included for improved support on olde
 form.formtastic fieldset ol li fieldset legend { margin-left: -6px;}
 
 --------------------------------------------------------------------------------------------------*/
+#post_message_form form.formtastic label {
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 16px; }
 #post_message_form form.formtastic textarea {
   width: 350px;
   height: 350px;
@@ -20,7 +24,7 @@ form.formtastic fieldset ol li fieldset legend { margin-left: -6px;}
   background-color: transparent; }
 #post_message_form form.formtastic #post_message {
   position: relative;
-  top: 70px;
+  top: 30px;
   right: -20px; }
 #post_message_form form.formtastic input {
   border: 0px;
@@ -29,7 +33,11 @@ form.formtastic fieldset ol li fieldset legend { margin-left: -6px;}
 #post_message_form form.formtastic .submit_button {
   position: relative;
   bottom: -55px;
-  right: -300px; }
+  right: -200px; }
+#post_message_form form.formtastic #post_submit {
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 16px; }
 #post_message_form form.formtastic #post_email {
   width: 350px; }
 #post_message_form form.formtastic .icons {
@@ -39,10 +47,12 @@ form.formtastic fieldset ol li fieldset legend { margin-left: -6px;}
 #post_message_form form.formtastic .right {
   float: right; }
 #post_message_form form.formtastic #message_area {
+  position: relative;
+  top: 50px;
   width: 50%; }
 #post_message_form form.formtastic #address_area {
   position: relative;
-  top: 250px;
+  top: 50px;
   right: -50px;
   width: 40%; }
 #post_message_form form.formtastic li {

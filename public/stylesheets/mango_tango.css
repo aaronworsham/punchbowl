@@ -1,9 +1,14 @@
-#main .content hr {
-  border: 0;
-  width: 80%;
-  background-color: #A47858; }
-#main .content #tango {
-  z-index: 3;
-  position: relative;
-  bottom: 220px;
-  left: 550px; }
+#main .content {
+  height: 602px; }
+  #main .content hr {
+    border: 0;
+    width: 80%;
+    background-color: #A47858; }
+  #main .content #tango {
+    z-index: -11;
+    position: relative;
+    bottom: 110px;
+    left: 550px;
+    opacity: 0.2; }
+#main .mango_tango_name_input {
+  width: 150px; }

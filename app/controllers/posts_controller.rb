@@ -3,7 +3,9 @@ class PostsController < ApplicationController
   respond_to :html, :json
   layout 'post'
   def new
-    @post = Post.new(:postable_type => params[:source].classify)
+    @email = params[:email]
+    @source = params[:source]
+    @post = params[:source] ? Post.new(:postable_type => params[:source].classify) : Post.new
     render :layout => 'message'
   end
   def create

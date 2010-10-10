@@ -2,7 +2,9 @@ class TangoMailer < ActionMailer::Base
   default :from => "punchbowl@mangolanguage.com", 
           :to => "aaron@sazbean.com"
 
-  def invitation(partner)
+  def invitation(customer, partner)
+    @customer = customer
+    @partner = partner
     mail(:to => partner.email, 
          :subject => "Invitation to Tango with Mango")   
   end

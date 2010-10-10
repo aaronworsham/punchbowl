@@ -15,6 +15,11 @@ form.formtastic fieldset ol li fieldset legend { margin-left: -6px;}
 
 #post_message_form {
   form.formtastic {
+    label {
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 16px;
+    }
     textarea {
       width: 350px;
       height: 350px;
@@ -23,9 +28,8 @@ form.formtastic fieldset ol li fieldset legend { margin-left: -6px;}
       background-color: transparent; }
     #post_message{
       position: relative;
-      top: 70px;
-      right: -20px;
-    }
+      top: 30px;
+      right: -20px;    }
     input {
       border: 0px;
       font-size: 14px;
@@ -33,7 +37,13 @@ form.formtastic fieldset ol li fieldset legend { margin-left: -6px;}
     .submit_button {
       position: relative;
       bottom: -55px;
-      right: -300px; }
+      right: -200px; }
+    #post_submit{
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
     #post_email {
       width: 350px; }
     .icons {
@@ -43,12 +53,16 @@ form.formtastic fieldset ol li fieldset legend { margin-left: -6px;}
     .right {
       float: right; }
     #message_area {
-      width: 50%; }
+      position: relative;
+      top: 50px;
+      width: 50%; 
+     }
     #address_area {
       position: relative;
-      top: 250px;
+      top: 50px;
       right: -50px;
-      width: 40%; }
+      width: 40%; 
+     }
     li {
       list-style-type: none; 
     } 
