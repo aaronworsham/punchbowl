@@ -2,7 +2,7 @@
 
 <script>
   $(function(){
-    $('#overlay').punchbowl({ debug : true, testMode : true, url : <%= AppConfig.url %> });
+    $('#overlay').punchbowl({ debug : true, testMode : true, url : "<%= AppConfig.url %>" });
     $('.test_link#1').click(function(){
       $('#overlay').punchbowl('post', { uuid : '1', badge_name : 'English', message : 'Completed lesson in English', language : 'English' });
     });
