@@ -5,7 +5,7 @@ class GiftOfMangosController < ApplicationController
   respond_to :html, :json
   
   def new
-    @post = Post.new
+    @post = Post.new(:postable_type => "GiftOfMango" )
   end
 
   
