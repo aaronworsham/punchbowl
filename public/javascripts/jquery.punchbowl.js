@@ -1,7 +1,7 @@
 (function($){
 
   var Punchbowl = {
-    url  : "http://localhost:3000",
+    url  : "http://punchbowl.heroku.com",
     debug : false,
     testMode : false,
     showOverlay : function(overlay, content, customer, disableRemember){
