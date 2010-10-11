@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101010190422) do
+ActiveRecord::Schema.define(:version => 20101011143346) do
 
   create_table "accomplishments", :force => true do |t|
     t.integer  "customer_id"
@@ -122,6 +122,7 @@ ActiveRecord::Schema.define(:version => 20101010190422) do
     t.integer  "customer_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "badge_id"
   end
 
   create_table "languages", :force => true do |t|
@@ -144,6 +145,7 @@ ActiveRecord::Schema.define(:version => 20101010190422) do
     t.integer  "customer_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "badge_id"
   end
 
   create_table "posts", :force => true do |t|

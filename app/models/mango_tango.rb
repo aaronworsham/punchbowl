@@ -3,6 +3,7 @@ class MangoTango < ActiveRecord::Base
   has_many :dance_partners
   belongs_to :customer
   has_one :reward, :as => :rewardable, :order => 'created_at DESC'
+  belongs_to :badge 
 
   def self.top_5
 
