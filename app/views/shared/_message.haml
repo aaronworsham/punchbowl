@@ -2,6 +2,7 @@
   - semantic_form_for @post, :url => url do |form|
     = form.input :posted_to_facebook, :as => :hidden, :input_html => { :value => true}
     = form.input :posted_to_twitter, :as => :hidden, :input_html => { :value => true}
+    = form.input :source, :as => :hidden, :input_html => { :value => @source}
     .left#message_area
       = form.input :message, :as => :text, :label => "Message", :input_html => { :value => default_message_copy(source), :maxlength =>"130", :class => 'required' }
     .left#address_area
