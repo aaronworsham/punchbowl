@@ -10,8 +10,5 @@ class BadgesController < ApplicationController
     respond_with @badge
   end
 
-  def index
-    @badges = Badge.all
-  end
-
+  
 end

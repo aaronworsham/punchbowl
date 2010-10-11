@@ -1,7 +1,7 @@
 $(function(){
   $("form#new_mango_tango").validate({
     errorLabelContainer: "#messageBox",
-    wrapper: "li",
+    wrapper: "li"
   });
 
   $('#new_mango_tango').submit(function(){

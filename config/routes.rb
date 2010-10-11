@@ -27,6 +27,9 @@ Punchbowl::Application.routes.draw do
   match 'customers/test/uuid/:uuid' => 'customers#test', :as => :test_customer_by_uuid
   match 'customers/email/:email' => 'customers#show', :as => :customer_by_email
   match 'badges/name/:badge_name' => 'badges#show', :as => :badge_by_name
+  match 'mango_tango' => 'mango_tangos#new'
+  match 'gift_of_mango' => 'gift_of_mangos#new'
+  match 'test_badges' => 'accomplishments#new'
 
   resource :gift_of_mango
   resource :mango_tango
