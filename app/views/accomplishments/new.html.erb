@@ -4,22 +4,22 @@
   $(function(){
     $('#overlay').punchbowl({ debug : true, testMode : true, url : "<%= AppConfig.url %>" });
     $('.test_link#1').click(function(){
-      $('#overlay').punchbowl('post', { uuid : '1', badge_name : 'English', message : 'Completed lesson in English', language : 'English', lesson_number : '2' });
+      $('#overlay').punchbowl('post', { uuid : '1', badge_name : 'English', message : 'Completed lesson in English, direct post', language : 'English', lesson_number : '2' });
     });
     $('.test_link#2').click(function(){
-      $('#overlay').punchbowl('post', { uuid : null, badge_name : 'English', message : 'Completed lesson in English', language : 'English', lesson_number : '2' });
+      $('#overlay').punchbowl('post', { uuid : null, badge_name : 'English', message : 'Completed lesson in English, anonymous', language : 'English', lesson_number : '2' });
     });
     $('.test_link#3').click(function(){
-      $('#overlay').punchbowl('post', { uuid : 'unknown', badge_name : 'English', message : 'Completed lesson in English', language : 'English', lesson_number : '2' });
+      $('#overlay').punchbowl('post', { uuid : 'unknown', badge_name : 'English', message : 'Completed lesson in English, unknown', language : 'English', lesson_number : '2' });
     });
     $('.test_link#4').click(function(){
-      $('#overlay').punchbowl('post', { uuid : 'no_sharing', badge_name : 'English', message : 'Completed lesson in English', language : 'English', lesson_number : '2' });
+      $('#overlay').punchbowl('post', { uuid : 'no_sharing', badge_name : 'English', message : 'Completed lesson in English, no sharing', language : 'English', lesson_number : '2' });
     });
     $('.test_link#5').click(function(){
-      $('#overlay').punchbowl('post', { uuid : 'ask_first', badge_name : 'English', message : 'Completed lesson in English', language : 'English', lesson_number : '2' });
+      $('#overlay').punchbowl('post', { uuid : 'ask_first', badge_name : 'English', message : 'Completed lesson in English, ask first', language : 'English', lesson_number : '2' });
     });
     $('.test_link#6').click(function(){
-      $('#overlay').punchbowl('post', { uuid : 'red_lit', badge_name : 'English', message : 'Completed lesson in English', language : 'English', lesson_number : '2' });
+      $('#overlay').punchbowl('post', { uuid : 'red_lit', badge_name : 'English', message : 'Completed lesson in English, red lit', language : 'English', lesson_number : '2' });
     });
   });
 </script>
