@@ -2,7 +2,7 @@ class Post < ActiveRecord::Base
   belongs_to :postable, :polymorphic => true
   belongs_to :customer
 
-  attr_accessor :email, :post_to
+  attr_accessor :email, :post_to, :source
 
   named_scope :accomplishments, :conditions => ['posts.postable_type = ?', "Accomplishment"]
 

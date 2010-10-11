@@ -54,7 +54,7 @@ class FacebookAccount < ActiveRecord::Base
   end
 
   def build_message(post)
-    if post.postable.badge
+    if post.postable and post.postable.badge
       {
         :message => post.message,
         :picture => post.postable.badge.image_path,

@@ -18,7 +18,7 @@ class PostsController < ApplicationController
       raise "Cannot locate User without an email or uuid"
     end
     if params[:post] 
-      @post = Post.create(params[:post].merge(:customer => @customer, :postable_type => @source.classify))
+      @post = Post.create(params[:post].merge(:customer => @customer))
     else
       raise "Missing :post param"
     end
