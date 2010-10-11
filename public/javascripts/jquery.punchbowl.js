@@ -17,6 +17,8 @@
         $("input[name='badge_name']").val(content.badge_name);
         $("input[name='language']").val(content.language);
 
+        $('.dialog #dialog_message').html('Would you like to announce to your Facebook and Twitter friends that you completed Lesson '+
+                                           content.lesson_number+' of '+content.language+'?');
         // Add submit event to a tag in form for posting
         $('#dialog_form_submit').click(function(){
           if ( $('#send_a_tweet').is(':checked') || $('#post_on_facebook').is(':checked') ) {
@@ -58,7 +60,7 @@
     },
     post : function( content ) {   
       return this.each(function(i, e){
-        if (content && content.badge_name && content.message  && content.language) {          
+        if (content && content.badge_name && content.message  && content.language && content.lesson_number) {          
           if (content.uuid){
             if ( Punchbowl.testMode ) {
               var customer_url = Punchbowl.url + "/customers/test/uuid/"+content.uuid
@@ -120,7 +122,7 @@
                 '<input type="hidden" name="language" value="" />'+
                 '<div class="dialog" style="display: block; ">'+
                 '<div class="content">'+
-                '<h2>Would you like to announce to your Facebook and Twitter friends that you completed lesson 2 of French?</h2>'+
+                '<h2 id="dialog_message"></h2>'+
                 '<div class="twitter">'+
                 '<input id="send_a_tweet" type="checkbox" name="post_to_twitter" value="true"> <label for="send_a_tweet">Post on Twitter!</label>'+
                 '</div>'+
