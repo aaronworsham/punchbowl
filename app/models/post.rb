@@ -45,7 +45,7 @@ class Post < ActiveRecord::Base
     when "GiftOfMango"
       "/gift_of_mango/"
     when "MangoTango"
-      "/mango_tango/"
+      "/posts/"
     else
       "/posts"
     end
