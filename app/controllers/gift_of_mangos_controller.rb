@@ -5,6 +5,7 @@ class GiftOfMangosController < ApplicationController
   respond_to :html, :json
   
   def new
+    @email = params[:email]
     @post = Post.new(:postable_type => "GiftOfMango" )
   end
 
