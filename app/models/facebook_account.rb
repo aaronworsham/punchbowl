@@ -31,7 +31,7 @@ class FacebookAccount < ActiveRecord::Base
     #SystemMailer.warning_email(e.response.body).deliver
     customer.update_attribute(:last_error, e.message)   
     self.update_attributes(:token => nil) if FacebookApi.token_error?(e.response.body) 
-      raise FacebookApi.handle_error(e.response.body)
+    raise FacebookApi.handle_error(e.response.body)
     
   end
 

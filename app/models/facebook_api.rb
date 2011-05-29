@@ -1,65 +1,29 @@
-class FacebookApi
+class FacebookApi < OAuth2::Client
 
-  #this will be a growing list of token related errors
-  def self.token_error?(msg)
-    msg = JSON.parse(msg)
-    if msg["error"].present? 
-      case msg["error"]["message"]
-      when /100/
-        return true
-      else
-        return false
-      end
-    else
-      return false
-    end
-  end
+  include FacebookApiMixin
 
-  def self.handle_error(msg)
-    msg = JSON.parse(msg)
-    if msg["error"].present?
-      case msg["error"]["message"]
-      when /341/
-        return "We have posted too many times to your wall today, please try again tomorrow."
-      when /506/
-        return "That message has already been posted to your wall"
-      when /100/
-        return "We could not locate your user account at Facebook, please try again"
-      else
-        return "Something has happened while posting to Facebook, please try again."
-      end
-    else
-      return "Something has happened while posting to Facebook, please try again."
-    end
-  end
-
-  def self.client
-    settings = AppConfig.facebook
-    @client ||= OAuth2::Client.new(settings["key"], settings["secret"], :site => 'https://graph.facebook.com')
-  end
-
-  def self.access_token(token)
-    @token ||= OAuth2::AccessToken.new(client, token)
-  end
-
-  def self.rest_connection
-    Faraday::Connection.new(:url => 'https://api.facebook.com')
-  end
-
-  def self.authorize_url(uri)
+  def authorize_url(uri, scope = nil)
     Rails.logger.info "Authorize URL Facebook API"
-    client.web_server.authorize_url(
+    super(
+      {
+        :client_id => @key,
         :redirect_uri => uri, 
-        :scope => 'email,publish_stream,offline_access'
+        :scope => (scope || 'email,read_stream,publish_stream,offline_access')
+      }
     )
   end
 
-  def self.verify(code, uri)
-    Rails.logger.info "Verifying in Facebook API" 
-    fb_token = client.web_server.get_access_token(code, :redirect_uri => uri) 
-    response = JSON.parse(fb_token.get("/me"))
-    Rails.logger.info response.inspect
-    return [response["id"], fb_token.token]
+  def verify(code, uri)
+    Rails.logger.info "Verifying in Facebook API"
+    local_token = self.web_server.get_access_token(code, :redirect_uri => uri)
+    response = JSON.parse(local_token.get("/me"))
+    return [response["id"], self.new(local_token.token)]
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.response.inspect if e.respond_to?("response")
+    raise e
   end
+
+
 
 end

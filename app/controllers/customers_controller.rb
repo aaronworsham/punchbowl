@@ -1,63 +1,53 @@
 class CustomersController < ApplicationController
+
+  before_filter :check_auth_key, :only => [:show]
   respond_to :json, :xml
   def show
-    if params[:uuid]
-      @customer = Customer.find_by_uuid(params[:uuid])
-    elsif params[:email]
-      @customer = Customer.find_by_email(params[:email])
-    else
-      @customer = nil
-    end
+    @customer = Customer.find_by_uuid(params[:uuid])
     respond_with @customer do |format|
       format.json{
        if @customer.present? 
-        render :json => @customer.attributes.merge(:green_lit => @customer.green_lit?)
+        render :json => {
+          :existing_user => true, 
+          :facebook => {
+            :opt_in => @customer.facebook_user?,
+            :green_lit? => @customer.facebook_green_lit?,
+          },
+          :twitter => {
+            :opt_in => @customer.twitter_user?,
+            :green_lit? => @customer.twitter_green_lit?,
+          }
+        }
        else
-        render @customer
+        render :json => {:new_user => true}
        end
-      }      
+      }
     end
   end
 
-  def update
-    if params[:uuid]
-      @customer = Customer.find_by_uuid(params[:uuid])
-    elsif params[:email]
-      @customer = Customer.find_by_email(params[:email])
-    end
-    if params[:customer] and @customer
-      @customer.update_attributes(params[:customer])
-    end
-    render :nothing => true
-  end
-  def test
-    case params[:uuid]
-    when "1"
-      @customer = Customer.find_by_uuid(params[:uuid])
-      green_lit = true
-    when "unknown"
-      @customer = nil
-    when "no_sharing"
-      @customer = Customer.find_by_uuid(1)
-      @customer.wants_to_share = false
-      green_lit = true
-    when "ask_first"
-      @customer = Customer.find_by_uuid(1)
-      @customer.wants_to_be_asked = true
-      green_lit = true
-    when "red_lit"
-      @customer = Customer.find_by_uuid(1)
-      green_lit = false
-    end
+  def create
+    @customer = Customer.create(params[:customer])
     respond_with @customer do |format|
       format.json{
-       if @customer.present? 
-        render :json => @customer.attributes.merge(:green_lit => green_lit )
-       else
-        render @customer
-       end
-      }      
+        if @customer.valid?
+          render :json => {:new_user => true, :url => auth_url}
+        else
+          render :json => {:new_user => false, :error => @customer.errors}
+        end
+      }
     end
   end
+
+  private 
+
+  def auth_url 
+    if @customer
+       @customer.facebook_user? ? 
+         FacebookApi.new.authorize_url(auth_success_customer_facebook_url(@customer)) :
+         TwitterApi.new.authorize_url(auth_success_customer_twitter_url(@customer))
+    end
+  end
+
+
 
 end

@@ -1,91 +1,100 @@
-/* -------------------------------------------------------------------------------------------------
-
-Load this stylesheet after formtastic.css in your layouts to override the CSS to suit your needs.
-This will allow you to update formtastic.css with new releases without clobbering your own changes.
-  
-For example, to make the inline hint paragraphs a little darker in color than the standard #666:
-
-form.formtastic fieldset > ol > li p.inline-hints { color:#333; }
-
-HINT:
-The following style may be *conditionally* included for improved support on older versions of IE(<8)
-form.formtastic fieldset ol li fieldset legend { margin-left: -6px;}
-
---------------------------------------------------------------------------------------------------*/
-#post_message_form form.formtastic label {
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 16px; }
-#post_message_form form.formtastic textarea {
-  width: 350px;
-  height: 350px;
-  border: 0px;
-  font-size: 30px;
-  background-color: transparent; }
-#post_message_form form.formtastic #post_message {
-  position: relative;
-  top: 30px;
-  right: -20px; }
-#post_message_form form.formtastic input {
-  border: 0px;
-  font-size: 14px;
-  background-color: transparent; }
-#post_message_form form.formtastic .submit_button {
-  position: relative;
-  bottom: -55px;
-  right: -200px; }
-#post_message_form form.formtastic #post_submit {
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 16px; }
-#post_message_form form.formtastic #post_email {
-  width: 350px; }
-#post_message_form form.formtastic .icons {
-  padding-top: 20px; }
-#post_message_form form.formtastic .left {
+.left {
+  padding-left: 20px;
   float: left; }
-#post_message_form form.formtastic .right {
-  float: right; }
-#post_message_form form.formtastic #message_area {
-  position: relative;
-  top: 50px;
-  width: 50%; }
-#post_message_form form.formtastic #address_area {
-  position: relative;
-  top: 50px;
-  right: -50px;
-  width: 40%; }
-#post_message_form form.formtastic li {
-  list-style-type: none; }
-#post_message_form form.formtastic .facebook-icon {
-  position: relative;
-  top: 20px;
-  right: -80px; }
-#post_message_form form.formtastic .twitter-icon {
-  position: relative;
-  top: 30px;
-  right: -80px; }
 
-.mango_tango {
+form.formtastic fieldset {
+  border: none;
+  margin: 0;
+  padding: 0; }
+form.formtastic legend {
+  padding: 0; }
+form.formtastic li {
+  margin: 1em 0; }
+  form.formtastic li fieldset li {
+    float: left;
+    margin: 0; }
+    form.formtastic li fieldset li label {
+      display: inline;
+      font-size: .75em; }
+form.formtastic ol, form.formtastic ul {
+  list-style: none;
+  padding: 0; }
+form.formtastic .errors, form.formtastic .inline-hints {
+  font-size: .75em;
+  margin: .5em 0; }
+form.formtastic .errors {
+  color: red;
+  list-style-type: disc;
+  padding-left: 2em; }
+  form.formtastic .errors li {
+    display: list-item;
+    margin: 0; }
+form.formtastic .inline-hints {
+  color: #999; }
+form.formtastic abbr[title="required"] {
+  border: none;
+  outline: none; }
+form.formtastic div {
+  margin: 0; }
+form.formtastic fieldset {
+  border: none;
+  margin: 0;
+  padding: 0; }
+form.formtastic label {
+  display: block; }
+  form.formtastic label .errors {
+    font-size: 1em; }
+form.formtastic legend {
+  padding: 0 0 5px; }
+form.formtastic textarea {
+  height: 55px;
+  width: 500px; }
+form.formtastic li {
+  margin: 1em 0; }
+  form.formtastic li fieldset li {
+    float: left;
+    line-height: normal;
+    margin: 0; }
+    form.formtastic li fieldset li label {
+      display: inline;
+      font-size: .75em; }
+    form.formtastic li fieldset li li {
+      border-left: 1px solid #CCC;
+      margin-left: .5em;
+      padding-left: .5em; }
+  form.formtastic li fieldset ol, form.formtastic li fieldset ul {
+    margin: .25em 0; }
+form.formtastic ol, form.formtastic ul {
+  list-style: none;
+  margin: 0;
+  padding: 0; }
+form.formtastic .boolean input[type="checkbox"] {
+  display: block;
+  height: 1em;
+  margin: 0;
+  left: 0;
+  padding: 0;
+  position: absolute;
+  top: 1px;
+  vertical-align: bottom;
+  width: 1em; }
+form.formtastic .boolean label {
+  line-height: normal;
+  padding: 0;
   position: relative;
-  right: -30px; }
-  .mango_tango form.formtastic ol li {
-    margin-bottom: 1em; }
-  .mango_tango form.formtastic label {
-    font-weight: 600;
-    cursor: pointer;
-    font-size: 16px; }
-  .mango_tango form.formtastic input {
-    width: 240px;
-    border: 1px solid #A47858;
-    padding: 4px;
-    font-size: 14px;
-    color: #444; }
-  .mango_tango form.formtastic #mango_tango_submit {
-    position: relative;
-    width: 240px;
-    right: -190px;
-    vertical-align: middle;
-    cursor: pointer; }
-  .mango_tango form.formtastic li {
-    list-style-type: none; }
+  padding-left: 1.5em;
+  vertical-align: top; }
+form.formtastic .errors, form.formtastic .inline-hints {
+  font-size: .75em;
+  line-height: normal;
+  margin: .5em 0; }
+form.formtastic .errors {
+  color: red;
+  list-style-type: disc;
+  line-height: normal;
+  padding-left: 2em; }
+  form.formtastic .errors li {
+    display: list-item;
+    margin: 0; }
+form.formtastic .inline-hints {
+  color: #999; }

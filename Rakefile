@@ -9,6 +9,16 @@ rescue LoadError
   STDERR.puts "Run `rake gems:install` to install delayed_job"
 end
 
+module ::Punchbowl
+  class Application
+    include Rake::DSL
+  end
+end
+
+module ::RakeFileUtils
+  extend Rake::FileUtilsExt
+end
+
 
 
 Punchbowl::Application.load_tasks

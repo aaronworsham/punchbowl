@@ -1,113 +1,139 @@
-/* -------------------------------------------------------------------------------------------------
-
-Load this stylesheet after formtastic.css in your layouts to override the CSS to suit your needs.
-This will allow you to update formtastic.css with new releases without clobbering your own changes.
-  
-For example, to make the inline hint paragraphs a little darker in color than the standard #666:
-
-form.formtastic fieldset > ol > li p.inline-hints { color:#333; }
-
-HINT:
-The following style may be *conditionally* included for improved support on older versions of IE(<8)
-form.formtastic fieldset ol li fieldset legend { margin-left: -6px;}
-
---------------------------------------------------------------------------------------------------*/
-
-#post_message_form {
-  form.formtastic {
-    label {
-      font-weight: 600;
-      cursor: pointer;
-      font-size: 16px;
+.left{
+  padding-left: 20px;
+  float:left;
+}
+form.formtastic {
+  fieldset {
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
+  legend {
+    padding: 0;
+  }
+  li {
+    margin: 1em 0;
+    fieldset {
+      li {
+        float: left;
+        margin: 0;
+        label {
+          display: inline;
+          font-size: .75em;
+        }
+      }
     }
-    textarea {
-      width: 350px;
-      height: 350px;
-      border: 0px;
-      font-size: 30px;
-      background-color: transparent; }
-    #post_message{
-      position: relative;
-      top: 30px;
-      right: -20px;    }
-    input {
-      border: 0px;
-      font-size: 14px;
-      background-color: transparent; }
-    .submit_button {
-      position: relative;
-      bottom: -55px;
-      right: -200px; }
-    #post_submit{
-      font-weight: 600;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    #post_email {
-      width: 350px; }
-    .icons {
-      padding-top: 20px; }
-    .left {
-      float: left; }
-    .right {
-      float: right; }
-    #message_area {
-      position: relative;
-      top: 50px;
-      width: 50%; 
-     }
-    #address_area {
-      position: relative;
-      top: 50px;
-      right: -50px;
-      width: 40%; 
-     }
+  }
+  ol,ul{
+    list-style: none;
+    padding: 0;
+  }
+  .errors, .inline-hints {
+    font-size: .75em;
+    margin: .5em 0;
+  }
+  .errors {
+    color: red;
+    list-style-type: disc;
+    padding-left: 2em;
     li {
-      list-style-type: none; 
-    } 
-    .facebook-icon {
-      position: relative;
-      top: 20px;
-      right: -80px;
+      display: list-item;
+      margin: 0;
     }
-    .twitter-icon {
-      position: relative;
-      top: 30px;
-      right: -80px;
+  }
+  .inline-hints {
+    color: #999;
+  }
+  abbr[title="required"]{
+    border: none;
+    outline: none;
+  }
+  div{
+    margin: 0;
+  }
+  fieldset{
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
+  label{
+    display: block;
+    .errors{
+      font-size: 1em;
     }
-
+  }
+  legend{
+    padding: 0 0 5px;
+  }
+  textarea{
+    height: 55px;
+    width: 500px;
+  }
+  li{
+    margin: 1em 0;
+    fieldset{
+      li{
+        float: left;
+        line-height: normal;
+        margin: 0;
+        label{
+          display: inline;
+          font-size: .75em;
+        }
+        li{
+          border-left: 1px solid #CCC;
+          margin-left: .5em;
+          padding-left: .5em;
+        }
+      }
+      ol,ul{
+        margin: .25em 0;
+      }
+    }
+  }
+  ol,ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .boolean{
+    input[type="checkbox"]{
+      display: block;
+      height: 1em;
+      margin: 0;
+      left: 0;
+      padding: 0;
+      position: absolute;
+      top: 1px;
+      vertical-align: bottom;
+      width: 1em;
+    }
+    label{
+      line-height: normal;
+      padding: 0;
+      position: relative;
+      padding-left: 1.5em;
+      vertical-align: top;
+    }
+  }
+  .errors, .inline-hints{
+    font-size: .75em;
+    line-height: normal;
+    margin: .5em 0;
+  }
+  .errors{
+    color: red;
+    list-style-type: disc;
+    line-height: normal;
+    padding-left: 2em;
+    li{
+      display: list-item;
+      margin: 0;
+    }
+  }
+  .inline-hints{
+    color: #999;
   }
 }
-.mango_tango {
-  position: relative;
-  right: -30px;
-  form.formtastic {
-    ol li {
-      margin-bottom: 1em;
-    }
-    label {
-      font-weight: 600;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    input {
-      width: 240px;
-      border: 1px solid #A47858;
-      padding: 4px;
-      font-size: 14px;
-      color: #444;
-    }
-    #mango_tango_submit {
-      position: relative;
-      width: 240px;
-      right: -190px;
-      vertical-align: middle;
-      cursor: pointer;
-    }
-    li {
-      list-style-type: none; 
-    } 
-  }
-}
+
 

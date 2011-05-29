@@ -1,7 +1,13 @@
-.content
-  #post_message_box
-  -if @source == "mango_tango"
-    %h3 While we contact your partners, while not share with the world!
-  -elsif @source == "gift_of_mango"
-    %h3 You gave the Gift of Mango, now share with the world!
-  = render :partial => '/shared/message', :locals => {:url => @post.create_url, :email => @email, :source => @source}
+#post_message_form
+  = semantic_form_for @post, :url => '/posts.json?test_mode=true' do |form|
+    %input{:name=>"auth_token", :type=>"hidden", :value => 'abcdef'}
+    .left
+      #message_area
+        = form.input :message, :as => :text, :label => "Message", :input_html => { :maxlength =>"130", :class => 'required', :placeholder => "Your message here...", }
+      #address_area
+        %label{:for => :uuid} UUID
+        %input{:id => :UUID, :name=>"uuid", :placeholder=>"Your uuid here...", :size=>"60", :type=>"text"}
+      .submit_button
+        = form.commit_button :button_html => { :value => "Deliver" } 
+
+

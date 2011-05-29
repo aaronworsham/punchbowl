@@ -1,9 +1,0 @@
-.content
-  - @badges.each do |b|
-    - next unless b.name and b.image_path
-    = image_tag(b.image_path, :name => b.name, :alt => b.name) 
-    .hidden
-      %div{:id => b.name + "_blurb"}
-        %h3="Learn more about the #{b.name} accomplishment badge"
-        = image_tag(b.image_path, :name => b.name, :alt => b.name)
-        = link_to "Test Post this Badge", "/accomplishments?language=#{b.language.name}&uuid=1", :class => 'test_post', :rel => b.name 

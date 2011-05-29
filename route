@@ -1,0 +1,51 @@
+              new_user_session GET    /users/sign_in(.:format)                                {:action=>"new", :controller=>"devise/sessions"}
+                  user_session POST   /users/sign_in(.:format)                                {:action=>"create", :controller=>"devise/sessions"}
+          destroy_user_session GET    /users/sign_out(.:format)                               {:action=>"destroy", :controller=>"devise/sessions"}
+                 user_password POST   /users/password(.:format)                               {:action=>"create", :controller=>"devise/passwords"}
+             new_user_password GET    /users/password/new(.:format)                           {:action=>"new", :controller=>"devise/passwords"}
+            edit_user_password GET    /users/password/edit(.:format)                          {:action=>"edit", :controller=>"devise/passwords"}
+                               PUT    /users/password(.:format)                               {:action=>"update", :controller=>"devise/passwords"}
+      cancel_user_registration GET    /users/cancel(.:format)                                 {:action=>"cancel", :controller=>"devise/registrations"}
+             user_registration POST   /users(.:format)                                        {:action=>"create", :controller=>"devise/registrations"}
+         new_user_registration GET    /users/sign_up(.:format)                                {:action=>"new", :controller=>"devise/registrations"}
+        edit_user_registration GET    /users/edit(.:format)                                   {:action=>"edit", :controller=>"devise/registrations"}
+                               PUT    /users(.:format)                                        {:action=>"update", :controller=>"devise/registrations"}
+                               DELETE /users(.:format)                                        {:action=>"destroy", :controller=>"devise/registrations"}
+              customer_by_uuid GET    /customers/uuid/:uuid(.:format)                         {:action=>"show", :controller=>"customers"}
+              customer_by_uuid PUT    /customers/uuid/:uuid(.:format)                         {:action=>"update", :controller=>"customers"}
+                customer_posts GET    /customers/:customer_id/posts(.:format)                 {:action=>"index", :controller=>"posts"}
+                               POST   /customers/:customer_id/posts(.:format)                 {:action=>"create", :controller=>"posts"}
+             new_customer_post GET    /customers/:customer_id/posts/new(.:format)             {:action=>"new", :controller=>"posts"}
+            edit_customer_post GET    /customers/:customer_id/posts/:id/edit(.:format)        {:action=>"edit", :controller=>"posts"}
+                 customer_post GET    /customers/:customer_id/posts/:id(.:format)             {:action=>"show", :controller=>"posts"}
+                               PUT    /customers/:customer_id/posts/:id(.:format)             {:action=>"update", :controller=>"posts"}
+                               DELETE /customers/:customer_id/posts/:id(.:format)             {:action=>"destroy", :controller=>"posts"}
+auth_success_customer_facebook GET    /customers/:customer_id/facebook/auth_success(.:format) {:action=>"auth_success", :controller=>"facebooks"}
+             customer_facebook POST   /customers/:customer_id/facebook(.:format)              {:action=>"create", :controller=>"facebooks"}
+         new_customer_facebook GET    /customers/:customer_id/facebook/new(.:format)          {:action=>"new", :controller=>"facebooks"}
+        edit_customer_facebook GET    /customers/:customer_id/facebook/edit(.:format)         {:action=>"edit", :controller=>"facebooks"}
+                               GET    /customers/:customer_id/facebook(.:format)              {:action=>"show", :controller=>"facebooks"}
+                               PUT    /customers/:customer_id/facebook(.:format)              {:action=>"update", :controller=>"facebooks"}
+                               DELETE /customers/:customer_id/facebook(.:format)              {:action=>"destroy", :controller=>"facebooks"}
+ auth_success_customer_twitter GET    /customers/:customer_id/twitter/auth_success(.:format)  {:action=>"auth_success", :controller=>"twitters"}
+              customer_twitter POST   /customers/:customer_id/twitter(.:format)               {:action=>"create", :controller=>"twitters"}
+          new_customer_twitter GET    /customers/:customer_id/twitter/new(.:format)           {:action=>"new", :controller=>"twitters"}
+         edit_customer_twitter GET    /customers/:customer_id/twitter/edit(.:format)          {:action=>"edit", :controller=>"twitters"}
+                               GET    /customers/:customer_id/twitter(.:format)               {:action=>"show", :controller=>"twitters"}
+                               PUT    /customers/:customer_id/twitter(.:format)               {:action=>"update", :controller=>"twitters"}
+                               DELETE /customers/:customer_id/twitter(.:format)               {:action=>"destroy", :controller=>"twitters"}
+                     customers GET    /customers(.:format)                                    {:action=>"index", :controller=>"customers"}
+                               POST   /customers(.:format)                                    {:action=>"create", :controller=>"customers"}
+                  new_customer GET    /customers/new(.:format)                                {:action=>"new", :controller=>"customers"}
+                 edit_customer GET    /customers/:id/edit(.:format)                           {:action=>"edit", :controller=>"customers"}
+                      customer GET    /customers/:id(.:format)                                {:action=>"show", :controller=>"customers"}
+                               PUT    /customers/:id(.:format)                                {:action=>"update", :controller=>"customers"}
+                               DELETE /customers/:id(.:format)                                {:action=>"destroy", :controller=>"customers"}
+                         posts GET    /posts(.:format)                                        {:action=>"index", :controller=>"posts"}
+                               POST   /posts(.:format)                                        {:action=>"create", :controller=>"posts"}
+                      new_post GET    /posts/new(.:format)                                    {:action=>"new", :controller=>"posts"}
+                     edit_post GET    /posts/:id/edit(.:format)                               {:action=>"edit", :controller=>"posts"}
+                          post GET    /posts/:id(.:format)                                    {:action=>"show", :controller=>"posts"}
+                               PUT    /posts/:id(.:format)                                    {:action=>"update", :controller=>"posts"}
+                               DELETE /posts/:id(.:format)                                    {:action=>"destroy", :controller=>"posts"}
+                          root        /(.:format)                                             {:action=>"new", :controller=>"posts"}

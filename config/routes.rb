@@ -1,9 +1,4 @@
 Punchbowl::Application.routes.draw do
-  get "accomplishments/new"
-
-  get "accomplishments/create"
-
-  get "badges/show"
 
   devise_for :users
 
@@ -20,41 +15,24 @@ Punchbowl::Application.routes.draw do
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   
-  match 'posts/success' => 'posts#success'
-  match 'rewards/token/:token' => 'rewards#edit', :as => :rewards_token
+
   match 'customers/uuid/:uuid' => 'customers#show', :as => :customer_by_uuid, :via => :get
   match 'customers/uuid/:uuid' => 'customers#update', :as => :customer_by_uuid, :via => :put
-  match 'customers/test/uuid/:uuid' => 'customers#test', :as => :test_customer_by_uuid
-  match 'customers/email/:email' => 'customers#show', :as => :customer_by_email
-  match 'badges/name/:badge_name' => 'badges#show', :as => :badge_by_name
-  match 'mango_tango' => 'mango_tangos#new', :via => :get
-  match 'mango_tango' => 'mango_tangos#create', :via => :post
-  match 'gift_of_mango' => 'gift_of_mangos#new', :via => :get
-  match 'gift_of_mango' => 'gift_of_mangos#create', :via => :post
-  match 'test_badges' => 'accomplishments#new'
 
-  resource :gift_of_mango
-  resource :mango_tango
-  resources :mango_badges
-  resource :facebook 
-  resource :twitter 
-  resources :accomplishments
-  resources :rewards
-  resources :customers 
-  resources :posts do
+
+  resources :customers do
     resource :facebook do
-      member do
-        get  'post_message'
-        get 'auth'
+      collection do
+        get 'auth_success'
       end
     end
     resource :twitter do
-      member do
-        get  'post_message'
-        get 'auth'
+      collection do
+        get 'auth_success'
       end
     end
   end
+  resources :posts
 
   # Sample resource route with options:
   #   resources :products do
@@ -82,15 +60,11 @@ Punchbowl::Application.routes.draw do
   #     end
   #   end
   
-  resources :badges
-    namespace :admin do
-      resources :badges
-      resources :languages
-    end
+
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
- root :to => "punchbowl#index"
+ root :to => "posts#new"
 
   # See how all your routes lay out with "rake routes"
 

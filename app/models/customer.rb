@@ -5,23 +5,23 @@ class Customer < ActiveRecord::Base
   has_many :gifts, :class_name => "GiftOfMango"
   has_many :rewards
 
+  validates_uniqueness_of :uuid
+  validates_presence_of :uuid
+
 #HACK
   def ensure_twitter_account
     self.twitter_account = TwitterAccount.new if self.twitter_account.nil?
   end
- 
-  def green_lit?
-    facebook_green = if facebook_user? 
-      facebook_account and facebook_account.green_light?
-    else
-      true
-    end
+  
+  def facebook_green_lit?
+    facebook_account and facebook_account.green_light?
+  end
 
-    twitter_green = if twitter_user? 
-      twitter_account and twitter_account.green_light?
-    else
-      true
-    end
-    facebook_green and twitter_green
+  def twitter_green_lit?
+    twitter_account and twitter_account.green_light?
+  end
+
+  def green_lit?
+    facebook_green_li? and twitter_green_lit?
   end
 end
