@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101011143346) do
+ActiveRecord::Schema.define(:version => 20110530003155) do
 
   create_table "accomplishments", :force => true do |t|
     t.integer  "customer_id"
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(:version => 20101011143346) do
     t.boolean  "wants_to_be_asked", :default => false
     t.boolean  "twitter_user",      :default => false
     t.boolean  "facebook_user",     :default => false
+    t.boolean  "test_account",      :default => false
   end
 
   add_index "customers", ["email"], :name => "index_customers_on_email"

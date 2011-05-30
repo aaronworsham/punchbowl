@@ -1,12 +1,11 @@
 class PostsController < ApplicationController
   include PostableMixin
   
-  before_filter :check_auth_key, :only => [:create]
+  before_filter :check_auth_key, :only => [:create, :index]
 
   def new
-    @email = params[:email]
-    @source = params[:source] || ""
-    @post = params[:source] ? Post.new(:postable_type => params[:source].classify) : Post.new
+    @test_customers = Customer.test
+    @post =  Post.new
   end
 
   def create
@@ -21,6 +20,18 @@ class PostsController < ApplicationController
     Rails.logger.info e.message
     Rails.logger.info params.inspect
     render :json => {:error => e.message}
+  end
+
+  def index
+    if params[:customer_id]
+      @posts = Post.where(:customer_id => params[:customer_id])
+    elsif params[:uuid]
+      customer = Customer.find_by_uuid(params[:uuid])
+      @posts = Post.where(:customer_id => customer.id)
+    else
+      @posts = Post.all
+    end
+    render :json => @posts
   end
 
 

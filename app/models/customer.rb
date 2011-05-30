@@ -5,6 +5,8 @@ class Customer < ActiveRecord::Base
   has_many :gifts, :class_name => "GiftOfMango"
   has_many :rewards
 
+  scope :test, where(:test_account => true)
+
   validates_uniqueness_of :uuid
   validates_presence_of :uuid
 
@@ -14,11 +16,11 @@ class Customer < ActiveRecord::Base
   end
   
   def facebook_green_lit?
-    facebook_account and facebook_account.green_light?
+    !!(facebook_account && facebook_account.green_light?)
   end
 
   def twitter_green_lit?
-    twitter_account and twitter_account.green_light?
+    !!(twitter_account && twitter_account.green_light?)
   end
 
   def green_lit?

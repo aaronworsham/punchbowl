@@ -7,7 +7,7 @@ class TwitterAccount < ActiveRecord::Base
   end
 
   def client
-    TwitterApi.client
+    @client ||= TwitterApi.new.client
   end
 
   def post(post)
@@ -22,8 +22,7 @@ class TwitterAccount < ActiveRecord::Base
     #TODO uncomment once we get an smtp server set
     #SystemMailer.warning_email(e.response.body).deliver
     customer.update_attribute(:last_error, e.message) 
-    self.update_attributes(:token => nil, :secret => nil) if TwitterApi.token_error?(e.message) 
-    raise TwitterApi.handle_error(e.message)
+    raise e.message
   end
 
 end

@@ -11,8 +11,10 @@ class FacebooksController < ApplicationController
     #Then we need to record the id and token with the customer
     Rails.logger.info "creating account"
     @customer.facebook_account.create(:facebook_id => id, :token => token) if @customer
-    if @customer and @customer.twitter_user?
+    if @customer and @customer.twitter_user? and !@customer.twitter_green_lit?
       redirect_to TwitterApi.new.authorize_url(auth_success_customer_twitter_url(@customer))
+    else
+      render :js => 'alert("Authorized with facebook")'
     end
   rescue => e
     flash[:warning] = e.message
@@ -23,14 +25,6 @@ class FacebooksController < ApplicationController
 private
   def facebook
    @facebook ||= FacebookApi.new
-  end
-
-  def find_post
-    @post ||= Post.find_by_id params[:post_id]
-  end
-
-  def redirect_uri
-    post_message_post_facebook_url(@post, :from_auth => "true") 
   end
   
 end

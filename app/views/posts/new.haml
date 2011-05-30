@@ -1,13 +1,42 @@
+%h3 Test Messages
 #post_message_form
   = semantic_form_for @post, :url => '/posts.json?test_mode=true' do |form|
-    %input{:name=>"auth_token", :type=>"hidden", :value => 'abcdef'}
-    .left
-      #message_area
-        = form.input :message, :as => :text, :label => "Message", :input_html => { :maxlength =>"130", :class => 'required', :placeholder => "Your message here...", }
-      #address_area
-        %label{:for => :uuid} UUID
-        %input{:id => :UUID, :name=>"uuid", :placeholder=>"Your uuid here...", :size=>"60", :type=>"text"}
-      .submit_button
-        = form.commit_button :button_html => { :value => "Deliver" } 
+    #message_area
+      = form.input :message, :as => :text, :label => "Message", :input_html => { :maxlength =>"130", :class => 'required', :placeholder => "Your message here...", }
+    #address_area
+      %label{:for => :uuid} UUID
+      %input{:id => :UUID, :name=>"uuid", :placeholder=>"Your uuid here...", :size=>"40", :type=>"text"}
+    #auth
+      %label{:for => :auth_token} AUTH Token
+      %input{:name=>"auth_token", :type=>"text", :size=>"40", :placeholder => 'abcdef'}
+    .submit_button
+      = form.commit_button :button_html => { :value => "Deliver Message" } 
+
+
+%h3 Test Accounts
+#add_customer_form
+  - if @test_customers.present?
+    %table
+      %th Name
+      %th UUID
+      %th facebook_user?
+      %th twitter_user?
+      - @test_customers.each do |tc|
+        %tr
+          %td= tc.name
+          %td= tc.uuid
+          %td= tc.facebook_user?
+          %td= tc.twitter_user?
+
+  = semantic_form_for Customer.new, :url => '/customers.json?test_mode=true' do |form|
+    = form.input :name, :input_html => {  :placeholder => "Name here...", }
+    = form.input :uuid, :input_html => {  :placeholder => "UUID here...", }
+    = form.input :facebook_user
+    = form.input :twitter_user
+    #auth
+      %label{:for => :auth_token} AUTH Token
+      %input{:name=>"auth_token", :type=>"text", :size=>"40", :placeholder => 'abcdef'}
+    .submit_button
+      = form.commit_button :button_html => { :value => "Create User" } 
 
 

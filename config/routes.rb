@@ -18,6 +18,7 @@ Punchbowl::Application.routes.draw do
 
   match 'customers/uuid/:uuid' => 'customers#show', :as => :customer_by_uuid, :via => :get
   match 'customers/uuid/:uuid' => 'customers#update', :as => :customer_by_uuid, :via => :put
+  match 'customers/uuid/:uuid/posts' => 'posts#index', :as => :posts_by_customer_uuid, :via => :get
 
 
   resources :customers do
@@ -31,6 +32,7 @@ Punchbowl::Application.routes.draw do
         get 'auth_success'
       end
     end
+    resources :posts
   end
   resources :posts
 

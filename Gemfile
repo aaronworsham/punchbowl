@@ -26,4 +26,5 @@ group :development, :test do
   gem 'faker'
   gem 'mongrel'
   gem 'ruby-debug'
+  gem 'jasmine'
 end
