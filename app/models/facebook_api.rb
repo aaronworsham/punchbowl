@@ -16,8 +16,12 @@ class FacebookApi < OAuth2::Client
   def verify(code, uri)
     Rails.logger.info "Verifying in Facebook API"
     local_token = self.web_server.get_access_token(code, :redirect_uri => uri)
+    Rails.logger.info "-----local_token-----"
+    Rails.logger.info local_token.inspect
     response = JSON.parse(local_token.get("/me"))
-    return [response["id"], self.new(local_token.token)]
+    Rails.logger.info "-----ID Response-----"
+    Rails.logger.info response.inspect
+    return [response["id"], local_token.token]
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.response.inspect if e.respond_to?("response")

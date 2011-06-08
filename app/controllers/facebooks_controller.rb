@@ -4,20 +4,20 @@ class FacebooksController < ApplicationController
 
 
   def auth_success
-    @customer = Customer.find_by_id(params[:id])
+    @customer = Customer.find_by_id(params[:customer_id])
           #We need to get the token and the users facebook id
-    id, token = facebook.verify(params[:code], redirect_uri)
+    id, token = facebook.verify(params[:code], auth_success_customer_facebook_url(@customer))
     Rails.logger.info "Id = :#{id} Token = :#{token}"
     #Then we need to record the id and token with the customer
     Rails.logger.info "creating account"
-    @customer.facebook_account.create(:facebook_id => id, :token => token) if @customer
+    FacebookAccount.create(:facebook_id => id, :token => token, :customer => @customer) if @customer
     if @customer and @customer.twitter_user? and !@customer.twitter_green_lit?
       redirect_to TwitterApi.new.authorize_url(auth_success_customer_twitter_url(@customer))
     else
-      render :js => 'alert("Authorized with facebook")'
+      render :json => {:success => true, :facebook => 'authorized'}
     end
   rescue => e
-    flash[:warning] = e.message
+    Rails.logger.error e.message
     render :json => {:error => e.message}
   end
 

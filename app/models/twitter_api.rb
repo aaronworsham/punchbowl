@@ -1,23 +1,37 @@
 class TwitterApi
 
+  def initialize(customer)
+    @customer = customer
+  end
+
   def client 
     settings = AppConfig.twitter
-    @client ||= Twitter::OAuth.new(settings["key"], settings["secret"])
-  end
-
-  def authorize_url(uri) 
-    client.set_callback_url(uri) 
-    client.request_token.authorize_url 
-  end
-
-  def verify(token, secret, verifier) 
-    if token and secret and verifier
-      client.authorize_from_request(token, secret, verifier)
-      Twitter::Base.new(client).verify_credentials
-      return [client.access_token.token, client.access_token.secret]
+    @client ||= if @customer.twitter_green_lit?
+      TwitterOAuth::Client.new(
+        :consumer_key => settings["key"],
+        :consumer_secret => settings["secret"],
+        :token => @customer.twitter_account.token,
+        :secret => @customer.twitter_account.secret)
     else
-      raise "Session information for twitter were missing, could not verify"
+      TwitterOAuth::Client.new(
+        :consumer_key => settings["key"],
+        :consumer_secret => settings["secret"])
     end
+  end
+
+  def request_token(uri)
+    client.request_token(:oauth_callback => uri)
+  end
+
+  def authorize_url(uri)
+    token = request_token(uri)
+    Rails.cache.write("customer_#{@customer.id}_twitter_token", token)
+    token.authorize_url 
+  end
+
+  def verify(verifier) 
+    request_token = Rails.cache.read("customer_#{@customer.id}_twitter_token") 
+    client.authorize(request_token.token, request_token.secret, :oauth_verifier => verifier)
   end
 
 

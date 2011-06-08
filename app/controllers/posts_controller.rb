@@ -1,7 +1,6 @@
 class PostsController < ApplicationController
   include PostableMixin
   
-  before_filter :check_auth_key, :only => [:create, :index]
 
   def new
     @test_customers = Customer.test

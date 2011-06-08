@@ -6,9 +6,6 @@
     #address_area
       %label{:for => :uuid} UUID
       %input{:id => :UUID, :name=>"uuid", :placeholder=>"Your uuid here...", :size=>"40", :type=>"text"}
-    #auth
-      %label{:for => :auth_token} AUTH Token
-      %input{:name=>"auth_token", :type=>"text", :size=>"40", :placeholder => 'abcdef'}
     .submit_button
       = form.commit_button :button_html => { :value => "Deliver Message" } 
 
@@ -33,9 +30,7 @@
     = form.input :uuid, :input_html => {  :placeholder => "UUID here...", }
     = form.input :facebook_user
     = form.input :twitter_user
-    #auth
-      %label{:for => :auth_token} AUTH Token
-      %input{:name=>"auth_token", :type=>"text", :size=>"40", :placeholder => 'abcdef'}
+    = form.input :test_account
     .submit_button
       = form.commit_button :button_html => { :value => "Create User" } 
 

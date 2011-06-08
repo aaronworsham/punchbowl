@@ -7,13 +7,11 @@ class TwitterAccount < ActiveRecord::Base
   end
 
   def client
-    @client ||= TwitterApi.new.client
+    @client ||= TwitterApi.new(customer).client
   end
 
   def post(post)
-    client.authorize_from_access(self.token, self.secret)
-    twitter = Twitter::Base.new(client)
-    twitter.update(post.message)
+    client.update(post.message)
   rescue => e
     Rails.logger.info e.message
     if e.respond_to?("response")

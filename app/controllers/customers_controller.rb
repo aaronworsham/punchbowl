@@ -1,6 +1,5 @@
 class CustomersController < ApplicationController
 
-  before_filter :check_auth_key, :only => [:show, :create]
   respond_to :json
   def show
     if params[:uuid]
@@ -59,7 +58,7 @@ class CustomersController < ApplicationController
     if @customer
        @customer.facebook_user? ? 
          FacebookApi.new.authorize_url(auth_success_customer_facebook_url(@customer)) :
-         TwitterApi.new.authorize_url(auth_success_customer_twitter_url(@customer))
+         TwitterApi.new(@customer).authorize_url(auth_success_customer_twitter_url(@customer))
     end
   end
 
