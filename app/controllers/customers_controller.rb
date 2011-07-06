@@ -4,12 +4,8 @@ class CustomersController < ApplicationController
   def show
     if params[:uuid]
       @customer = Customer.find_by_uuid(params[:uuid], :include => [:posts])
-    elsif params[:id]
-      @customer = Customer.find_by_id(params[:id], :include => [:posts])
     end
-
-     if @customer.present? 
-
+    if @customer.present? 
       last_post = @customer.posts.last
       render :json => {
         :id => @customer.id,
@@ -34,10 +30,9 @@ class CustomersController < ApplicationController
           :created_at => last_post.created_at.to_s(:long),
         }
       }
-     else
+    else
       render :json => {:new_user => true}
-     end
-
+    end
   end
 
   def create

@@ -2,9 +2,7 @@
 // 
 // First, it is used in javascript like this
 // 
-// var x = new Punchbowl({uuid : uuid_from_flex_client, auth_key : auth_key_from_client, testMode : true})
-// 
-// Now there is talk of not using an auth key and just using the uuid and a signed session, but for now these are both needed
+// var x = new Punchbowl({uuid : uuid_from_flex_client, testMode : true})
 // 
 // Then you can call functions on the x javascript object this way
 // 
@@ -12,7 +10,6 @@
 // 
 // This call will send a GET with the following data
 // - The url is a combination of the base from the settings and the uuid
-// - The auth_token was passed in, otherwise use 'abcdef' to test with 
 // - This will return JSON that is parsed automatically by JQuery
 // - Note that at the bottom of the js, the get_json function calls _ajax_json_request with the GET param which sets up the call to use the following
 //                 xhrObj.setRequestHeader("Content-Type","application/json");
@@ -54,9 +51,8 @@
 
 function Punchbowl(options){
   this.default_settings = {
-    url  : "https://punchbowl.mangolanguages.com",
+    url  : "https://punchbowl-staging.mangolanguages.com",
     test_url : "http://punchbowl.dev",
-    auth_key : "abcdef",
     debug : false,
     testMode : false,
     uuid : 0,
@@ -65,7 +61,6 @@ function Punchbowl(options){
 // INIT
 // Expects 
 // - uuid
-// - auth_key
 //
 
   this.settings = $.extend(this.default_settings, options)
@@ -77,6 +72,7 @@ function Punchbowl(options){
 //- uuid
 // Returns:
 // - New User
+// - or
 // - Existing User
 // --- Facebook
 // ----- Opt In?
@@ -90,8 +86,7 @@ Punchbowl.prototype.profile = function( callback ){
     var uuid = this.settings.uuid;
     var customer_url = url + "/customers/uuid/"+ uuid;
     if(uuid){
-      $.get_json(customer_url, {auth_token : this.settings.auth_key}, function(data){
-        console.log(data);
+      $.get_json(customer_url, {}, function(data){
         callback(data);
       });
     }
@@ -108,12 +103,13 @@ Punchbowl.prototype.profile = function( callback ){
 // Returns:
 // - status
 // - URL
+// - or
 // - error
 
 Punchbowl.prototype.create_profile = function( customer_data, callback ){
     var customer_url = this.settings.testMode ? (this.settings.test_url + "/customers") : (this.setttings.url + "/customers")
     customer_data['uuid'] = this.settings.uuid;
-    $.post_json(customer_url, {'customer' : customer_data, 'auth_token' : this.settings.auth_key}, function(data){
+    $.post_json(customer_url, {'customer' : customer_data}, function(data){
       console.log(data);
       callback(data);
     });
@@ -129,8 +125,7 @@ Punchbowl.prototype.post = function( content, callback ) {
     if (content && content.message) {
       $.post_json(url + "/posts", { 'post'        : content, 
                                     'uuid'        : this.settings.uuid, 
-                                    'test_mode'   : this.settings.testMode,
-                                    'auth_token'  : this.settings.auth_key }, function(data){
+                                    'test_mode'   : this.settings.testMode}, function(data){
         console.log("Inside profile callback function");
         callback(data);
       });

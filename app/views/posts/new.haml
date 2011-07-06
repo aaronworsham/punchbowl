@@ -1,3 +1,14 @@
+%h3 Test Accounts
+#add_customer_form
+  = semantic_form_for Customer.new, :url => '/customers.json?test_mode=true' do |form|
+    = form.input :name, :input_html => {  :placeholder => "Name here...", }
+    = form.input :uuid, :input_html => {  :placeholder => "UUID here...", }
+    = form.input :facebook_user
+    = form.input :twitter_user
+    = form.input :test_account
+    .submit_button
+      = form.commit_button :button_html => { :value => "Create User" } 
+
 %h3 Test Messages
 #post_message_form
   = semantic_form_for @post, :url => '/posts.json?test_mode=true' do |form|
@@ -10,28 +21,6 @@
       = form.commit_button :button_html => { :value => "Deliver Message" } 
 
 
-%h3 Test Accounts
-#add_customer_form
-  - if @test_customers.present?
-    %table
-      %th Name
-      %th UUID
-      %th facebook_user?
-      %th twitter_user?
-      - @test_customers.each do |tc|
-        %tr
-          %td= tc.name
-          %td= tc.uuid
-          %td= tc.facebook_user?
-          %td= tc.twitter_user?
 
-  = semantic_form_for Customer.new, :url => '/customers.json?test_mode=true' do |form|
-    = form.input :name, :input_html => {  :placeholder => "Name here...", }
-    = form.input :uuid, :input_html => {  :placeholder => "UUID here...", }
-    = form.input :facebook_user
-    = form.input :twitter_user
-    = form.input :test_account
-    .submit_button
-      = form.commit_button :button_html => { :value => "Create User" } 
 
 
