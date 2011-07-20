@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110530003155) do
+ActiveRecord::Schema.define(:version => 20110720163540) do
 
   create_table "accomplishments", :force => true do |t|
     t.integer  "customer_id"
@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(:version => 20110530003155) do
     t.string   "twitter_token"
     t.string   "twitter_id"
     t.text     "last_error"
-    t.integer  "uuid"
+    t.string   "uuid"
     t.boolean  "wants_to_share",    :default => true
     t.boolean  "wants_to_be_asked", :default => false
     t.boolean  "twitter_user",      :default => false
