@@ -18,6 +18,7 @@ class PostsController < ApplicationController
   rescue => e
     Rails.logger.info e.message
     Rails.logger.info params.inspect
+    Rails.logger.info e.backtrace[0]
     render :json => {:error => e.message}
   end
 

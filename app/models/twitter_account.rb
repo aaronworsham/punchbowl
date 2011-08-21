@@ -2,7 +2,7 @@ class TwitterAccount < ActiveRecord::Base
 
   belongs_to :customer
 
-  def green_light? 
+  def greenlit? 
     self.token? and self.secret?
   end
 
@@ -11,7 +11,9 @@ class TwitterAccount < ActiveRecord::Base
   end
 
   def post(post)
-    client.update(post.message)
+    response = client.update(post.message)
+    Rails.logger.info response.inspect
+    'success'
   rescue => e
     Rails.logger.info e.message
     if e.respond_to?("response")
@@ -21,6 +23,10 @@ class TwitterAccount < ActiveRecord::Base
     #SystemMailer.warning_email(e.response.body).deliver
     customer.update_attribute(:last_error, e.message) 
     raise e.message
+  end
+
+  def last_post
+    client.user_timeline[0]
   end
 
 end

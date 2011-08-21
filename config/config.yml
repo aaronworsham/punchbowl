@@ -1,11 +1,17 @@
 common:
   site_name:  Punchbowl
   facebook_url: 
+
 development:
   url:        http://localhost:3000
   twitter:
     key:      CXgfZm05277FOxb7HBTkUg
     secret:   ky0oGma6zfy4qt8q3Z27JIQpIopbr2aMBhKxbNZ1c    
+    test_email: 'aaron+twittertest@sazboom.com'
+    test_name: sazboom_test
+    test_password: wordpass
+    test_token: "359500181-o1VKzCUF21SS6zV8ePFZQvH149CkNfiQIMqMpbZL"
+    test_secret: "XBIjp6LetXxpyDII6ASERY2BKkF7soDWCanQtrcyq4"
   facebook: 
     key:      154629021224817
     secret:   48ad712fe340e5e13aaa015bc721a272
@@ -32,13 +38,17 @@ production:
     tango:
       start_date: "01/01/2010"
 
-
-
 test:
   url:        http://localhost.com:3000
   twitter:
     key:      CXgfZm05277FOxb7HBTkUg
     secret:   ky0oGma6zfy4qt8q3Z27JIQpIopbr2aMBhKxbNZ1c    
+    test_email: 'aaron+twittertest@sazboom.com'
+    test_name: sazboom_test
+    test_password: wordpass
+    test_token: "359500181-o1VKzCUF21SS6zV8ePFZQvH149CkNfiQIMqMpbZL"
+    test_secret: "XBIjp6LetXxpyDII6ASERY2BKkF7soDWCanQtrcyq4"
+
   facebook: 
     key:      154629021224817
     secret:   48ad712fe340e5e13aaa015bc721a272

@@ -2,28 +2,21 @@ class Customer < ActiveRecord::Base
   has_many :posts
   has_one :twitter_account, :order => 'created_at DESC'
   has_one :facebook_account, :order => 'created_at DESC'
-  has_many :gifts, :class_name => "GiftOfMango"
-  has_many :rewards
 
   scope :test, where(:test_account => true)
 
   validates_uniqueness_of :uuid
   validates_presence_of :uuid
 
-#HACK
-  def ensure_twitter_account
-    self.twitter_account = TwitterAccount.new if self.twitter_account.nil?
-  end
-  
-  def facebook_green_lit?
-    !!(facebook_account && facebook_account.green_light?)
+  def facebook_greenlit?
+    !!(facebook_account && facebook_account.greenlit?)
   end
 
-  def twitter_green_lit?
-    !!(twitter_account && twitter_account.green_light?)
+  def twitter_greenlit?
+    !!(twitter_account && twitter_account.greenlit?)
   end
 
-  def green_lit?
-    facebook_green_li? and twitter_green_lit?
+  def greenlit?
+    facebook_greenlit? and twitter_greenlit?
   end
 end

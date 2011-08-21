@@ -11,7 +11,7 @@
 
 %h3 Test Messages
 #post_message_form
-  = semantic_form_for @post, :url => '/posts.json?test_mode=true' do |form|
+  = semantic_form_for @post, :url => '/posts.json' do |form|
     #message_area
       = form.input :message, :as => :text, :label => "Message", :input_html => { :maxlength =>"130", :class => 'required', :placeholder => "Your message here...", }
     #address_area

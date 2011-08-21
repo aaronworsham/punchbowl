@@ -6,7 +6,7 @@ class TwitterApi
 
   def client 
     settings = AppConfig.twitter
-    @client ||= if @customer.twitter_green_lit?
+    @client ||= if @customer.twitter_greenlit?
       TwitterOAuth::Client.new(
         :consumer_key => settings["key"],
         :consumer_secret => settings["secret"],

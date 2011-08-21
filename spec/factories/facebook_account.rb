@@ -1,7 +1,10 @@
 require 'faker'
 
 Factory.define :facebook_account do |f|
-  f.facebook_id rand 10000
-  f.token rand 1000
+end
+
+Factory.define :greenlit_facebook_account, :parent => :facebook_account do |f|
+  f.token 'abcdef'
+  f.facebook_id '12345'
 end
 

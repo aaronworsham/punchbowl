@@ -4,6 +4,8 @@ describe FacebookApi do
 
   before(:all) do
     @user, @fba = TestFacebookApi.new.add_test_user
+    @message = "test random #{rand(1000000)}"
+
   end
   after(:all) do
     @fba.delete_test_user(@user)
@@ -40,13 +42,14 @@ describe FacebookApi do
 
   context :publishing do
     it "should be able to post to the users wall" do
-      resp = @fba.post_to_wall(@user["id"], "test")
+      resp = @fba.post_to_wall(@user["id"], @message)
       resp["id"].should_not be_nil
     end
 
     it "should be able to read from the wall (intermittent failures)" do
+      sleep 10
       resp =  @fba.read_from_wall(@user["id"])
-      resp["data"][0]["message"].should eq("test")
+      resp["data"][0]["message"].should eq(@message)
     end
   end
 

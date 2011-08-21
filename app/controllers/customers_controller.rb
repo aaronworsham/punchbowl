@@ -14,12 +14,12 @@ class CustomersController < ApplicationController
         :facebook => {
           :token => @customer.try('facebook_account').try('token'),
           :opt_in => @customer.facebook_user?,
-          :green_lit? => @customer.facebook_green_lit?,
+          :greenlit? => @customer.facebook_greenlit?,
         },
         :twitter => {
           :token => @customer.try('twitter_account').try('token'),
           :opt_in => @customer.twitter_user?,
-          :green_lit? => @customer.twitter_green_lit?,
+          :greenlit? => @customer.twitter_greenlit?,
         },
         :last_error => @customer.last_error,
         :created_at => @customer.created_at.to_s(:long),

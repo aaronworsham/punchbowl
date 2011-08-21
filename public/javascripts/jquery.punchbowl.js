@@ -19,7 +19,7 @@
 // Data back:
 // {"created_at":"May 30, 2011 00:45","last_post":{"created_at":"May 30, 2011 00:48","message":"bob"},
 // "existing_user":true,"number_of_posts":1,"uuid":3,"updated_at":"May 30, 2011 00:46","id":53,"facebook":
-// {"token":null,"green_lit?":false,"opt_in":true},"last_error":null,"twitter":{"token":null,"green_lit?":false,"opt_in":false}}
+// {"token":null,"greenlit?":false,"opt_in":true},"last_error":null,"twitter":{"token":null,"greenlit?":false,"opt_in":false}}
 // 
 // 
 // If the profile call cannot locate the uuid, it will return {new_user : true} and you can follow that call with the create_profile call
@@ -34,7 +34,7 @@
 // On return, you will be given a url to send them to for authentication in the browser.  We will have to set 
 // up some signaling to tell the app when this is user is finally authenticated.  Then you can send the post
 // 
-// Once we have a user and they are green_lit for facebook  and/or twitter we can send a post
+// Once we have a user and they are greenlit for facebook  and/or twitter we can send a post
 // 
 // x.post({message : 'bob'}, function(){console.log('bob')});
 // 
