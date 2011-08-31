@@ -20,6 +20,15 @@ Factory.define :twitter_customer, :parent => :customer do |f|
   f.twitter_user true
   f.association :twitter_account
 end
+Factory.define :twitter_test_user, :parent => :customer do |f|
+  f.twitter_user true
+  f.association :twitter_account, :factory => :twitter_test_account
+  f.name 'sazboom_test'
+  f.email 'aaron+twittertest@sazboom.com'
+  f.uuid 'aaron+twittertest@sazboom.com'
+
+end
+
 Factory.define :greenlit_twitter_customer, :parent => :customer do |f|
   f.twitter_user true
   f.association :twitter_account, :factory => :greenlit_twitter_account

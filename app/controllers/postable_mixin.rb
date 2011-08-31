@@ -15,7 +15,7 @@ module PostableMixin
     else
       status = 'customer is not a facebook or twitter user'
     end
-      render :json =>  {:status => response}
+      render :json =>  {:status => status}
   rescue 
     raise
   end 

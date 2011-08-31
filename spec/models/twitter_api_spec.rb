@@ -7,7 +7,7 @@ describe TwitterApi do
   end
 
   before(:each) do
-    @user = Customer.find_by_name AppConfig.twitter["test_name"]
+    @user = Factory :twitter_test_user
     @ta = @user.twitter_account
   end
 
