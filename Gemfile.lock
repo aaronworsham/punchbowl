@@ -199,7 +199,7 @@ DEPENDENCIES
   machinist
   mocha
   mongrel
-  oauth2
+  oauth2 (~> 0.4.1)
   rails (~> 3.0.7)
   rspec-rails
   ruby-debug
