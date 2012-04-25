@@ -24,7 +24,6 @@ group :development, :test do
   gem 'machinist'
   gem 'factory_girl_rails'
   gem 'faker'
-  gem 'mongrel'
-  gem 'ruby-debug'
+  gem 'ruby-debug19'
   gem 'jasmine'
 end

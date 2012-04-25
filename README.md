@@ -118,4 +118,4 @@ Testing
 There are both model and integration tests written for PB.  Facebook actually has a more fully fleshed out line of tests because their 
 API accounts support the concept of 'test users' that can be created at the beginning of the test and deleted at the end.  
 
-  rake rspec
+  rake spec

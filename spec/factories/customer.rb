@@ -1,48 +1,54 @@
 require 'faker'
 
-Factory.define :customer do |f|
-  f.name Faker::Name.name
-  f.email Faker::Internet.email
-  f.uuid rand(10000)
-  f.wants_to_share true
-  f.wants_to_be_asked false
-end
+FactoryGirl.define do
+  factory :customer do
+    name Faker::Name.name
+    email Faker::Internet.email
+    uuid rand(10000)
+    wants_to_share true
+    wants_to_be_asked false
+  end
 
-Factory.define :facebook_customer, :parent => :customer do |f|
-  f.facebook_user true
-  f.association :facebook_account
-end
-Factory.define :greenlit_facebook_customer, :parent => :customer do |f|
-  f.facebook_user true
-  f.association :facebook_account, :factory => :greenlit_facebook_account
-end
-Factory.define :twitter_customer, :parent => :customer do |f|
-  f.twitter_user true
-  f.association :twitter_account
-end
-Factory.define :twitter_test_user, :parent => :customer do |f|
-  f.twitter_user true
-  f.association :twitter_account, :factory => :twitter_test_account
-  f.name 'sazboom_test'
-  f.email 'aaron+twittertest@sazboom.com'
-  f.uuid 'aaron+twittertest@sazboom.com'
+  factory :facebook_customer, :parent => :customer do
+    facebook_user true
+    association :facebook_account
+  end
 
-end
+  factory :greenlit_facebook_customer, :parent => :customer do
+    facebook_user true
+    association :facebook_account, :factory => :greenlit_facebook_account
+  end
 
-Factory.define :greenlit_twitter_customer, :parent => :customer do |f|
-  f.twitter_user true
-  f.association :twitter_account, :factory => :greenlit_twitter_account
-end
+  factory :twitter_customer, :parent => :customer do
+    twitter_user true
+    association :twitter_account
+  end
 
-Factory.define :facebook_and_twitter_customer, :parent => :customer do |f|
-  f.twitter_user true
-  f.facebook_user true
-  f.association :facebook_account
-  f.association :twitter_account
-end
-Factory.define :greenlit_facebook_and_twitter_customer, :parent => :customer do |f|
-  f.twitter_user true
-  f.facebook_user true
-  f.association :facebook_account, :factory => :greenlit_facebook_account
-  f.association :twitter_account, :factory => :greenlit_twitter_account
+  factory :twitter_test_user, :parent => :customer do
+    twitter_user true
+    association :twitter_account, :factory => :twitter_test_account
+    name 'sazboom_test'
+    email 'aaron+twittertest@sazboom.com'
+    uuid 'aaron+twittertest@sazboom.com'
+
+  end
+
+  factory :greenlit_twitter_customer, :parent => :customer do
+    twitter_user true
+    association :twitter_account, :factory => :greenlit_twitter_account
+  end
+
+  factory :facebook_and_twitter_customer, :parent => :customer do
+    twitter_user true
+    facebook_user true
+    association :facebook_account
+    association :twitter_account
+  end
+
+  factory :greenlit_facebook_and_twitter_customer, :parent => :customer do
+    twitter_user true
+    facebook_user true
+    association :facebook_account, :factory => :greenlit_facebook_account
+    association :twitter_account, :factory => :greenlit_twitter_account
+  end
 end

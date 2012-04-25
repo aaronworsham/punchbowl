@@ -1,19 +1,23 @@
 require 'faker'
 
-Factory.define :post do |f|
-  f.message "test"
-  f.association :customer
-end
+FactoryGirl.define  do
 
-Factory.define :facebook_post, :parent => :post do |f|
-  f.posted_to_facebook true
-end
+  factory :post do
+    message "test"
+    association :customer
+  end
 
-Factory.define :twitter_post, :parent => :post do |f|
-  f.posted_to_twitter true
-end
+  factory :facebook_post, :parent => :post do
+    posted_to_facebook true
+  end
 
-Factory.define :facebook_and_twitter_post, :parent => :post do |f|
-  f.posted_to_facebook true
-  f.posted_to_twitter true
+  factory :twitter_post, :parent => :post do
+    posted_to_twitter true
+  end
+
+  factory :facebook_and_twitter_post, :parent => :post do
+    posted_to_facebook true
+    posted_to_twitter true
+  end
+
 end
