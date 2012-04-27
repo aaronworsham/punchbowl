@@ -7,7 +7,7 @@ describe TwitterApi do
   end
 
   before(:each) do
-    @user = Factory :twitter_test_user
+    @user = FactoryGirl.create :twitter_test_user
     @ta = @user.twitter_account
   end
 
@@ -21,7 +21,7 @@ describe TwitterApi do
     it "should not be nil" do
       @ta.should_not be_nil
     end
-  
+
     it "should have a token" do
       @ta.token.should_not be_nil
     end
@@ -37,7 +37,7 @@ describe TwitterApi do
 
   context :publishing do
     it "should be able to post to the users timeline" do
-      @ta.post(Factory( :post, :message => @message)).should eq 'success'
+      @ta.post(FactoryGirl.create(:post, :message => @message)).should eq 'success'
     end
 
     it "should be able to read from the wall (intermittent failures)" do

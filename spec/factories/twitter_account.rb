@@ -1,6 +1,8 @@
 require 'faker'
 
 FactoryGirl.define  do
+  factory :twitter_account do
+  end
 
   factory :greenlit_twitter_account, :parent => :twitter_account do
     token 'abcdef'

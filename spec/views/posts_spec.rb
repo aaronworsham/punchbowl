@@ -1,5 +1,6 @@
 require 'spec_helper'
 include Capybara::DSL
+
 describe "Post Views", :type => :request do
 
   it "visits the home page" do
@@ -26,7 +27,7 @@ describe "Post Views", :type => :request do
     end
 
     it "should not post if neither facebook or twitter user" do
-      @user = Factory :customer, :uuid => 5
+      @user = FactoryGirl.create :customer, :uuid => 5
       @user.save
       @session.within('#new_post') do
         @session.fill_in 'Message', :with => 'bob'
@@ -38,7 +39,7 @@ describe "Post Views", :type => :request do
 
     end
     it "posts to facebook when user is known and permissioned to post to facebook" do
-      @user = Factory :facebook_customer
+      @user = FactoryGirl.create :facebook_customer
       @user.save
       @session.within('#new_post') do
         @session.fill_in 'Message', :with => 'bob'
@@ -50,7 +51,7 @@ describe "Post Views", :type => :request do
 
     end
     it "posts to twitter when user is known and permissioned to post to twitter" do
-      @user = Factory :twitter_customer
+      @user = FactoryGirl.create :twitter_customer
       @user.save
       @session.within('#new_post') do
         @session.fill_in 'Message', :with => 'bob'

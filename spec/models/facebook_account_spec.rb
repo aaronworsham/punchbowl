@@ -3,9 +3,9 @@ require 'spec_helper'
 describe FacebookAccount do
 
   before(:all) do
-    @a = Factory :greenlit_facebook_account
-
+    @a = FactoryGirl.build :greenlit_facebook_account
   end
+
   it 'should be green lit when token and id are present' do
     @a.greenlit?.should be_true
     @a.token.present?.should be_true

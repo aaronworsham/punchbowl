@@ -1,6 +1,6 @@
 require 'faker'
 
-FactoryGirl.define :facebook_account do
+FactoryGirl.define do
   factory :facebook_account do
   end
 

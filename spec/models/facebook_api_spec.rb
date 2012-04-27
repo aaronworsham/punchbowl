@@ -7,6 +7,7 @@ describe FacebookApi do
     @message = "test random #{rand(1000000)}"
 
   end
+
   after(:all) do
     @fba.delete_test_user(@user)
   end
@@ -27,7 +28,7 @@ describe FacebookApi do
     it "should not be nil" do
       @fba.should_not be_nil
     end
-  
+
     it "should have same token as user" do
       @fba.access_token.should eq(@user["access_token"])
     end
@@ -52,6 +53,5 @@ describe FacebookApi do
       resp["data"][0]["message"].should eq(@message)
     end
   end
-
 
 end
