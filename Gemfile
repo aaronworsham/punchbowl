@@ -11,6 +11,7 @@ gem 'delayed_job'
 gem 'devise'
 gem 'typhoeus'
 gem 'curb'
+gem 'countries'
 
 group :development, :test do
   gem 'sqlite3'
