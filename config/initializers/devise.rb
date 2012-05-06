@@ -21,6 +21,9 @@ Devise.setup do |config|
   # parameters are used only when authenticating and not when retrieving from
   # session. If you need permissions, you should implement that in a before filter.
   # config.authentication_keys = [ :email ]
+  config.case_insensitive_keys = [:email]
+  config.reset_password_within = 48.hours
+  config.use_salt_as_remember_token = true
 
   # Tell if authentication through request.params is enabled. True by default.
   # config.params_authenticatable = true

@@ -4,7 +4,7 @@ FactoryGirl.define do
   factory :customer do
     name Faker::Name.name
     email Faker::Internet.email
-    uuid rand(10000)
+    uuid Random.rand(10000)
     wants_to_share true
     wants_to_be_asked false
   end

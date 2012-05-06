@@ -7,8 +7,9 @@
     = form.input :twitter_user
     = form.input :test_account
     .submit_button
-      = form.commit_button :button_html => { :value => "Create User" } 
-
+      =# form.commit_button :button_html => { :value => "Create User" }
+      = form.actions do
+        = form.action :submit, :button_html => { :value => "Create User" }
 %h3 Test Messages
 #post_message_form
   = semantic_form_for @post, :url => '/posts.json' do |form|
@@ -18,8 +19,9 @@
       %label{:for => :uuid} UUID
       %input{:id => :UUID, :name=>"uuid", :placeholder=>"Your uuid here...", :size=>"40", :type=>"text"}
     .submit_button
-      = form.commit_button :button_html => { :value => "Deliver Message" } 
-
+      =# form.commit_button :button_html => { :value => "Deliver Message" }
+      = form.actions do
+        = form.action :submit, :button_html => { :value => "Deliver Message" }
 
 
 
