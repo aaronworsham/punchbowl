@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails'
+gem 'rails', '3.2.3'
 gem 'haml'
 gem 'sass'
 gem 'formtastic'
@@ -12,9 +12,10 @@ gem 'devise'
 gem 'typhoeus'
 gem 'curb'
 gem 'countries'
+gem 'sqlite3'
+
 
 group :development, :test do
-  gem 'sqlite3'
   gem 'rspec-rails'
   gem 'guard-rspec'
   gem 'mocha'
