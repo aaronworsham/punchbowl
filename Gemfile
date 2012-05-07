@@ -12,7 +12,7 @@ gem 'devise'
 gem 'typhoeus'
 gem 'curb'
 gem 'countries'
-gem 'sqlite3'
+
 
 
 group :development, :test do
