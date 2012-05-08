@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.3'
+gem 'rails', '3.0.12'
 gem 'haml'
 gem 'sass'
 gem 'formtastic'
@@ -12,7 +12,7 @@ gem 'devise'
 gem 'typhoeus'
 gem 'curb'
 gem 'countries'
-gem 'mysql2'
+gem 'mysql'
 
 
 group :development, :test do
