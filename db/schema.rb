@@ -13,28 +13,19 @@
 
 ActiveRecord::Schema.define(:version => 20120501185929) do
 
-  create_table "accomplishments", :force => true do |t|
-    t.integer  "customer_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "language_id"
-    t.integer  "badge_id"
-  end
-
   create_table "admins", :force => true do |t|
-    t.string   "email",                               :default => "", :null => false
-    t.string   "encrypted_password",   :limit => 128, :default => "", :null => false
-    t.string   "password_salt",                       :default => "", :null => false
+    t.string   "email",                                 :default => "", :null => false
+    t.string   "encrypted_password",     :limit => 128, :default => "", :null => false
     t.string   "reset_password_token"
-    t.string   "remember_token"
+    t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                       :default => 0
+    t.integer  "sign_in_count",                         :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
   end
 
   add_index "admins", ["email"], :name => "index_admins_on_email", :unique => true
@@ -42,22 +33,14 @@ ActiveRecord::Schema.define(:version => 20120501185929) do
 
   create_table "app_stats", :force => true do |t|
     t.integer  "tango_reward_week"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "badges", :force => true do |t|
-    t.string   "name"
-    t.string   "image_path"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "language_id"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
   end
 
   create_table "customers", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
     t.string   "email"
     t.string   "facebook_token"
     t.string   "facebook_id"
@@ -75,14 +58,6 @@ ActiveRecord::Schema.define(:version => 20120501185929) do
   add_index "customers", ["email"], :name => "index_customers_on_email"
   add_index "customers", ["uuid"], :name => "index_customers_on_uuid"
 
-  create_table "dance_partners", :force => true do |t|
-    t.string   "email"
-    t.integer  "mango_tango_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "name"
-  end
-
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
     t.integer  "attempts",   :default => 0
@@ -92,22 +67,22 @@ ActiveRecord::Schema.define(:version => 20120501185929) do
     t.datetime "locked_at"
     t.datetime "failed_at"
     t.text     "locked_by"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
   create_table "facebook_accounts", :force => true do |t|
     t.string   "facebook_id"
     t.string   "token"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.integer  "customer_id"
   end
 
   create_table "facebook_events", :force => true do |t|
     t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "facebook_tokens", :force => true do |t|
@@ -115,68 +90,21 @@ ActiveRecord::Schema.define(:version => 20120501185929) do
     t.string   "refresh_token"
     t.datetime "expires_at"
     t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "gift_of_mangos", :force => true do |t|
-    t.integer  "post_id"
-    t.integer  "customer_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "badge_id"
-  end
-
-  create_table "languages", :force => true do |t|
-    t.string   "name"
-    t.integer  "badge_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "mango_achievements", :force => true do |t|
-    t.integer  "badge_id"
-    t.integer  "post_id"
-    t.integer  "customer_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "mango_tangos", :force => true do |t|
-    t.integer  "post_id"
-    t.integer  "customer_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "badge_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "posts", :force => true do |t|
-    t.text     "message",            :limit => 255
+    t.text     "message"
     t.integer  "postable_id"
     t.string   "postable_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.integer  "customer_id"
-    t.boolean  "posted_to_facebook",                :default => false
-    t.boolean  "posted_to_twitter",                 :default => false
+    t.boolean  "posted_to_facebook", :default => false
+    t.boolean  "posted_to_twitter",  :default => false
     t.string   "facebook_id"
     t.string   "twitter_id"
-  end
-
-  create_table "rewards", :force => true do |t|
-    t.integer  "customer_id"
-    t.datetime "issued_at"
-    t.datetime "redeemed_at"
-    t.string   "token"
-    t.integer  "rewardable_id"
-    t.string   "rewardable_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "street_address"
-    t.string   "city"
-    t.string   "state_or_province"
-    t.string   "postal_code"
-    t.string   "country"
   end
 
   create_table "twitter_accounts", :force => true do |t|
@@ -184,30 +112,29 @@ ActiveRecord::Schema.define(:version => 20120501185929) do
     t.string   "token"
     t.string   "secret"
     t.string   "verifier"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "twitter_events", :force => true do |t|
     t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|
     t.string   "email",                                 :default => "", :null => false
     t.string   "encrypted_password",     :limit => 128, :default => "", :null => false
-    t.string   "password_salt",                         :default => "", :null => false
     t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.integer  "sign_in_count",                         :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "reset_password_sent_at"
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
