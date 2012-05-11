@@ -19,6 +19,14 @@ class TwitterApi
     end
   end
 
+  def post_to_timeline(post)
+    client.update(post.message)
+  end
+
+  def last_post
+    client.user_timeline[0]
+  end
+
   def request_token(uri)
     client.request_token(:oauth_callback => uri)
   end

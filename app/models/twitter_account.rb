@@ -6,12 +6,12 @@ class TwitterAccount < ActiveRecord::Base
     self.token? and self.secret?
   end
 
-  def client
-    @client ||= TwitterApi.new(customer).client
+  def api
+    @api ||= TwitterApi.new(customer)
   end
 
   def post(post)
-    response = client.update(post.message)
+    response = api.post_to_timeline(post)
     Rails.logger.info response.inspect
     'success'
   rescue => e
@@ -26,7 +26,7 @@ class TwitterAccount < ActiveRecord::Base
   end
 
   def last_post
-    client.user_timeline[0]
+    api.last_post
   end
 
 end

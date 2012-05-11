@@ -1,4 +1,4 @@
-class FacebookAccount < ActiveRecord::Base
+class TestFacebookAccount < ActiveRecord::Base
 
   belongs_to :customer
 
@@ -8,12 +8,12 @@ class FacebookAccount < ActiveRecord::Base
     self.token.present? and self.facebook_id.present?
   end
 
-  def access_token
-    FacebookApi.access_token(self.token)
+  def api
+    @api ||= TestFacebookApi.new(self.token)
   end
 
   def post_to_wall(post)
-    response = JSON.parse(access_token.post("/#{self.facebook_id}/feed", build_message(post))) 
+    response = JSON.parse(api.post_to_wall(facebook_id, build_message(post)))
     Rails.logger.info response.inspect
     post.update_attribute("facebook_id", response["id"]) if response["id"].present?
     response

@@ -26,8 +26,7 @@ class CustomersController < ApplicationController
         :updated_at => @customer.updated_at.to_s(:long),
         :number_of_posts => @customer.posts.size,
         :last_post => {
-          :message => last_post.message,
-          :created_at => last_post.created_at.to_s(:long),
+          :created_at => last_post.try('created_at'),
         }
       }
     else
