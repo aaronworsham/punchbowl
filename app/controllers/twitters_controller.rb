@@ -9,11 +9,15 @@ class TwittersController < ApplicationController
       access_token = twitter.verify(params[:oauth_verifier])
       #save token and secret to the account
       TwitterAccount.create(:customer => @customer, :token => access_token.token, :secret => access_token.secret)
+      @customer.finish_authorizing_twitter
       render :json => {:success => true}
+
     else
+      @customer.fail_to_authorize_twitter
       raise "We are missing the session code from facebook to retrieve token"
     end
   rescue => e
+    @customer.fail_to_authorize_twitter if @customer
     Rails.logger.error e.message
     render :json => {:error => e.message}
   end

@@ -13,6 +13,7 @@ gem 'typhoeus'
 gem 'curb'
 gem 'countries'
 gem 'mysql'
+gem 'state_machine'
 
 
 group :development, :test do

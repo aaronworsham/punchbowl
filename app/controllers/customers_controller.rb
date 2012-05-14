@@ -15,18 +15,20 @@ class CustomersController < ApplicationController
           :token => @customer.try('facebook_account').try('token'),
           :opt_in => @customer.facebook_user?,
           :greenlit? => @customer.facebook_greenlit?,
+          :auth_state => @customer.facebook_auth_state
         },
         :twitter => {
           :token => @customer.try('twitter_account').try('token'),
           :opt_in => @customer.twitter_user?,
           :greenlit? => @customer.twitter_greenlit?,
+          :auth_state => @customer.twitter_auth_state
         },
         :last_error => @customer.last_error,
         :created_at => @customer.created_at.to_s(:long),
         :updated_at => @customer.updated_at.to_s(:long),
         :number_of_posts => @customer.posts.size,
         :last_post => {
-          :created_at => last_post.try('created_at'),
+          :created_at => (last_post ? last_post.created_at.to_s(:long) : nil),
         }
       }
     else
@@ -40,6 +42,7 @@ class CustomersController < ApplicationController
       @customer.test_account = true 
     end
     if @customer.valid?
+      start_authorizing
       render :json => {:new_user => true, :url => auth_url}
     else
       render :json => {:new_user => false, :error => @customer.errors}
@@ -53,6 +56,13 @@ class CustomersController < ApplicationController
        @customer.facebook_user? ? 
          FacebookApi.new.authorize_url(auth_success_customer_facebook_url(@customer)) :
          TwitterApi.new(@customer).authorize_url(auth_success_customer_twitter_url(@customer))
+    end
+  end
+
+  def start_authorizing
+    if @customer
+      @customer.start_authorizing_facebook if @customer.facebook_user?
+      @customer.start_authorizing_twitter if @customer.twitter_user?
     end
   end
 

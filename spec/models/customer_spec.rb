@@ -48,4 +48,31 @@ describe Customer do
       (0...25).map { alphanumerics[Kernel.rand(alphanumerics.size)] }.join
     end
   end
+
+  context :auth_state do
+    it 'should start with unauthroized for twitter and facebook' do
+      c = FactoryGirl.create :customer
+      c.facebook_auth_state.should == 'unauthorized'
+      c.twitter_auth_state.should == 'unauthorized'
+    end
+    it 'should move states to authorizing' do
+      c = FactoryGirl.create :customer
+      c.start_authorizing_facebook
+      c.facebook_auth_state.should == 'authorizing'
+      c.twitter_auth_state.should == 'unauthorized'
+      c.start_authorizing_twitter
+      c.facebook_auth_state.should == 'authorizing'
+      c.twitter_auth_state.should == 'authorizing'
+    end
+    it 'should persist states to authorizing' do
+      c = FactoryGirl.create :customer
+      c.start_authorizing_facebook
+      c.facebook_auth_state.should == 'authorizing'
+      c.twitter_auth_state.should == 'unauthorized'
+      c.start_authorizing_twitter
+      c.reload
+      c.facebook_auth_state.should == 'authorizing'
+      c.twitter_auth_state.should == 'authorizing'
+    end
+  end
 end
