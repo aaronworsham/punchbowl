@@ -38,9 +38,6 @@ class CustomersController < ApplicationController
 
   def create
     @customer = Customer.create(params[:customer])
-    if params[:test_mode]
-      @customer.test_account = true 
-    end
     if @customer.valid?
       start_authorizing(@customer.first_network)
       render :json => {:new_user => true, :network => (@customer.first_network), :url => auth_url(@customer.first_network) }

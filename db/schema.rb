@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120513235716) do
+ActiveRecord::Schema.define(:version => 20120516200438) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",                                 :default => "", :null => false
@@ -24,8 +24,8 @@ ActiveRecord::Schema.define(:version => 20120513235716) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
   end
 
   add_index "admins", ["email"], :name => "index_admins_on_email", :unique => true
@@ -33,14 +33,14 @@ ActiveRecord::Schema.define(:version => 20120513235716) do
 
   create_table "app_stats", :force => true do |t|
     t.integer  "tango_reward_week"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
   end
 
   create_table "customers", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
     t.string   "email"
     t.string   "facebook_token"
     t.string   "facebook_id"
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(:version => 20120513235716) do
     t.boolean  "test_account",        :default => false
     t.string   "facebook_auth_state"
     t.string   "twitter_auth_state"
+    t.boolean  "anonymous",           :default => false
   end
 
   add_index "customers", ["email"], :name => "index_customers_on_email"
@@ -69,22 +70,22 @@ ActiveRecord::Schema.define(:version => 20120513235716) do
     t.datetime "locked_at"
     t.datetime "failed_at"
     t.text     "locked_by"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
   create_table "facebook_accounts", :force => true do |t|
     t.string   "facebook_id"
     t.string   "token"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.integer  "customer_id"
   end
 
   create_table "facebook_events", :force => true do |t|
     t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "facebook_tokens", :force => true do |t|
@@ -92,16 +93,16 @@ ActiveRecord::Schema.define(:version => 20120513235716) do
     t.string   "refresh_token"
     t.datetime "expires_at"
     t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "posts", :force => true do |t|
     t.text     "message"
     t.integer  "postable_id"
     t.string   "postable_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.integer  "customer_id"
     t.boolean  "posted_to_facebook", :default => false
     t.boolean  "posted_to_twitter",  :default => false
@@ -114,14 +115,14 @@ ActiveRecord::Schema.define(:version => 20120513235716) do
     t.string   "token"
     t.string   "secret"
     t.string   "verifier"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "twitter_events", :force => true do |t|
     t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|
@@ -135,8 +136,8 @@ ActiveRecord::Schema.define(:version => 20120513235716) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
