@@ -10,7 +10,8 @@ class CustomersController < ApplicationController
       render :json => {
         :id => @customer.id,
         :uuid => @customer.uuid,
-        :existing_user => true, 
+        :existing_user => true,
+        :anonymous => @customer.anonymous?,
         :facebook => {
           :token => @customer.try('facebook_account').try('token'),
           :opt_in => @customer.facebook_user?,
