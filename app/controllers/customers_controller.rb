@@ -50,7 +50,7 @@ class CustomersController < ApplicationController
   end
 
   def add_network
-    @customer = Customer.find_by_id params[:uuid]
+    @customer = Customer.find_by_uuid params[:uuid]
     case params[:network]
       when 'facebook'
         unless @customer.facebook_user?
@@ -72,7 +72,7 @@ class CustomersController < ApplicationController
   end
 
   def remove_network
-    @customer = Customer.find_by_id params[:uuid]
+    @customer = Customer.find_by_uuid params[:uuid]
     case params[:network]
       when 'facebook'
         if @customer.facebook_user?
@@ -94,7 +94,7 @@ class CustomersController < ApplicationController
   end
 
   def reauthorize_network
-    @customer = Customer.find_by_id params[:uuid]
+    @customer = Customer.find_by_uuid params[:uuid]
     case params[:network]
       when 'facebook'
         if @customer.facebook_user?
