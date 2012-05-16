@@ -42,27 +42,109 @@ class CustomersController < ApplicationController
       @customer.test_account = true 
     end
     if @customer.valid?
-      start_authorizing
-      render :json => {:new_user => true, :url => auth_url}
+      start_authorizing(@customer.first_network)
+      render :json => {:new_user => true, :network => (@customer.first_network), :url => auth_url(@customer.first_network) }
     else
       render :json => {:new_user => false, :error => @customer.errors}
     end
   end
 
-  private 
-
-  def auth_url 
-    if @customer
-       @customer.facebook_user? ? 
-         FacebookApi.new.authorize_url(auth_success_customer_facebook_url(@customer)) :
-         TwitterApi.new(@customer).authorize_url(auth_success_customer_twitter_url(@customer))
+  def add_network
+    @customer = Customer.find_by_id params[:uuid]
+    case params[:network]
+      when 'facebook'
+        unless @customer.facebook_user?
+          @customer.update_attribute(:facebook_user, true)
+          start_authorizing('facebook')
+          render :json => {:network => 'facebook', :added => true, :url => auth_url('facebook')}
+        else
+          render :json => {:network => 'facebook', :added => false, :error => 'Already facebook user'}
+        end
+      when 'twitter'
+        unless @customer.twitter_user?
+          @customer.update_attribute(:twitter_user, true)
+          start_authorizing('twitter')
+          render :json => {:network => 'twitter', :added => true, :url => auth_url('twitter')}
+        else
+          render :json => {:network => 'twitter', :added => false, :error => 'Already twitter user'}
+        end
     end
   end
 
-  def start_authorizing
+  def remove_network
+    @customer = Customer.find_by_id params[:uuid]
+    case params[:network]
+      when 'facebook'
+        if @customer.facebook_user?
+          @customer.update_attribute(:facebook_user, false)
+          deauthroize('facebook')
+          render :json => {:network => 'facebook', :removed => true}
+        else
+          render :json => {:network => 'facebook', :removed => false, :error => 'Not a Facebook user'}
+        end
+      when 'twitter'
+        if @customer.twitter_user?
+          @customer.update_attribute(:twitter_user, false)
+          deauthroize('twitter')
+          render :json => {:network => 'twitter', :removed => true}
+        else
+          render :json => {:network => 'twitter', :removed => false, :error => 'Not a Twitter user'}
+        end
+    end
+  end
+
+  def reauthorize_network
+    @customer = Customer.find_by_id params[:uuid]
+    case params[:network]
+      when 'facebook'
+        if @customer.facebook_user?
+          start_authorizing('facebook')
+          render :json => {:network => 'facebook',:authorizing => true, :url => auth_url('facebook')}
+        else
+          render :json => {:network => 'facebook', :authorizing => false, :error => 'Not a Facebook user'}
+        end
+      when 'twitter'
+        if @customer.twitter_user?
+          start_authorizing('twitter')
+          render :json => {:network => 'twitter',:authorizing => true, :url => auth_url('twitter')}
+        else
+          render :json => {:network => 'twitter', :authorizing => false, :error => 'Not a Twitter user'}
+        end
+    end
+  end
+
+  private
+
+  def auth_url(network = 'facebook')
     if @customer
-      @customer.start_authorizing_facebook if @customer.facebook_user?
-      @customer.start_authorizing_twitter if @customer.twitter_user?
+       case network
+         when 'facebook'
+           FacebookApi.new.authorize_url(auth_success_customer_facebook_url(@customer))
+         when 'twitter'
+           TwitterApi.new(@customer).authorize_url(auth_success_customer_twitter_url(@customer))
+       end
+    end
+  end
+
+  def start_authorizing(network = 'facebook')
+    if @customer
+      case network
+        when 'facebook'
+          @customer.start_authorizing_facebook
+        when 'twitter'
+          @customer.start_authorizing_twitter
+      end
+    end
+  end
+
+  def deauthroize(network = 'facebook')
+    if @customer
+      case network
+        when 'facebook'
+          @customer.deauthorize_facebook
+        when 'twitter'
+          @customer.deauthorize_twitter
+      end
     end
   end
 

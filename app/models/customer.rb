@@ -10,7 +10,7 @@ class Customer < ActiveRecord::Base
 
   state_machine :facebook_auth_state, :initial => :unauthorized, :namespace => 'facebook' do
     event :start_authorizing do
-      transition :unauthorized => :authorizing
+      transition all => :authorizing
     end
 
     event :finish_authorizing do
@@ -28,7 +28,7 @@ class Customer < ActiveRecord::Base
 
   state_machine :twitter_auth_state, :initial => :unauthorized, :namespace => 'twitter' do
     event :start_authorizing do
-      transition :unauthorized => :authorizing
+      transition all => :authorizing
     end
 
     event :finish_authorizing do
@@ -45,14 +45,20 @@ class Customer < ActiveRecord::Base
   end
 
   def facebook_greenlit?
-    !!(facebook_account && facebook_account.greenlit?)
+    !!(facebook_user && facebook_account && facebook_account.greenlit?)
   end
 
   def twitter_greenlit?
-    !!(twitter_account && twitter_account.greenlit?)
+    !!(twitter_user && twitter_account && twitter_account.greenlit?)
   end
 
   def greenlit?
     facebook_greenlit? and twitter_greenlit?
   end
+
+  def first_network
+    return 'facebook' if facebook_user?
+    return 'twitter' if twitter_user?
+  end
 end
+

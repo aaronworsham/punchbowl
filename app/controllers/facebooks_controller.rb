@@ -12,12 +12,7 @@ class FacebooksController < ApplicationController
     Rails.logger.info "creating account"
     FacebookAccount.create(:facebook_id => id, :token => token, :customer => @customer) if @customer
     @customer.finish_authorizing_facebook
-    if @customer and @customer.twitter_user? and !@customer.twitter_greenlit?
-      redirect_to TwitterApi.new(@customer).authorize_url(auth_success_customer_twitter_url(@customer))
-    else
-      @customer.fail_to_authorize_twitter
-      render :json => {:success => true, :facebook => 'authorized'}
-    end
+    render :json => {:success => true, :facebook => 'authorized'}
   rescue => e
     @customer.fail_to_authorize_twitter if @customer
     Rails.logger.error e.message

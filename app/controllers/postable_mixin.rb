@@ -3,19 +3,37 @@ module PostableMixin
   def post_to_social_media
     if params[:test_mode]
       type = 'tested'
-    elsif @customer.facebook_user? or @customer.twitter_user?
-      response = {}
-      if @customer.facebook_user? and @customer.facebook_greenlit?
-        response[:facebook] = @customer.facebook_account.post_to_wall(@post)
+    elsif @post.posted_to_facebook?
+      if @customer.facebook_user?
+        if @customer.facebook_greenlit?
+          success = true
+          status = @customer.facebook_account.post_to_wall(@post)
+        else
+          success = false
+          error = 'Customer not authorized to Facebook'
+        end
+      else
+        success = false
+        error = 'Customer not a Facebook User'
       end
-      if @customer.twitter_user? and @customer.twitter_greenlit?
-        response[:twitter] = @customer.twitter_account.post(@post)
+    elsif @post.posted_to_twitter?
+      if @customer.twitter_user?
+        if @customer.twitter_greenlit?
+          success = true
+          status = @customer.twitter_account.post(@post)
+        else
+          success = false
+          error = 'Customer not authorized to Twitter'
+        end
+      else
+        success = false
+        error = 'Customer not a Twitter User'
       end
-      status = "posted" 
     else
-      status = 'customer is not a facebook or twitter user'
+      success = false
+      error = 'Please select a supported Network, IE Facebook or Twitter'
     end
-      render :json =>  {:status => status}
+    render :json =>  {:success => success, :status => status, :error => error}
   rescue 
     raise
   end 

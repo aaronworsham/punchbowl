@@ -18,6 +18,9 @@
     #address_area
       %label{:for => :uuid} UUID
       %input{:id => :UUID, :name=>"uuid", :placeholder=>"Your uuid here...", :size=>"40", :type=>"text"}
+    #network
+      = form.input :posted_to_facebook
+      = form.input :posted_to_twitter
     .submit_button
       =# form.commit_button :button_html => { :value => "Deliver Message" }
       = form.actions do
