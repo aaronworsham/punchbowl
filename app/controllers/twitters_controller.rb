@@ -10,7 +10,8 @@ class TwittersController < ApplicationController
       #save token and secret to the account
       TwitterAccount.create(:customer => @customer, :token => access_token.token, :secret => access_token.secret)
       @customer.finish_authorizing_twitter
-      render :js => "window.close();"
+      @network = 'Twitter'
+      render :template => 'shared/close_window'
 
     else
       @customer.fail_to_authorize_twitter
@@ -19,7 +20,8 @@ class TwittersController < ApplicationController
   rescue => e
     @customer.fail_to_authorize_twitter if @customer
     Rails.logger.error e.message
-    render :js => "window.close();"
+    @network = 'Twitter'
+    render :template => 'shared/close_window'
   end
 
 private

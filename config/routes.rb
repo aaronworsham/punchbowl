@@ -19,7 +19,7 @@ Punchbowl::Application.routes.draw do
   match 'customers/uuid/:uuid' => 'customers#show', :as => :customer_by_uuid, :via => :get
   match 'customers/uuid/:uuid/add_network/:network' => 'customers#add_network', :as => :add_network, :via => :post
   match 'customers/uuid/:uuid/remove_network/:network' => 'customers#remove_network', :as => :remove_network, :via => :post
-  match 'customers/uuid/:uuid/reauthorize/:network' => 'customers#reauthorize', :as => :reauthroize, :via => :post
+  match 'customers/uuid/:uuid/reauthorize/:network' => 'customers#reauthorize', :as => :reauthorize, :via => :post
   match 'customers/uuid/:uuid/posts' => 'posts#index', :as => :posts_by_customer_uuid, :via => :get
 
 

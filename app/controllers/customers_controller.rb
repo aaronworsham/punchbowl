@@ -99,7 +99,7 @@ class CustomersController < ApplicationController
     end
   end
 
-  def reauthorize_network
+  def reauthorize
     @customer = Customer.find_by_uuid params[:uuid]
     if @customer
       case params[:network]

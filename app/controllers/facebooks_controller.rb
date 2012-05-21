@@ -12,11 +12,13 @@ class FacebooksController < ApplicationController
     Rails.logger.info "creating account"
     FacebookAccount.create(:facebook_id => id, :token => token, :customer => @customer) if @customer
     @customer.finish_authorizing_facebook
-    render :js => "window.close();"
+    @network = 'Facebook'
+    render :template => 'shared/close_window'
   rescue => e
     @customer.fail_to_authorize_twitter if @customer
     Rails.logger.error e.message
-    render :js => "window.close();"
+    @network = 'Facebook'
+    render :template => 'shared/close_window'
   end
 
 
