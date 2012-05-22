@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120516200438) do
+ActiveRecord::Schema.define(:version => 20120522133607) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",                                 :default => "", :null => false
@@ -108,6 +108,8 @@ ActiveRecord::Schema.define(:version => 20120516200438) do
     t.boolean  "posted_to_twitter",  :default => false
     t.string   "facebook_id"
     t.string   "twitter_id"
+    t.string   "image_src"
+    t.string   "image_url"
   end
 
   create_table "twitter_accounts", :force => true do |t|
