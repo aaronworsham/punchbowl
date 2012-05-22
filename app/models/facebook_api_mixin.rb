@@ -55,12 +55,23 @@ module FacebookApiMixin
 
 
   def post_to_wall(id, message)
-    JSON.parse(self.request(:post, "/#{id}/feed", 
-        {
+    params = {
           :message => message,
           :access_token => access_token
         }
-      )
+
+    if self.images_src.present? and self.images_url.present?
+      params << {
+        :media => [
+          {
+            :type => 'image',
+            :image_src => self.image_src,
+            :image_url => self.image_url,
+          }
+        ]
+      }
+    end
+    JSON.parse(self.request(:post, "/#{id}/feed", params)
     )
   rescue => e
     Rails.logger.info e.message
