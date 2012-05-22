@@ -13,7 +13,7 @@ class FacebookAccount < ActiveRecord::Base
   end
 
   def post_to_wall(post)
-    response = api.post_to_wall(facebook_id, post.message)
+    response = api.post_to_wall(facebook_id, post.message, post.image_src, post.image_url)
     Rails.logger.info response.inspect
     post.update_attribute("facebook_id", response["id"]) if response["id"].present?
     response
