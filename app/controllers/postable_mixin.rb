@@ -19,12 +19,13 @@ module PostableMixin
       end
     elsif @post.posted_to_twitter?
       if @customer.twitter_user?
-        if @customer.twitter_greenlit?
+        if @customer.twitter_greenlit? and @customer.twitter_account.valid_auth?
           success = true
           status = @customer.twitter_account.post(@post)
         else
           success = false
           error = 'Customer not authorized to Twitter'
+          url = auth_url('twitter')
         end
       else
         success = false

@@ -42,6 +42,10 @@ class TwitterApi
     client.authorize(request_token.token, request_token.secret, :oauth_verifier => verifier)
   end
 
+  def valid_auth?
+    client.authorized?
+  end
+
 
 
 end

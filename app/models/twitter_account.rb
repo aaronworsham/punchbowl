@@ -29,4 +29,8 @@ class TwitterAccount < ActiveRecord::Base
     api.last_post
   end
 
+  def valid_auth?
+    api.valid_auth?
+  end
+
 end
