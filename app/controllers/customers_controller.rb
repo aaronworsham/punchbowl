@@ -125,16 +125,7 @@ class CustomersController < ApplicationController
 
   private
 
-  def auth_url(network = 'facebook')
-    if @customer
-       case network
-         when 'facebook'
-           FacebookApi.new.authorize_url(auth_success_customer_facebook_url(@customer))
-         when 'twitter'
-           TwitterApi.new(@customer).authorize_url(auth_success_customer_twitter_url(@customer))
-       end
-    end
-  end
+
 
   def start_authorizing(network = 'facebook')
     if @customer

@@ -5,12 +5,13 @@ module PostableMixin
       type = 'tested'
     elsif @post.posted_to_facebook?
       if @customer.facebook_user?
-        if @customer.facebook_greenlit?
+        if @customer.facebook_greenlit? and @customer.facebook_account.valid_auth?
           success = true
           status = @customer.facebook_account.post_to_wall(@post)
         else
           success = false
           error = 'Customer not authorized to Facebook'
+          url = auth_url('facebook')
         end
       else
         success = false
@@ -33,7 +34,11 @@ module PostableMixin
       success = false
       error = 'Please select a supported Network, IE Facebook or Twitter'
     end
-    render :json =>  {:success => success, :status => status, :error => error}
+    if success
+      render :json =>  {:success => success, :status => status}
+    else
+      render :json =>  {:success => success, :status => status, :error => error, :url => url}
+    end
   rescue 
     raise
   end 

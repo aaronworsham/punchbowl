@@ -31,6 +31,10 @@ class FacebookAccount < ActiveRecord::Base
     
   end
 
+  def valid_auth?
+    api.valid_auth?(facebook_id)
+  end
+
   # def rest_connection
   #   FacebookApi.rest_connection
   # end

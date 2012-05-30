@@ -102,6 +102,27 @@ module FacebookApiMixin
     raise e
   end
 
+  def valid_auth?(id)
+    resp = JSON.parse(self.request(:get, "/#{id}/permissions",{
+        :access_token => access_token
+      }
+    ))
+    Rails.logger.info resp.inspect
+    return true
+  rescue => e
+    Rails.logger.info e.message
+    if e.respond_to?('response')
+      Rails.logger.info e.response.inspect
+      if JSON.parse(e.response.env[:body])["error"]["code"] == 190 and
+        JSON.parse(e.response.env[:body])["error"]["error_subcode"] == 458
+        return false
+      else
+        raise e
+      end
+    end
+  end
+
+
   #this will be a growing list of token related errors
   def token_error?(msg)
     msg = JSON.parse(msg)
