@@ -9,6 +9,7 @@ module PostableMixin
           success = true
           status = @customer.facebook_account.post_to_wall(@post)
         else
+          deauthorize('facebook')
           success = false
           error = 'Customer not authorized to Facebook'
           url = auth_url('facebook')
@@ -23,6 +24,7 @@ module PostableMixin
           success = true
           status = @customer.twitter_account.post(@post)
         else
+          deauthorize('twitter')
           success = false
           error = 'Customer not authorized to Twitter'
           url = auth_url('twitter')

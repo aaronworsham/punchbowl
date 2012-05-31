@@ -80,7 +80,7 @@ class CustomersController < ApplicationController
         when 'facebook'
           if @customer.facebook_user?
             @customer.update_attribute(:facebook_user, false)
-            deauthroize('facebook')
+            deauthorize('facebook')
             render :json => {:network => 'facebook', :removed => true}
           else
             render :json => {:network => 'facebook', :removed => false, :error => 'Not a Facebook user'}
@@ -88,7 +88,7 @@ class CustomersController < ApplicationController
         when 'twitter'
           if @customer.twitter_user?
             @customer.update_attribute(:twitter_user, false)
-            deauthroize('twitter')
+            deauthorize('twitter')
             render :json => {:network => 'twitter', :removed => true}
           else
             render :json => {:network => 'twitter', :removed => false, :error => 'Not a Twitter user'}
@@ -127,27 +127,7 @@ class CustomersController < ApplicationController
 
 
 
-  def start_authorizing(network = 'facebook')
-    if @customer
-      case network
-        when 'facebook'
-          @customer.start_authorizing_facebook
-        when 'twitter'
-          @customer.start_authorizing_twitter
-      end
-    end
-  end
 
-  def deauthroize(network = 'facebook')
-    if @customer
-      case network
-        when 'facebook'
-          @customer.deauthorize_facebook
-        when 'twitter'
-          @customer.deauthorize_twitter
-      end
-    end
-  end
 
 
 

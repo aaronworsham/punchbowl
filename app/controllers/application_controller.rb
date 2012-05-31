@@ -38,4 +38,26 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def start_authorizing(network = 'facebook')
+    if @customer
+      case network
+        when 'facebook'
+          @customer.start_authorizing_facebook
+        when 'twitter'
+          @customer.start_authorizing_twitter
+      end
+    end
+  end
+
+  def deauthorize(network = 'facebook')
+    if @customer
+      case network
+        when 'facebook'
+          @customer.deauthorize_facebook
+        when 'twitter'
+          @customer.deauthorize_twitter
+      end
+    end
+  end
+
 end
