@@ -22,6 +22,24 @@ development:
   rewards:
     tango:
       start_date: "01/01/2010"
+
+staging:
+  url:        http://punchbowl.heroku.com
+  twitter:
+    key:      l1UrVnBEjoaAqgw8zzqCg
+    secret:   fxPgyUSyw07WYiRXFia1A68d534MTvB6gtefZFnc
+  facebook:
+    key:      121998531187880
+    secret:   725abca77adabcae093dc1057136b168
+  email:
+    default:
+      to:     aaron@sazboom.com
+      from:   punchbowl@mangolanguage.com
+  rewards:
+    tango:
+      start_date: "01/01/2010"
+
+
 production:
   url:        http://punchbowl.heroku.com
   twitter:
