@@ -5,6 +5,12 @@ class ApplicationController < ActionController::Base
 
   layout :layout_by_resource
 
+  def needs_basic_auth
+    authenticate_or_request_with_http_basic do |u,p|
+      u == "mango" && p == "letme1nsmi"
+    end
+  end
+
   def layout_by_resource
     if devise_controller?
       "devise"

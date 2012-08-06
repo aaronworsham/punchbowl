@@ -1,7 +1,6 @@
 class PostsController < ApplicationController
   include PostableMixin
-  
-
+  before_filter :needs_basic_auth, :only => :new
   def new
     @test_customers = Customer.test
     @post =  Post.new
